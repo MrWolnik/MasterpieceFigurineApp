@@ -39,7 +39,7 @@ When `PLAN.md` and this file disagree, `PLAN.md` wins.
 
 ## Git & GitHub
 
-- The repository is private.
+- The repository is public (free branch protection); it may go private again with GitHub Pro.
 - Never push to `main` directly; work on branches named `feat/z1-5-turntable`, `fix/...`,
   `test/...`, `chore/...`
 - Use Conventional Commits (`feat(portfolio): add tag filter`, `test(form): ...`, `chore: ...`)
