@@ -152,7 +152,7 @@ Figurkę fotografujemy na obrotowym talerzu, robiąc 24–36 zdjęć co 10–15�
   5. `npm run test:e2e` (Playwright na zbudowanej stronie)
 - **Ochrona `main`:** merge jest możliwy tylko przy zielonym CI.
 - **Wdrożenie:** Netlify publikuje `main` automatycznie i robi podgląd każdego pull requesta.
-- **Widoczność repozytorium:** **prywatne**. Plan i konfiguracja zawierają adres e-mail, a publiczne repozytoria są przeszukiwane przez boty spamowe.
+- **Widoczność repozytorium:** **publiczne** (od 2026-11-26). Na darmowym planie GitHub ochrona gałęzi działa tylko w publicznych repozytoriach. Uwaga: plan, konfiguracja i historia Gita zawierają adresy e-mail, a publiczne repozytoria są przeszukiwane przez boty spamowe. Przy przejściu na GitHub Pro można wrócić do repozytorium prywatnego.
 - **Sekrety:** nigdy nie trafiają do repozytorium. Repozytorium zawiera `.env.example` z pustymi wartościami, a `.env` jest w `.gitignore`.
 - **Zdjęcia:** pliki WebP mają łącznie umiarkowany rozmiar, więc trzymamy je w repozytorium. Gdy repozytorium urośnie powyżej ~500 MB, przenosimy zdjęcia do Git LFS lub zewnętrznego magazynu.
 
@@ -285,7 +285,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Gotowe gdy:_ `build`, `lint` i `typecheck` przechodzą, a kod jest na GitHubie.
 - [x] **Z0.2 Testy i jakość.** Vitest + React Testing Library + user-event + jsdom, `src/test/setup.ts`, `test-utils.tsx` (renderowanie z routerem i i18n), MSW. Playwright (3 przeglądarki + profil telefonu) z `@axe-core/playwright`. Husky + lint-staged. Skrypty `test`, `test:watch`, `test:coverage`, `test:e2e`.
       _Gotowe gdy:_ jest przykładowy test jednostkowy i przykładowy test e2e, oba przechodzą, a hook pre-commit działa.
-- [ ] **Z0.3 CI.** Workflow GitHub Actions z pkt 5 (cache npm, raport Playwright jako artefakt przy błędzie). Instrukcja w README, jak włączyć ochronę gałęzi `main`.
+- [x] **Z0.3 CI.** Workflow GitHub Actions z pkt 5 (cache npm, raport Playwright jako artefakt przy błędzie). Instrukcja w README, jak włączyć ochronę gałęzi `main`.
       _Gotowe gdy:_ pull request pokazuje zielony status CI.
 - [ ] **Z0.4 Design tokens i style globalne.** `tokens.css`, fonty przez `@fontsource` z polskimi znakami, reset CSS, ciemne tło z subtelną teksturą lub vignette. Strona testowa `/styleguide` (tylko w trybie dev).
       _Testy:_ e2e sprawdzający, że `/styleguide` się renderuje i nie ma błędów kontrastu (axe).
@@ -380,3 +380,4 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-25 | Repozytorium GitHub prywatne                                                 |
 | 2026-11-26 | React 19 i TypeScript 6 (TS 7 jeszcze nieobsługiwany przez typescript-eslint) |
 | 2026-11-26 | ESLint + Prettier zamiast oxlint z szablonu Vite                             |
+| 2026-11-26 | Repozytorium publiczne (ochrona `main` bez GitHub Pro); być może Pro w przyszłości |
