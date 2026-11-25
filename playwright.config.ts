@@ -29,7 +29,10 @@ export default defineConfig({
     { name: 'mobile-safari', use: { ...devices['iPhone 15'] } },
   ],
   webServer: {
-    command: `npm run build && npm run preview -- --port ${String(PORT)} --strictPort`,
+    // CI has already built the app in an earlier step, so it only serves `dist`.
+    command: isCI
+      ? `npm run preview -- --port ${String(PORT)} --strictPort`
+      : `npm run build && npm run preview -- --port ${String(PORT)} --strictPort`,
     url: `http://localhost:${String(PORT)}`,
     reuseExistingServer: !isCI,
     timeout: 120_000,
