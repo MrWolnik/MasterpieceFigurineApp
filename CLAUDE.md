@@ -6,7 +6,7 @@ When `PLAN.md` and this file disagree, `PLAN.md` wins.
 
 ## Tech stack
 
-- React 18 + TypeScript (strict) + Vite, single-page app
+- React 19 + TypeScript 6 (strict) + Vite, single-page app
 - Package manager: npm
 - Styling: CSS Modules + CSS custom properties (design tokens)
 - Routing: React Router with a language prefix (`/pl/...`, `/en/...`)
