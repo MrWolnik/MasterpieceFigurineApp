@@ -281,7 +281,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 ### Etap 0 — Fundamenty
 
-- [ ] **Z0.1 Repozytorium i projekt.** `git init`, Vite + React + TypeScript (strict), `.gitignore`, `.env.example`, ESLint, Prettier i skrypty `dev`, `build`, `preview`, `lint`, `typecheck`. Do tego README i `CLAUDE.md` z zasadami z pkt 5. Pierwszy commit, a potem wypchnięcie do nowego repozytorium na GitHubie.
+- [x] **Z0.1 Repozytorium i projekt.** `git init`, Vite + React + TypeScript (strict), `.gitignore`, `.env.example`, ESLint, Prettier i skrypty `dev`, `build`, `preview`, `lint`, `typecheck`. Do tego README i `CLAUDE.md` z zasadami z pkt 5. Pierwszy commit, a potem wypchnięcie do nowego repozytorium na GitHubie.
       _Gotowe gdy:_ `build`, `lint` i `typecheck` przechodzą, a kod jest na GitHubie.
 - [ ] **Z0.2 Testy i jakość.** Vitest + React Testing Library + user-event + jsdom, `src/test/setup.ts`, `test-utils.tsx` (renderowanie z routerem i i18n), MSW. Playwright (3 przeglądarki + profil telefonu) z `@axe-core/playwright`. Husky + lint-staged. Skrypty `test`, `test:watch`, `test:coverage`, `test:e2e`.
       _Gotowe gdy:_ jest przykładowy test jednostkowy i przykładowy test e2e, oba przechodzą, a hook pre-commit działa.
