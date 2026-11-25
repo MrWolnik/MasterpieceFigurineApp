@@ -114,7 +114,7 @@ Figurkę fotografujemy na obrotowym talerzu, robiąc 24–36 zdjęć co 10–15�
 
 | Obszar                          | Wybór                                                                                             |
 | ------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Aplikacja                       | **React 18 + TypeScript (strict) + Vite**, jedna aplikacja (SPA)                                  |
+| Aplikacja                       | **React 19 + TypeScript 6 (strict) + Vite**, jedna aplikacja (SPA)                                |
 | Routing                         | React Router z prefiksem języka                                                                   |
 | Tłumaczenia                     | react-i18next, pliki `src/locales/pl.json` i `en.json`                                            |
 | Formularz                       | react-hook-form + zod (reguła „e-mail albo telefon”)                                              |
@@ -378,3 +378,5 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-25 | E-mail testowy do zgłoszeń: dwolnik12310@gmail.com                           |
 | 2026-11-25 | Social media jako edytowalne pola w `site.ts`; pusty link = ikona ukryta     |
 | 2026-11-25 | Repozytorium GitHub prywatne                                                 |
+| 2026-11-26 | React 19 i TypeScript 6 (TS 7 jeszcze nieobsługiwany przez typescript-eslint) |
+| 2026-11-26 | ESLint + Prettier zamiast oxlint z szablonu Vite                             |
