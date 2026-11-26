@@ -238,6 +238,15 @@
         "size": "{{name}}: plik jest większy niż 5 MB.",
         "count": "{{name}}: możesz dodać najwyżej 3 pliki."
       }
-    }
+    },
+    "subject": "[{{kind}}] Nowe zgłoszenie – {{name}}",
+    "sending": "Wysyłanie…",
+    "honeypot": "Nie wypełniaj tego pola",
+    "success": {
+      "title": "Dziękuję za zgłoszenie!",
+      "text": "Odezwę się najszybciej, jak to możliwe – zwykle w ciągu 2–3 dni roboczych.",
+      "again": "Wyślij kolejne zgłoszenie"
+    },
+    "failure": "Nie udało się wysłać zgłoszenia. Twoje dane zostały w formularzu – spróbuj ponownie za chwilę albo napisz e-mail."
   }
 }

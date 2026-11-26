@@ -1,13 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Controller, useForm, useWatch, type Resolver } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
 import { pathFor } from '../../lib/routes';
+import { HONEYPOT_FIELD } from '../../lib/submitOrder';
 import { useLanguage } from '../../lib/useLanguage';
 import { Dropzone } from '../Dropzone/Dropzone';
 import { FieldError, FormField } from './FormField';
+import { OrderSuccess } from './OrderSuccess';
 import styles from './OrderForm.module.css';
 import { PaintingFields } from './PaintingFields';
 import { useOrderPrefill } from './useOrderPrefill';
@@ -26,6 +28,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     register,
     handleSubmit,
     resetField,
+    reset,
     control,
     formState: { errors, isSubmitting },
   } = useForm<OrderFormValues, unknown, Order>({
@@ -35,6 +38,34 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     defaultValues,
   });
   const kind = useWatch({ control, name: 'kind' });
+  const honeypotRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<'idle' | 'sent' | 'failed'>('idle');
+
+  async function send(order: Order) {
+    setStatus('idle');
+    // A filled honeypot means a bot: pretend success and send nothing.
+    if (honeypotRef.current?.value) {
+      setStatus('sent');
+      return;
+    }
+    try {
+      await onSubmit(order);
+      setStatus('sent');
+    } catch {
+      setStatus('failed'); // values stay in the form, so the user can simply retry
+    }
+  }
+
+  if (status === 'sent') {
+    return (
+      <OrderSuccess
+        onReset={() => {
+          reset(defaultValues);
+          setStatus('idle');
+        }}
+      />
+    );
+  }
 
   return (
     <form
@@ -42,9 +73,22 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
       // aria-label, not aria-labelledby: the latter crashes Firefox under axe on this page.
       aria-label={t('form.title')}
       noValidate
-      onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+      onSubmit={(event) => void handleSubmit(send)(event)}
     >
       <h2>{t('form.title')}</h2>
+      {/* Honeypot: hidden from people and assistive tech, tempting for bots. */}
+      <p className={styles.honeypot} aria-hidden="true">
+        <label>
+          {t('form.honeypot')}
+          <input
+            ref={honeypotRef}
+            name={HONEYPOT_FIELD}
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
+      </p>
       <p className={styles.hint}>{t('form.intro')}</p>
 
       <fieldset className={styles.kinds}>
@@ -175,8 +219,14 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
         )}
       </div>
 
+      {status === 'failed' && (
+        <p className={styles.failure} role="alert">
+          {t('form.failure')}
+        </p>
+      )}
+
       <button className={styles.submit} type="submit" disabled={isSubmitting}>
-        {t('form.submit')}
+        {isSubmitting ? t('form.sending') : t('form.submit')}
       </button>
     </form>
   );

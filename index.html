@@ -8,6 +8,32 @@
   </head>
   <body>
     <div id="root"></div>
+    <!--
+      Static copy of the order form so Netlify detects it at deploy time (the real form is
+      rendered by React). Field names must match src/lib/submitOrder.ts.
+    -->
+    <form
+      name="order"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="subject" />
+      <input type="text" name="kind" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="description"></textarea>
+      <input type="text" name="dimensions" />
+      <input type="text" name="technique" />
+      <input type="date" name="deadline" />
+      <input type="file" name="photo1" />
+      <input type="file" name="photo2" />
+      <input type="file" name="photo3" />
+      <input type="checkbox" name="consent" />
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

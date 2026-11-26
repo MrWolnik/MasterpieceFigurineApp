@@ -238,6 +238,15 @@
         "size": "{{name}}: the file is larger than 5 MB.",
         "count": "{{name}}: you can add up to 3 files."
       }
-    }
+    },
+    "subject": "[{{kind}}] New request – {{name}}",
+    "sending": "Sending…",
+    "honeypot": "Do not fill in this field",
+    "success": {
+      "title": "Thank you for your request!",
+      "text": "I will get back to you as soon as I can – usually within 2–3 working days.",
+      "again": "Send another request"
+    },
+    "failure": "The request could not be sent. Your answers are still in the form – try again in a moment or send an e-mail."
   }
 }

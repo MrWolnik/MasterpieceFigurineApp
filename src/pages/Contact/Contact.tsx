@@ -2,10 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { About } from '../../components/About/About';
 import { ContactDetails } from '../../components/ContactDetails/ContactDetails';
 import { OrderForm } from '../../components/OrderForm/OrderForm';
+import { submitOrder } from '../../lib/submitOrder';
 import styles from './Contact.module.css';
-
-// Replaced by the Netlify Forms submission in Z3.5.
-const submitOrder = () => Promise.resolve();
 
 /** Contact page: about Julia, contact details and the order form. */
 export function Contact() {
