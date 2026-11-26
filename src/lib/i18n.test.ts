@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from 'vitest';
-import { createI18n, detectLanguage, isLanguage } from './i18n';
+import { describe, expect, it } from 'vitest';
+import { detectLanguage, i18nFor, isLanguage } from './i18n';
 
 describe('isLanguage', () => {
   it('accepts only supported languages', () => {
@@ -23,16 +23,11 @@ describe('detectLanguage', () => {
   });
 });
 
-describe('createI18n', () => {
-  afterEach(() => {
-    document.documentElement.lang = '';
-  });
-
-  it('sets <html lang> on init and on every language change', async () => {
-    const i18n = createI18n('pl');
-    expect(document.documentElement.lang).toBe('pl');
-
-    await i18n.changeLanguage('en');
-    expect(document.documentElement.lang).toBe('en');
+describe('i18nFor', () => {
+  it('returns one fixed instance per language', () => {
+    expect(i18nFor('en')).toBe(i18nFor('en'));
+    expect(i18nFor('en').language).toBe('en');
+    expect(i18nFor('pl').language).toBe('pl');
+    expect(i18nFor('pl').t('pages.contact.title')).toBe('Kontakt');
   });
 });

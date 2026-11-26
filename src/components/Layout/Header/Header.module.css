@@ -31,6 +31,12 @@
   color: var(--color-accent);
 }
 
+.menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
 .navList {
   display: flex;
   gap: var(--space-6);
@@ -51,15 +57,9 @@
   color: var(--color-text);
 }
 
-.navLink[aria-current] {
+.navLink[data-active='true'] {
   color: var(--color-accent);
   border-bottom-color: var(--color-accent);
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
 }
 
 .menuButton {
@@ -78,31 +78,34 @@
   border-color: var(--color-accent);
 }
 
-/* Below md (900px): navigation collapses into a panel under the header. */
+/* Below md (900px): navigation and language switcher collapse into a panel under the header. */
 @media (width < 900px) {
   .menuButton {
     display: inline-grid;
   }
 
-  .nav {
+  .menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--container-padding) var(--space-4);
     background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow-md);
   }
 
-  .nav[data-open='true'] {
-    display: block;
+  .menu[data-open='true'] {
+    display: flex;
   }
 
   .navList {
     flex-direction: column;
     gap: 0;
-    padding: var(--space-2) var(--container-padding) var(--space-4);
   }
 
   .navLink {

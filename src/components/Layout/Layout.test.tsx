@@ -1,20 +1,21 @@
 import { render, screen } from '@testing-library/react';
-import { I18nextProvider } from 'react-i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { createI18n } from '../../lib/i18n';
+import type { Language } from '../../lib/i18n';
 import { Layout } from './Layout';
 
-function renderLayout() {
+function renderLayout(lang: Language = 'pl') {
   const router = createMemoryRouter(
-    [{ path: '/pl', Component: Layout, children: [{ index: true, element: <h1>Child</h1> }] }],
-    { initialEntries: ['/pl'] },
+    [
+      {
+        path: `/${lang}`,
+        element: <Layout lang={lang} />,
+        children: [{ index: true, element: <h1>Child</h1> }],
+      },
+    ],
+    { initialEntries: [`/${lang}`] },
   );
-  render(
-    <I18nextProvider i18n={createI18n()}>
-      <RouterProvider router={router} />
-    </I18nextProvider>,
-  );
+  render(<RouterProvider router={router} />);
 }
 
 describe('Layout', () => {
@@ -44,5 +45,13 @@ describe('Layout', () => {
 
     const names = screen.getAllByRole('navigation').map((nav) => nav.getAttribute('aria-label'));
     expect(new Set(names).size).toBe(names.length);
+  });
+
+  it('renders in the language of its route and sets <html lang>', async () => {
+    renderLayout('en');
+    await screen.findByRole('heading', { name: 'Child' });
+
+    expect(screen.getAllByRole('link')[0]).toHaveTextContent('Skip to content');
+    expect(document.documentElement.lang).toBe('en');
   });
 });

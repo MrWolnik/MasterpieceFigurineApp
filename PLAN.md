@@ -338,6 +338,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 - [ ] **Z4.1 Animacje** (IntersectionObserver), z poszanowaniem `prefers-reduced-motion`.
 - [ ] **Z4.2 SEO.** Prerendering wszystkich tras, tytuły i opisy stron w obu językach, `hreflang`, sitemap, robots.txt, obrazki OG, dane strukturalne `Person`.
       _Testy:_ e2e sprawdzający, że zbudowany HTML każdej trasy zawiera `<title>`, opis i `hreflang` jeszcze przed uruchomieniem JS.
+      _Uwaga (przegląd Etapu 0):_ prerendering musi ustawić `<html lang>` osobno dla każdej trasy (teraz robi to `Layout` w przeglądarce, a `index.html` ma na sztywno `pl`). Rok w stopce (`new Date().getFullYear()`) brać z czasu budowania, żeby HTML zbudowany w grudniu nie dawał błędu hydracji w styczniu.
 - [ ] **Z4.3 Wydajność.** WebP/AVIF z `srcset`, dzielenie kodu na trasy (code splitting), preload fontów. Lighthouse CI w GitHub Actions z progiem ≥ 90.
 - [ ] **Z4.4 Dostępność.** Skan axe na każdej podstronie w obu językach jako stały test e2e, fokus widoczny, teksty alternatywne.
 

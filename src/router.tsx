@@ -1,4 +1,3 @@
-import type { i18n } from 'i18next';
 import type { ComponentType } from 'react';
 import {
   createBrowserRouter,
@@ -7,6 +6,7 @@ import {
   type RouteObject,
 } from 'react-router';
 import { Layout } from './components/Layout/Layout';
+import { NavigationFocus } from './components/Layout/NavigationFocus/NavigationFocus';
 import { detectBrowserLanguage, languages, type Language } from './lib/i18n';
 import { canonicalPath, pathFor, routePaths, type RouteKey } from './lib/routes';
 import { Contact } from './pages/Contact/Contact';
@@ -24,8 +24,9 @@ const pages: Record<Exclude<RouteKey, 'home'>, ComponentType> = {
 };
 
 /**
- * Unknown path inside a language prefix: if it uses another language's slug
- * (`/en/kontakt`), redirect to the canonical page (`/en/contact`); otherwise render the 404.
+ * Unmatched path: if it points to a known page under a non-canonical spelling
+ * (another language's slug like `/en/kontakt`, or other letter case like `/EN/Contact`),
+ * redirect to the canonical URL; otherwise render the 404.
  */
 function redirectToCanonical({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -33,19 +34,18 @@ function redirectToCanonical({ request }: LoaderFunctionArgs) {
   return canonical ? redirect(`${canonical}${url.search}${url.hash}`) : null;
 }
 
-function languageRoute(lang: Language, i18n: i18n): RouteObject {
+function languageRoute(lang: Language): RouteObject {
   return {
     path: lang,
-    // Runs before the first render of the language, so the page never flashes in the wrong one.
-    loader: async () => {
-      await i18n.changeLanguage(lang);
-      return null;
-    },
-    Component: Layout,
+    // Case-sensitive, so `/EN/contact` is not served as a duplicate of `/en/contact`.
+    caseSensitive: true,
+    // The language comes from the route that is rendered, not from a side effect in a loader.
+    element: <Layout lang={lang} />,
     children: [
       { index: true, Component: Home },
       ...Object.entries(pages).map(([key, Component]) => ({
         path: routePaths[key as keyof typeof pages][lang],
+        caseSensitive: true,
         Component,
       })),
       { path: '*', loader: redirectToCanonical, Component: NotFound },
@@ -53,11 +53,11 @@ function languageRoute(lang: Language, i18n: i18n): RouteObject {
   };
 }
 
-/** All app routes. A factory so tests can mount them in a memory router with their own i18n. */
-export function createAppRoutes(i18n: i18n): RouteObject[] {
+/** All app routes. A factory so tests can mount them in a memory router. */
+export function createAppRoutes(): RouteObject[] {
   const routes: RouteObject[] = [
     { index: true, loader: () => redirect(pathFor('home', detectBrowserLanguage())) },
-    ...languages.map((lang) => languageRoute(lang, i18n)),
+    ...languages.map(languageRoute),
   ];
 
   // `import.meta.env.DEV` is statically `false` in production builds, so Vite drops this
@@ -72,24 +72,16 @@ export function createAppRoutes(i18n: i18n): RouteObject[] {
     });
   }
 
-  // No (valid) language prefix: show the 404 in the browser's language.
+  // No (valid) language prefix: redirect if it is a known page in another letter case,
+  // otherwise show the 404 in the browser's language.
   routes.push({
-    Component: Layout,
-    children: [
-      {
-        path: '*',
-        loader: async () => {
-          await i18n.changeLanguage(detectBrowserLanguage());
-          return null;
-        },
-        Component: NotFound,
-      },
-    ],
+    element: <Layout lang={detectBrowserLanguage()} />,
+    children: [{ path: '*', loader: redirectToCanonical, Component: NotFound }],
   });
 
-  return [{ path: '/', children: routes }];
+  return [{ path: '/', Component: NavigationFocus, children: routes }];
 }
 
-export function createAppRouter(i18n: i18n) {
-  return createBrowserRouter(createAppRoutes(i18n));
+export function createAppRouter() {
+  return createBrowserRouter(createAppRoutes());
 }

@@ -89,6 +89,27 @@ test.describe('mobile menu (phone viewport)', () => {
     );
   });
 
+  test('Tab goes from the toggle into the open menu, and Enter lands focus on the new page', async ({
+    page,
+    browserName,
+  }) => {
+    test.skip(browserName === 'webkit', 'WebKit does not tab to links by default');
+    await page.goto('/pl');
+    const toggle = page.getByRole('button', { name: 'Otwórz menu' });
+
+    await toggle.focus();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Tab');
+    const portfolio = page.getByRole('navigation', { name: 'Główna nawigacja' }).getByRole('link', {
+      name: 'Portfolio',
+    });
+    await expect(portfolio).toBeFocused();
+
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/pl\/portfolio$/);
+    await expect(page.getByRole('main')).toBeFocused();
+  });
+
   test('closes on Escape and returns focus to the button', async ({ page }) => {
     await page.goto('/en');
 

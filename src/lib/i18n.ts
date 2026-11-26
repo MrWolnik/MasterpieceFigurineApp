@@ -39,15 +39,9 @@ export function detectBrowserLanguage(): Language {
 /**
  * Creates an independent, synchronously initialised i18next instance.
  * A factory (instead of one global instance) keeps tests isolated from each other.
- * The instance keeps `<html lang>` in sync with the active language.
  */
 export function createI18n(lng: Language = defaultLanguage): i18n {
   const instance = i18next.createInstance();
-  instance.on('languageChanged', (language) => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = language;
-    }
-  });
   void instance.use(initReactI18next).init({
     lng,
     fallbackLng: defaultLanguage,
@@ -56,5 +50,21 @@ export function createI18n(lng: Language = defaultLanguage): i18n {
     initAsync: false,
     interpolation: { escapeValue: false }, // React already escapes output
   });
+  return instance;
+}
+
+const instances = new Map<Language, i18n>();
+
+/**
+ * One fixed instance per language, shared by the whole app. The rendered route picks the
+ * instance (see `Layout`) instead of switching a global language, so the UI language always
+ * matches the URL that is actually on screen, even if a navigation is interrupted.
+ */
+export function i18nFor(lang: Language): i18n {
+  let instance = instances.get(lang);
+  if (!instance) {
+    instance = createI18n(lang);
+    instances.set(lang, instance);
+  }
   return instance;
 }

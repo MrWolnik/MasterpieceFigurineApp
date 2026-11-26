@@ -1,19 +1,12 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { I18nextProvider } from 'react-i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createI18n } from './lib/i18n';
 import { createAppRoutes } from './router';
 
 function renderApp(initialEntry: string) {
-  const i18n = createI18n();
-  const router = createMemoryRouter(createAppRoutes(i18n), { initialEntries: [initialEntry] });
-  render(
-    <I18nextProvider i18n={i18n}>
-      <RouterProvider router={router} />
-    </I18nextProvider>,
-  );
+  const router = createMemoryRouter(createAppRoutes(), { initialEntries: [initialEntry] });
+  render(<RouterProvider router={router} />);
   return { router, user: userEvent.setup() };
 }
 
@@ -100,5 +93,52 @@ describe('app routes', () => {
       'href',
       '/en',
     );
+  });
+
+  it.each([
+    ['/EN/contact', '/en/contact', 'Contact'],
+    ['/en/Contact', '/en/contact', 'Contact'],
+    ['/PL', '/pl', 'MasterpieceFigurineJ'],
+    ['/pl/Portfolio/x', '/pl/portfolio/x', 'Praca: x'],
+  ])('redirects %s to the lower-case canonical URL %s', async (path, expected, heading) => {
+    const { router } = renderApp(path);
+
+    expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe(expected);
+  });
+
+  it('keeps the language of the page on screen when a language switch is interrupted', async () => {
+    const { router } = renderApp('/pl/kontakt');
+    await screen.findByRole('heading', { level: 1, name: 'Kontakt' });
+
+    void router.navigate('/en/contact');
+    await router.navigate('/pl/portfolio');
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Portfolio' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Kontakt' })).toBeInTheDocument();
+    expect(document.documentElement.lang).toBe('pl');
+  });
+
+  it('moves focus to the main content after navigating, but not on the first load', async () => {
+    const { user } = renderApp('/pl');
+    await screen.findByRole('heading', { level: 1, name: 'MasterpieceFigurineJ' });
+    expect(screen.getByRole('main')).not.toHaveFocus();
+
+    await user.click(within(screen.getByRole('banner')).getByRole('link', { name: 'Kontakt' }));
+
+    await screen.findByRole('heading', { level: 1, name: 'Kontakt' });
+    expect(screen.getByRole('main')).toHaveFocus();
+  });
+
+  it('moves focus to the main content after switching language', async () => {
+    const { user } = renderApp('/pl/kontakt');
+    await screen.findByRole('heading', { level: 1, name: 'Kontakt' });
+
+    await user.click(
+      within(screen.getByRole('banner')).getByRole('link', { name: 'EN – English' }),
+    );
+
+    await screen.findByRole('heading', { level: 1, name: 'Contact' });
+    expect(screen.getByRole('main')).toHaveFocus();
   });
 });
