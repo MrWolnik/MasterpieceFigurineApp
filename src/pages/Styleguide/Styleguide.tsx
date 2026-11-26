@@ -1,3 +1,6 @@
+import { I18nextProvider } from 'react-i18next';
+import { Turntable } from '../../components/Turntable/Turntable';
+import { createI18n } from '../../lib/i18n';
 import styles from './Styleguide.module.css';
 import { colorTokens } from './styleguideTokens';
 
@@ -15,6 +18,9 @@ const headingLevels = [
 ] as const;
 
 const spacingTokens = ['1', '2', '3', '4', '6', '8', '12', '16', '24'] as const;
+
+// The styleguide lives outside the language routes, so components get their own i18n instance.
+const demoI18n = createI18n('pl');
 
 const POLISH_SAMPLE = 'Zażółć gęślą jaźń — ĄĆĘŁŃÓŚŹŻ ąćęłńóśźż';
 
@@ -90,6 +96,14 @@ export function Styleguide() {
           <button type="button" className={styles.focusDemo}>
             Tab to see focus ring
           </button>
+        </div>
+      </section>
+      <section aria-labelledby="sg-turntable" className={styles.section}>
+        <h2 id="sg-turntable">Turntable</h2>
+        <div className={styles.demo}>
+          <I18nextProvider i18n={demoI18n}>
+            <Turntable slug="nocny-wartownik" frames={36} format="svg" title="Nocny wartownik" />
+          </I18nextProvider>
         </div>
       </section>
     </main>

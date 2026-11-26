@@ -9,7 +9,7 @@ const previewURL = `http://localhost:${String(PREVIEW_PORT)}`;
 const devURL = `http://localhost:${String(DEV_PORT)}`;
 
 // Dev-only pages (e.g. /styleguide) are not in the production build, so they run against `vite`.
-const DEV_ONLY_SPECS = /styleguide\.spec\.ts/;
+const DEV_ONLY_SPECS = /(styleguide|turntable)\.spec\.ts/;
 
 /**
  * Most e2e tests run against the production build served by `vite preview`,
@@ -47,6 +47,12 @@ export default defineConfig({
       name: 'dev-only',
       testMatch: DEV_ONLY_SPECS,
       use: { ...devices['Desktop Chrome'], baseURL: devURL },
+    },
+    {
+      // The turntable drag must also work in Safari (PLAN Z1.5).
+      name: 'dev-only-webkit',
+      testMatch: /turntable\.spec\.ts/,
+      use: { ...devices['Desktop Safari'], baseURL: devURL },
     },
   ],
   webServer: [

@@ -248,7 +248,7 @@ Figurka:
 }
 ```
 
-Pole `frames` jest opcjonalne: gdy go brak, strona pokazuje zwykłą galerię zamiast podglądu 360°.
+Pole `frames` jest opcjonalne: gdy go brak, strona pokazuje zwykłą galerię zamiast podglądu 360°. Pole `framesFormat` (`webp` domyślnie albo `svg` dla obrazków zastępczych) podaje rozszerzenie plików klatek `/works/<slug>/frames/001.<format>`.
 
 Obraz:
 
@@ -305,7 +305,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Testy:_ e2e (wszystkie prace widoczne, kliknięcie otwiera szczegóły). Zrzuty ekranu przy szerokościach 360, 768 i 1440 px.
 - [x] **Z1.4 Filtry.** Przełącznik rodzaju „Wszystko / Figurki / Obrazy” i przyciski tagów. Lista tagów zależy od wybranego rodzaju, a stan filtrów trafia do adresu (`?kind=painting&tag=olej`).
       _Testy:_ komponentowe dla filtrowania i zmiany listy tagów po zmianie rodzaju. E2e: wejście z `?kind=` i `?tag=` pokazuje przefiltrowaną listę.
-- [ ] **Z1.5 Komponent Turntable (360°).** Obrót przeciąganiem (Pointer Events) i strzałkami, wskaźnik ładowania, autoobrót zatrzymujący się po dotknięciu, pierwsza klatka widoczna od razu, reszta wczytywana w tle. Ma `aria-label` i podpowiedź.
+- [x] **Z1.5 Komponent Turntable (360°).** Obrót przeciąganiem (Pointer Events) i strzałkami, wskaźnik ładowania, autoobrót zatrzymujący się po dotknięciu, pierwsza klatka widoczna od razu, reszta wczytywana w tle. Ma `aria-label` i podpowiedź.
       _Testy:_ jednostkowe dla wyliczania klatki z przesunięcia (zawijanie 35 → 0 → 35). Komponentowe: strzałki zmieniają klatkę, a autoobrót wyłącza się przy `prefers-reduced-motion`. E2e: przeciąganie zmienia klatkę w Chromium i WebKit.
 - [ ] **Z1.6 Komponent ImageZoom.** Obraz w całości, a po kliknięciu widok pełnoekranowy z powiększaniem kółkiem myszy, szczypaniem i przyciskami +/− oraz przesuwaniem powiększonego obrazu. Wersja w wysokiej rozdzielczości ładuje się dopiero przy powiększeniu. Zamykanie klawiszem Esc lub przyciskiem X, fokus nie ucieka poza widok. Napisz to samodzielnie na Pointer Events albo użyj małej biblioteki (np. `react-zoom-pan-pinch`) z uzasadnieniem w pull requeście.
       _Testy:_ jednostkowe dla ograniczania powiększenia (1×–5×) i przesuwania w granicach obrazu. Komponentowe: Esc zamyka widok, a przyciski +/− zmieniają powiększenie. E2e: szczypanie na profilu telefonu w WebKit.

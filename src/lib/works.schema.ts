@@ -24,6 +24,8 @@ export const figurineSchema = z.strictObject({
   ...baseFields,
   /** Number of 360° turntable frames; when absent, a plain gallery is shown. */
   frames: z.number().int().min(2).max(72).optional(),
+  /** File format of the frames in `/works/<slug>/frames/001.<format>`. */
+  framesFormat: z.enum(['webp', 'svg']).default('webp'),
 });
 
 export const paintingSchema = z.strictObject({

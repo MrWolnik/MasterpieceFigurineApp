@@ -86,5 +86,11 @@
     "pejzaz": "Pejzaż",
     "portret": "Portret",
     "kwiaty": "Kwiaty"
+  },
+  "turntable": {
+    "label": "Podgląd 360°: {{title}}",
+    "angle": "Kąt {{angle}}°",
+    "hint": "Przeciągnij lub użyj strzałek, aby obrócić",
+    "loading": "Wczytywanie widoku 360°"
   }
 }
