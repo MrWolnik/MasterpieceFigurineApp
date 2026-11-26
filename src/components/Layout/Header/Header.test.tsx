@@ -1,15 +1,11 @@
 import { act, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { renderWithProviders } from '../../../test/test-utils';
 import { Header } from './Header';
 
 function menuButton() {
   return screen.getByRole('button', { name: /menu/i });
 }
-
-afterEach(() => {
-  vi.unstubAllGlobals();
-});
 
 describe('Header', () => {
   it('links the brand to the home page and shows the navigation', () => {
@@ -19,8 +15,7 @@ describe('Header', () => {
       'href',
       '/pl',
     );
-    const nav = screen.getByRole('navigation', { name: 'Główna nawigacja' });
-    expect(nav).toBeInTheDocument();
+    screen.getByRole('navigation', { name: 'Główna nawigacja' }); // throws if missing
     expect(screen.getByRole('link', { name: 'Portfolio' })).toHaveAttribute(
       'href',
       '/pl/portfolio',

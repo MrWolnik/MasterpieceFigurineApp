@@ -1,10 +1,5 @@
 import type { ComponentType } from 'react';
-import {
-  createBrowserRouter,
-  redirect,
-  type LoaderFunctionArgs,
-  type RouteObject,
-} from 'react-router';
+import { redirect, type LoaderFunctionArgs, type RouteObject } from 'react-router';
 import { Layout } from './components/Layout/Layout';
 import { NavigationFocus } from './components/Layout/NavigationFocus/NavigationFocus';
 import { detectBrowserLanguage, languages, type Language } from './lib/i18n';
@@ -16,12 +11,13 @@ import { Portfolio } from './pages/Portfolio/Portfolio';
 import { Privacy } from './pages/Privacy/Privacy';
 import { WorkDetails } from './pages/WorkDetails/WorkDetails';
 
-const pages: Record<Exclude<RouteKey, 'home'>, ComponentType> = {
-  portfolio: Portfolio,
-  work: WorkDetails,
-  contact: Contact,
-  privacy: Privacy,
-};
+/** Every page except home, which is the index route of each language. */
+const pages = [
+  { key: 'portfolio', Component: Portfolio },
+  { key: 'work', Component: WorkDetails },
+  { key: 'contact', Component: Contact },
+  { key: 'privacy', Component: Privacy },
+] as const satisfies readonly { key: RouteKey; Component: ComponentType }[];
 
 /**
  * Unmatched path: if it points to a known page under a non-canonical spelling
@@ -29,9 +25,8 @@ const pages: Record<Exclude<RouteKey, 'home'>, ComponentType> = {
  * redirect to the canonical URL; otherwise render the 404.
  */
 function redirectToCanonical({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const canonical = canonicalPath(url.pathname);
-  return canonical ? redirect(`${canonical}${url.search}${url.hash}`) : null;
+  const canonical = canonicalPath(new URL(request.url));
+  return canonical ? redirect(canonical) : null;
 }
 
 function languageRoute(lang: Language): RouteObject {
@@ -43,8 +38,8 @@ function languageRoute(lang: Language): RouteObject {
     element: <Layout lang={lang} />,
     children: [
       { index: true, Component: Home },
-      ...Object.entries(pages).map(([key, Component]) => ({
-        path: routePaths[key as keyof typeof pages][lang],
+      ...pages.map(({ key, Component }) => ({
+        path: routePaths[key][lang],
         caseSensitive: true,
         Component,
       })),
@@ -53,35 +48,33 @@ function languageRoute(lang: Language): RouteObject {
   };
 }
 
+const styleguideRoute: RouteObject = {
+  path: 'styleguide',
+  lazy: async () => {
+    const { Styleguide } = await import('./pages/Styleguide/Styleguide');
+    return { Component: Styleguide };
+  },
+};
+
 /** All app routes. A factory so tests can mount them in a memory router. */
 export function createAppRoutes(): RouteObject[] {
-  const routes: RouteObject[] = [
-    { index: true, loader: () => redirect(pathFor('home', detectBrowserLanguage())) },
-    ...languages.map(languageRoute),
+  return [
+    {
+      path: '/',
+      Component: NavigationFocus,
+      children: [
+        { index: true, loader: () => redirect(pathFor('home', detectBrowserLanguage())) },
+        ...languages.map(languageRoute),
+        // `import.meta.env.DEV` is statically `false` in production builds, so Vite drops
+        // the styleguide route and its chunk entirely.
+        ...(import.meta.env.DEV ? [styleguideRoute] : []),
+        // No (valid) language prefix: redirect if it is a known page in another letter case,
+        // otherwise show the 404 in the browser's language.
+        {
+          element: <Layout lang={detectBrowserLanguage()} />,
+          children: [{ path: '*', loader: redirectToCanonical, Component: NotFound }],
+        },
+      ],
+    },
   ];
-
-  // `import.meta.env.DEV` is statically `false` in production builds, so Vite drops this
-  // branch and the styleguide chunk entirely.
-  if (import.meta.env.DEV) {
-    routes.push({
-      path: 'styleguide',
-      lazy: async () => {
-        const { Styleguide } = await import('./pages/Styleguide/Styleguide');
-        return { Component: Styleguide };
-      },
-    });
-  }
-
-  // No (valid) language prefix: redirect if it is a known page in another letter case,
-  // otherwise show the 404 in the browser's language.
-  routes.push({
-    element: <Layout lang={detectBrowserLanguage()} />,
-    children: [{ path: '*', loader: redirectToCanonical, Component: NotFound }],
-  });
-
-  return [{ path: '/', Component: NavigationFocus, children: routes }];
-}
-
-export function createAppRouter() {
-  return createBrowserRouter(createAppRoutes());
 }

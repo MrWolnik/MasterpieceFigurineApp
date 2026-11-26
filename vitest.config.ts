@@ -7,6 +7,9 @@ export default mergeConfig(
     test: {
       environment: 'jsdom',
       setupFiles: ['./src/test/setup.ts'],
+      // Undo vi.spyOn / vi.stubGlobal after every test, so no test file has to remember it.
+      restoreMocks: true,
+      unstubGlobals: true,
       include: ['src/**/*.test.{ts,tsx}'],
       css: { modules: { classNameStrategy: 'non-scoped' } },
       coverage: {

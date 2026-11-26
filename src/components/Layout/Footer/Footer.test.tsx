@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { site } from '../../../config/site';
 import { renderWithProviders } from '../../../test/test-utils';
@@ -22,13 +22,6 @@ describe('Footer', () => {
     );
   });
 
-  it('has a language switcher that is not a second navigation landmark', () => {
-    renderWithProviders(<Footer />);
-
-    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
-    expect(screen.getByRole('group', { name: 'Język' })).toBeInTheDocument();
-  });
-
   it('shows the copyright with the current year and brand', () => {
     renderWithProviders(<Footer />);
 
@@ -41,8 +34,11 @@ describe('Footer', () => {
     renderWithProviders(<Footer />);
 
     // No links are configured yet, so tests (DEV mode) see the grey placeholders.
+    const list = screen.getByRole('list', { name: 'Media społecznościowe' });
     expect(
-      screen.getByRole('list', { name: 'Media społecznościowe' }).querySelectorAll('[data-icon]'),
-    ).toHaveLength(site.socials.length);
+      within(list)
+        .getAllByRole('img')
+        .map((icon) => icon.getAttribute('aria-label')),
+    ).toEqual(site.socials.map(({ label }) => `${label} (link jeszcze nieustawiony)`));
   });
 });

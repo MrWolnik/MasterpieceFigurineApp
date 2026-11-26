@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { expectNoA11yViolations, urlOf } from './helpers.js';
 
 const pages = [
   { pl: '/pl', en: '/en', plHeading: 'MasterpieceFigurineJ', enHeading: 'MasterpieceFigurineJ' },
@@ -18,9 +18,6 @@ const pages = [
     enHeading: 'Privacy policy',
   },
 ] as const;
-
-/** Matches a URL ending exactly in `path` (paths here contain no regex metacharacters). */
-const urlOf = (path: string) => new RegExp(`${path}$`);
 
 for (const [locale, expected] of [
   ['en-US', '/en'],
@@ -106,8 +103,6 @@ test.describe('404 page', () => {
       page.getByRole('heading', { level: 1, name: 'Nie znaleziono strony' }),
     ).toBeVisible();
 
-    const results = await new AxeBuilder({ page }).analyze();
-
-    expect(results.violations).toEqual([]);
+    await expectNoA11yViolations(page);
   });
 });

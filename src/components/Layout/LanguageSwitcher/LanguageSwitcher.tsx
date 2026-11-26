@@ -5,10 +5,6 @@ import { switchLanguagePath } from '../../../lib/routes';
 import { useLanguage } from '../../../lib/useLanguage';
 import styles from './LanguageSwitcher.module.css';
 
-/**
- * Links to the current page in every supported language. Plain links (not buttons) so the
- * alternatives are crawlable and work before JavaScript loads once pages are prerendered.
- */
 interface LanguageSwitcherProps {
   /**
    * Render as a navigation landmark (default). The footer copy passes `false` and renders a
@@ -17,15 +13,18 @@ interface LanguageSwitcherProps {
   landmark?: boolean;
 }
 
+/**
+ * Links to the current page in every supported language. Plain links (not buttons) so the
+ * alternatives are crawlable and work before JavaScript loads once pages are prerendered.
+ */
 export function LanguageSwitcher({ landmark = true }: LanguageSwitcherProps) {
   const { t } = useTranslation();
   const location = useLocation();
   const current = useLanguage();
   const Wrapper = landmark ? 'nav' : 'div';
-  const wrapperProps = landmark ? {} : { role: 'group' };
 
   return (
-    <Wrapper {...wrapperProps} aria-label={t('languageSwitcher.label')}>
+    <Wrapper role={landmark ? undefined : 'group'} aria-label={t('languageSwitcher.label')}>
       <ul className={styles.list}>
         {languages.map((language) => {
           const isCurrent = language === current;

@@ -1,6 +1,5 @@
 {
   "app": {
-    "title": "MasterpieceFigurineJ",
     "tagline": "Malowanie figurek i obrazy na zamówienie"
   },
   "languageSwitcher": {
@@ -37,7 +36,6 @@
   },
   "layout": {
     "skipToContent": "Przejdź do treści",
-    "homeLink": "MasterpieceFigurineJ",
     "nav": {
       "label": "Główna nawigacja",
       "portfolio": "Portfolio",

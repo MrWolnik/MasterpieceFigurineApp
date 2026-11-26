@@ -22,18 +22,16 @@ export function SocialLinks({ socials, showPlaceholders = false }: SocialLinksPr
     }
     return (
       <ul className={styles.list} aria-label={t('layout.footer.social')}>
-        {socials.map(({ id, label }) => (
-          <li key={id}>
-            <span
-              className={styles.placeholder}
-              role="img"
-              aria-label={t('layout.footer.placeholder', { label })}
-              title={t('layout.footer.placeholder', { label })}
-            >
-              <SocialIcon id={id} />
-            </span>
-          </li>
-        ))}
+        {socials.map(({ id, label }) => {
+          const name = t('layout.footer.placeholder', { label });
+          return (
+            <li key={id}>
+              <span className={styles.placeholder} role="img" aria-label={name} title={name}>
+                <SocialIcon id={id} />
+              </span>
+            </li>
+          );
+        })}
       </ul>
     );
   }

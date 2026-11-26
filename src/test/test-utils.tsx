@@ -2,7 +2,7 @@ import { render, type RenderOptions, type RenderResult } from '@testing-library/
 import userEvent, { type UserEvent } from '@testing-library/user-event';
 import type { ReactElement, ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, MemoryRouter, RouterProvider, type RouteObject } from 'react-router';
 import { createI18n, type Language } from '../lib/i18n';
 
 interface ProviderOptions extends Omit<RenderOptions, 'wrapper'> {
@@ -35,4 +35,14 @@ export function renderWithProviders(
     user: userEvent.setup(),
     ...render(ui, { wrapper: Wrapper, ...options }),
   };
+}
+
+/**
+ * Renders a route tree in a memory router starting at `route`. Use it for code that needs real
+ * routes (layouts, loaders, redirects); the routes provide their own i18n through `Layout`.
+ */
+export function renderRoutes(routes: RouteObject[], { route = '/pl' }: { route?: string } = {}) {
+  const router = createMemoryRouter(routes, { initialEntries: [route] });
+  render(<RouterProvider router={router} />);
+  return { router, user: userEvent.setup() };
 }

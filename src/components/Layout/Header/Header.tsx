@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router';
+import { site } from '../../../config/site';
 import { pathFor, type RouteKey } from '../../../lib/routes';
 import { useLanguage } from '../../../lib/useLanguage';
 import { MenuIcon } from '../icons/MenuIcon';
@@ -31,7 +32,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link className={styles.brand} to={pathFor('home', language)} onClick={close}>
-          {t('layout.homeLink')}
+          {site.brand}
         </Link>
 
         <button

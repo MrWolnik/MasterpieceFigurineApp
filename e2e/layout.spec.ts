@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { expectNoA11yViolations, urlOf } from './helpers.js';
 
 test.describe('keyboard navigation (desktop)', () => {
   test.skip(({ isMobile }) => isMobile, 'Desktop layout only');
@@ -48,7 +48,7 @@ test.describe('keyboard navigation (desktop)', () => {
     await expect(banner.getByRole('link', { name: 'Kontakt' })).toBeFocused();
     await page.keyboard.press('Enter');
 
-    await expect(page).toHaveURL(/\/pl\/kontakt$/);
+    await expect(page).toHaveURL(urlOf('/pl/kontakt'));
     await expect(banner.getByRole('link', { name: 'Kontakt' })).toHaveAttribute(
       'aria-current',
       'page',
@@ -80,7 +80,7 @@ test.describe('mobile menu (phone viewport)', () => {
     await expect(nav).toBeVisible();
 
     await nav.getByRole('link', { name: 'Portfolio' }).click();
-    await expect(page).toHaveURL(/\/pl\/portfolio$/);
+    await expect(page).toHaveURL(urlOf('/pl/portfolio'));
     await expect(page.getByRole('heading', { level: 1, name: 'Portfolio' })).toBeVisible();
     await expect(nav).toBeHidden();
     await expect(page.getByRole('button', { name: 'Otwórz menu' })).toHaveAttribute(
@@ -106,7 +106,7 @@ test.describe('mobile menu (phone viewport)', () => {
     await expect(portfolio).toBeFocused();
 
     await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/\/pl\/portfolio$/);
+    await expect(page).toHaveURL(urlOf('/pl/portfolio'));
     await expect(page.getByRole('main')).toBeFocused();
   });
 
@@ -126,9 +126,7 @@ test.describe('mobile menu (phone viewport)', () => {
     await page.getByRole('button', { name: 'Otwórz menu' }).click();
     await expect(page.getByRole('navigation', { name: 'Główna nawigacja' })).toBeVisible();
 
-    const results = await new AxeBuilder({ page }).analyze();
-
-    expect(results.violations).toEqual([]);
+    await expectNoA11yViolations(page);
   });
 });
 
@@ -142,7 +140,7 @@ test.describe('footer', () => {
       /^mailto:/,
     );
     await footer.getByRole('link', { name: 'Privacy policy' }).click();
-    await expect(page).toHaveURL(/\/en\/privacy$/);
+    await expect(page).toHaveURL(urlOf('/en/privacy'));
   });
 
   test('hides social icons without links in production', async ({ page }) => {

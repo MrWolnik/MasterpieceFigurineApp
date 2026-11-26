@@ -39,7 +39,6 @@ export function SocialIcon({ id }: { id: SocialId }) {
       strokeLinejoin="round"
       aria-hidden="true"
       focusable="false"
-      data-icon={id}
     >
       {glyphs[id]}
     </svg>
