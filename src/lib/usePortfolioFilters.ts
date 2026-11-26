@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router';
 import { getTags, type WorkFilter, type WorkKind } from './works';
 
@@ -31,8 +32,19 @@ export function filtersToParams({ kind, tag }: WorkFilter): URLSearchParams {
 export function usePortfolioFilters() {
   const [params, setParams] = useSearchParams();
   const filters = parseFilters(params);
+  const search = params.toString();
+
+  // The last filters written to the URL. Two quick clicks can both run before React Router
+  // re-renders with the new URL, so building the second update from `filters` would undo the
+  // first (e.g. "Figurines" then a tag would lose the kind).
+  const latest = useRef(filters);
+  useEffect(() => {
+    // Back/forward, language switches and links change the URL without `update`.
+    latest.current = parseFilters(new URLSearchParams(search));
+  }, [search]);
 
   function update(next: WorkFilter) {
+    latest.current = next;
     // Replace, not push: toggling filters should not fill the Back button history.
     setParams(filtersToParams(next), { replace: true, preventScrollReset: true });
   }
@@ -41,11 +53,12 @@ export function usePortfolioFilters() {
     ...filters,
     /** Changes the kind; drops the tag when the new kind does not use it. */
     setKind: (kind: WorkKind | undefined) => {
-      const tag = filters.tag && getTags(kind).includes(filters.tag) ? filters.tag : undefined;
+      const { tag: currentTag } = latest.current;
+      const tag = currentTag && getTags(kind).includes(currentTag) ? currentTag : undefined;
       update({ kind, tag });
     },
     setTag: (tag: string | undefined) => {
-      update({ kind: filters.kind, tag });
+      update({ kind: latest.current.kind, tag });
     },
   };
 }
