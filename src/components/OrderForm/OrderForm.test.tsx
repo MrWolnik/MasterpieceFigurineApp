@@ -79,6 +79,25 @@ describe('OrderForm', () => {
     );
   });
 
+  it('does not send the form without consent; the policy link opens in a new tab', async () => {
+    const { user, onSubmit } = renderForm();
+    await user.type(screen.getByLabelText(/Imię/), 'Anna');
+    await user.type(screen.getByLabelText('E-mail'), 'anna@example.com');
+    await user.type(screen.getByLabelText(/Opis/), 'Space Marine w barwach zakonu.');
+
+    await user.click(screen.getByRole('button', { name: 'Wyślij zgłoszenie' }));
+
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(screen.getByRole('link', { name: 'polityką prywatności' })).toHaveAttribute(
+      'href',
+      '/pl/prywatnosc',
+    );
+    expect(screen.getByRole('link', { name: 'polityką prywatności' })).toHaveAttribute(
+      'target',
+      '_blank',
+    );
+  });
+
   it('submits a valid figurine order without painting fields', async () => {
     const { user, onSubmit } = renderForm();
 

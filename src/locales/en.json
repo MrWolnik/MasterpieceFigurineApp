@@ -73,7 +73,49 @@
       }
     },
     "privacy": {
-      "title": "Privacy policy"
+      "title": "Privacy policy",
+      "draft": "Template to complete – replace the parts in square brackets with real details before publishing.",
+      "updated": "Last updated: [date]",
+      "contact": "Contact about your data:",
+      "sections": [
+        {
+          "title": "Data controller",
+          "paragraphs": [
+            "The controller of your personal data is [full name / company name], [address], who runs the MasterpieceFigurineJ website."
+          ]
+        },
+        {
+          "title": "What data I collect",
+          "paragraphs": [
+            "Through the order form: your name, e-mail address or phone number, the description of the commission, preferred size and technique (for paintings), deadline and any photos or GIFs you upload.",
+            "The website uses no tracking cookies and no analytics tools."
+          ]
+        },
+        {
+          "title": "Purpose and legal basis",
+          "paragraphs": [
+            "I process the data only to answer your request, prepare a quote and – if we agree – carry out the commission (Art. 6(1)(a) and (b) GDPR)."
+          ]
+        },
+        {
+          "title": "Who receives the data",
+          "paragraphs": [
+            "Form submissions are transmitted and stored by Netlify, Inc. (hosting and form handling), and notifications reach my e-mail inbox. [Add details on transfers outside the EEA and safeguards.]"
+          ]
+        },
+        {
+          "title": "How long I keep the data",
+          "paragraphs": [
+            "Until we finish discussing the commission, and if it goes ahead, for the period required by law [e.g. tax law]. Requests with no further contact are deleted after [e.g. 12 months]."
+          ]
+        },
+        {
+          "title": "Your rights",
+          "paragraphs": [
+            "You have the right to access, rectify and erase your data, to restrict its processing, to data portability and to withdraw consent at any time. You can also lodge a complaint with a supervisory authority (in Poland: the President of UODO)."
+          ]
+        }
+      ]
     },
     "notFound": {
       "title": "Page not found",

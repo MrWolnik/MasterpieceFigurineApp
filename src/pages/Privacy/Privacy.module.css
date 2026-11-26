@@ -1,0 +1,39 @@
+.page {
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: var(--space-12) var(--container-padding);
+  display: grid;
+  gap: var(--space-6);
+  line-height: var(--leading-normal);
+}
+
+.page h1,
+.page h2,
+.page p {
+  margin: 0;
+}
+
+.page a {
+  color: var(--color-accent);
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.section p {
+  color: var(--color-text-muted);
+}
+
+.draft {
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+}
+
+.updated {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

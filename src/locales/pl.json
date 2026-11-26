@@ -73,7 +73,49 @@
       }
     },
     "privacy": {
-      "title": "Polityka prywatności"
+      "title": "Polityka prywatności",
+      "draft": "Szablon do uzupełnienia – fragmenty w nawiasach kwadratowych należy zastąpić prawdziwymi danymi przed publikacją.",
+      "updated": "Ostatnia aktualizacja: [data]",
+      "contact": "Kontakt w sprawie danych:",
+      "sections": [
+        {
+          "title": "Administrator danych",
+          "paragraphs": [
+            "Administratorem Twoich danych osobowych jest [imię i nazwisko / nazwa firmy], [adres], prowadząca serwis MasterpieceFigurineJ."
+          ]
+        },
+        {
+          "title": "Jakie dane zbieram",
+          "paragraphs": [
+            "Przez formularz zgłoszenia: imię, adres e-mail lub numer telefonu, opis zlecenia, preferowane wymiary i technikę (dla obrazów), termin oraz przesłane zdjęcia lub GIF-y.",
+            "Serwis nie używa plików cookie do śledzenia ani narzędzi analitycznych."
+          ]
+        },
+        {
+          "title": "Cel i podstawa przetwarzania",
+          "paragraphs": [
+            "Dane przetwarzam wyłącznie po to, żeby odpowiedzieć na zgłoszenie, przygotować wycenę i – jeśli się umówimy – wykonać zlecenie (art. 6 ust. 1 lit. a i b RODO)."
+          ]
+        },
+        {
+          "title": "Komu przekazuję dane",
+          "paragraphs": [
+            "Zgłoszenia z formularza są przesyłane i przechowywane przez Netlify, Inc. (hosting i obsługa formularzy), a powiadomienia trafiają na moją skrzynkę e-mail. [Uzupełnij informację o przekazaniu danych poza EOG i zabezpieczeniach.]"
+          ]
+        },
+        {
+          "title": "Jak długo przechowuję dane",
+          "paragraphs": [
+            "Do czasu zakończenia rozmowy o zleceniu, a w przypadku realizacji – przez okres wymagany przepisami [np. podatkowymi]. Zgłoszenia bez dalszego kontaktu usuwam po [np. 12 miesiącach]."
+          ]
+        },
+        {
+          "title": "Twoje prawa",
+          "paragraphs": [
+            "Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przeniesienia oraz cofnięcia zgody w dowolnym momencie. Możesz też złożyć skargę do Prezesa UODO."
+          ]
+        }
+      ]
     },
     "notFound": {
       "title": "Nie znaleziono strony",

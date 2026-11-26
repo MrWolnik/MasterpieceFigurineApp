@@ -1,13 +1,38 @@
 import { useTranslation } from 'react-i18next';
-import styles from '../Page.module.css';
+import { ProtectedEmail } from '../../components/ProtectedEmail/ProtectedEmail';
+import { site } from '../../config/site';
+import styles from './Privacy.module.css';
 
-// Placeholder page; the real content arrives in Z3.6.
+interface PolicySection {
+  title: string;
+  paragraphs: string[];
+}
+
+/** Privacy policy (a template Julia completes before launch), in both languages. */
 export function Privacy() {
   const { t } = useTranslation();
+  const sections: PolicySection[] = t('pages.privacy.sections', { returnObjects: true });
 
   return (
-    <div className={styles.page}>
+    <article className={styles.page}>
       <h1>{t('pages.privacy.title')}</h1>
-    </div>
+      <p className={styles.draft}>{t('pages.privacy.draft')}</p>
+      {sections.map((section) => (
+        <section key={section.title} className={styles.section}>
+          <h2>{section.title}</h2>
+          {section.paragraphs.map((text) => (
+            <p key={text}>{text}</p>
+          ))}
+        </section>
+      ))}
+      <p>
+        {t('pages.privacy.contact')}{' '}
+        <ProtectedEmail
+          address={site.contactEmail}
+          label={t('pages.contact.details.emailLink', { email: site.contactEmail })}
+        />
+      </p>
+      <p className={styles.updated}>{t('pages.privacy.updated')}</p>
+    </article>
   );
 }
