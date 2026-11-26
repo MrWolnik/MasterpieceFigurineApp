@@ -321,17 +321,17 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 ### Etap 3 — Kontakt i formularz
 
-- [ ] **Z3.1 Sekcja „O mnie”** z informacją, że Julia przyjmuje zlecenia na malowanie figurek i na obrazy, procesem współpracy i informacją o indywidualnej wycenie.
-- [ ] **Z3.2 Dane kontaktowe** z `site.ts`, e-mail zabezpieczony przed botami.
-- [ ] **Z3.3 Formularz (frontend).** Pola z pkt 3.3 oparte na react-hook-form i zod (schemat jako unia rozróżniana po rodzaju zlecenia), komunikaty w obu językach. Pola tylko dla obrazu są warunkowe, a parametry `?kind=` i `?ref=` z adresu wypełniają formularz. (Linki „Chcę podobną” z Z1.7 już wysyłają te parametry; tu dopisać e2e: przy obrazie ustawiony rodzaj „Obraz” i nazwa pracy w opisie).
+- [x] **Z3.1 Sekcja „O mnie”** z informacją, że Julia przyjmuje zlecenia na malowanie figurek i na obrazy, procesem współpracy i informacją o indywidualnej wycenie.
+- [x] **Z3.2 Dane kontaktowe** z `site.ts`, e-mail zabezpieczony przed botami.
+- [x] **Z3.3 Formularz (frontend).** Pola z pkt 3.3 oparte na react-hook-form i zod (schemat jako unia rozróżniana po rodzaju zlecenia), komunikaty w obu językach. Pola tylko dla obrazu są warunkowe, a parametry `?kind=` i `?ref=` z adresu wypełniają formularz. (Linki „Chcę podobną” z Z1.7 już wysyłają te parametry; tu dopisać e2e: przy obrazie ustawiony rodzaj „Obraz” i nazwa pracy w opisie).
       _Testy:_ jednostkowe schematu zod (sam e-mail OK, sam telefon OK, brak obu = błąd, termin w przeszłości = błąd, za krótki opis = błąd, pola obrazu są ignorowane przy figurce). Komponentowe: wybór „Obraz” pokazuje wymiary i technikę, a powrót do figurki je ukrywa i czyści; podpowiedzi opisu i pola zdjęć zmieniają się z rodzajem; `?kind=painting` ustawia rodzaj. Błędy pojawiają się przy właściwych polach i są czytane przez czytnik ekranu (`aria-describedby`).
-- [ ] **Z3.4 Dropzone dla zdjęć.** Przeciągnij i upuść lub wybierz plik, miniatury (GIF-y się animują), usuwanie pliku, limit 3 plików po 5 MB i tylko dozwolone typy.
+- [x] **Z3.4 Dropzone dla zdjęć.** Przeciągnij i upuść lub wybierz plik, miniatury (GIF-y się animują), usuwanie pliku, limit 3 plików po 5 MB i tylko dozwolone typy.
       _Testy:_ komponentowe (odrzuca PDF, odrzuca plik 6 MB, odrzuca czwarty plik, usuwa plik).
 - [ ] **Z3.5 Wysyłka.** Netlify Forms: statyczna kopia formularza w `index.html`, wysyłka jako `multipart/form-data`, honeypot. Adres e-mail do powiadomień ustawiamy w panelu Netlify, nie w kodzie.
       Wysyłane dane zawierają pole `kind` i temat z rodzajem zlecenia.
       _Testy:_ komponentowe z MSW (sukces pokazuje potwierdzenie, błąd 500 pokazuje komunikat i zachowuje dane, wypełniony honeypot nie wysyła formularza, przy figurce w żądaniu nie ma pól obrazu). E2e całego przepływu dla obu rodzajów zlecenia z przechwyconym żądaniem.
       _Gotowe gdy:_ po wdrożeniu testowe zgłoszenie ze zdjęciem i GIF-em dociera na skrzynkę Julii.
-- [ ] **Z3.6 Polityka prywatności** w PL i EN oraz checkbox zgody.
+- [x] **Z3.6 Polityka prywatności** w PL i EN oraz checkbox zgody.
 
 ### Etap 4 — Szlif
 
