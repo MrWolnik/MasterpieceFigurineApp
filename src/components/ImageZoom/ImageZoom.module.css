@@ -1,0 +1,137 @@
+.trigger {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: #000;
+  cursor: zoom-in;
+}
+
+.preview {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.zoomBadge {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgb(14 13 11 / 80%);
+  color: var(--color-accent-hover);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.trigger:hover .zoomBadge,
+.trigger:focus-visible .zoomBadge {
+  transform: scale(1.1);
+}
+
+.dialog {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #000;
+  color: var(--color-text);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 90%);
+}
+
+.viewer {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgb(14 13 11 / 85%);
+}
+
+.tool {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-lg);
+  cursor: pointer;
+}
+
+.tool:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent-hover);
+}
+
+.tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.close {
+  margin-left: auto;
+}
+
+.level {
+  min-width: 9rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  /* Every gesture inside the stage is ours: no browser pinch-zoom or scrolling. */
+  touch-action: none;
+  user-select: none;
+  cursor: zoom-in;
+}
+
+.stage[data-zoomed='true'] {
+  cursor: grab;
+}
+
+.stage[data-zoomed='true']:active {
+  cursor: grabbing;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hint {
+  margin: 0;
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}

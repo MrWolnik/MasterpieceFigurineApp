@@ -92,5 +92,15 @@
     "angle": "Kąt {{angle}}°",
     "hint": "Przeciągnij lub użyj strzałek, aby obrócić",
     "loading": "Wczytywanie widoku 360°"
+  },
+  "imageZoom": {
+    "open": "Powiększ obraz: {{alt}}",
+    "dialog": "Podgląd obrazu: {{alt}}",
+    "zoomIn": "Powiększ",
+    "zoomOut": "Pomniejsz",
+    "reset": "Dopasuj do ekranu",
+    "close": "Zamknij",
+    "level": "Powiększenie: {{percent}}%",
+    "hint": "Kółko myszy, szczypanie lub przyciski +/−. Przeciągnij, aby przesunąć."
   }
 }
