@@ -6,9 +6,9 @@ export function Home() {
   const { t } = useTranslation();
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1>{t('app.title')}</h1>
       <p>{t('app.tagline')}</p>
-    </main>
+    </div>
   );
 }

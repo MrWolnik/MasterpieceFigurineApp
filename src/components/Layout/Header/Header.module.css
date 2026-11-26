@@ -1,0 +1,113 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: rgb(14 13 11 / 88%);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-3) var(--container-padding);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-text);
+  text-decoration: none;
+  margin-inline-end: auto;
+}
+
+.brand:hover {
+  color: var(--color-accent);
+}
+
+.navList {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+}
+
+.navLink {
+  display: inline-block;
+  padding-block: var(--space-2);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid transparent;
+}
+
+.navLink:hover {
+  color: var(--color-text);
+}
+
+.navLink[aria-current] {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.menuButton {
+  display: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+}
+
+.menuButton:hover {
+  border-color: var(--color-accent);
+}
+
+/* Below md (900px): navigation collapses into a panel under the header. */
+@media (width < 900px) {
+  .menuButton {
+    display: inline-grid;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav[data-open='true'] {
+    display: block;
+  }
+
+  .navList {
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-2) var(--container-padding) var(--space-4);
+  }
+
+  .navLink {
+    display: block;
+    padding-block: var(--space-3);
+    font-size: var(--text-lg);
+  }
+}

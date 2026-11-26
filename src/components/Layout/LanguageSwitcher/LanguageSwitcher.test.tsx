@@ -32,3 +32,13 @@ describe('LanguageSwitcher', () => {
     );
   });
 });
+
+describe('LanguageSwitcher without landmark', () => {
+  it('renders a labelled group instead of a navigation landmark', () => {
+    renderWithProviders(<LanguageSwitcher landmark={false} />);
+
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Język' })).toBeInTheDocument();
+    expect(screen.getAllByRole('link')).toHaveLength(2);
+  });
+});

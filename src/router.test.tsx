@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router';
@@ -62,7 +62,9 @@ describe('app routes', () => {
     await screen.findByRole('heading', { level: 1, name: 'Kontakt' });
     expect(document.documentElement.lang).toBe('pl');
 
-    await user.click(screen.getByRole('link', { name: 'EN – English' }));
+    await user.click(
+      within(screen.getByRole('banner')).getByRole('link', { name: 'EN – English' }),
+    );
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Contact' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/en/contact');

@@ -6,8 +6,8 @@ export function Contact() {
   const { t } = useTranslation();
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1>{t('pages.contact.title')}</h1>
-    </main>
+    </div>
   );
 }

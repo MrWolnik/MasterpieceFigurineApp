@@ -9,13 +9,23 @@ import styles from './LanguageSwitcher.module.css';
  * Links to the current page in every supported language. Plain links (not buttons) so the
  * alternatives are crawlable and work before JavaScript loads once pages are prerendered.
  */
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  /**
+   * Render as a navigation landmark (default). The footer copy passes `false` and renders a
+   * labelled group instead, so the page does not get two landmarks with the same name.
+   */
+  landmark?: boolean;
+}
+
+export function LanguageSwitcher({ landmark = true }: LanguageSwitcherProps) {
   const { t } = useTranslation();
   const location = useLocation();
   const current = useLanguage();
+  const Wrapper = landmark ? 'nav' : 'div';
+  const wrapperProps = landmark ? {} : { role: 'group' };
 
   return (
-    <nav aria-label={t('languageSwitcher.label')}>
+    <Wrapper {...wrapperProps} aria-label={t('languageSwitcher.label')}>
       <ul className={styles.list}>
         {languages.map((language) => {
           const isCurrent = language === current;
@@ -35,6 +45,6 @@ export function LanguageSwitcher() {
           );
         })}
       </ul>
-    </nav>
+    </Wrapper>
   );
 }
