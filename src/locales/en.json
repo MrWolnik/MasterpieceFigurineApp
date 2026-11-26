@@ -1,6 +1,5 @@
 {
   "app": {
-    "title": "MasterpieceFigurineJ",
     "tagline": "Figurine painting and commissioned paintings"
   },
   "languageSwitcher": {
@@ -37,7 +36,6 @@
   },
   "layout": {
     "skipToContent": "Skip to content",
-    "homeLink": "MasterpieceFigurineJ",
     "nav": {
       "label": "Main navigation",
       "portfolio": "Portfolio",

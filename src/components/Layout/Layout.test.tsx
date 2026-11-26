@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { Language } from '../../lib/i18n';
+import { renderRoutes } from '../../test/test-utils';
 import { Layout } from './Layout';
 
 function renderLayout(lang: Language = 'pl') {
-  const router = createMemoryRouter(
+  renderRoutes(
     [
       {
         path: `/${lang}`,
@@ -13,9 +13,8 @@ function renderLayout(lang: Language = 'pl') {
         children: [{ index: true, element: <h1>Child</h1> }],
       },
     ],
-    { initialEntries: [`/${lang}`] },
+    { route: `/${lang}` },
   );
-  render(<RouterProvider router={router} />);
 }
 
 describe('Layout', () => {

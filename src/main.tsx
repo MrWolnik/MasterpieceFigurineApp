@@ -4,8 +4,9 @@ import './styles/tokens.css';
 import './styles/global.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
-import { createAppRouter } from './router';
+import { createAppRoutes } from './router';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -13,7 +14,7 @@ if (!rootElement) {
 }
 
 // Translations are provided per language by `Layout`, based on the rendered route.
-const router = createAppRouter();
+const router = createBrowserRouter(createAppRoutes());
 
 createRoot(rootElement).render(
   <StrictMode>

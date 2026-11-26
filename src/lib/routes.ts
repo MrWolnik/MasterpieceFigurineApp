@@ -79,16 +79,19 @@ export function resolvePath(pathname: string): ResolvedRoute | null {
   return null;
 }
 
-/** The canonical path for `pathname`, or `null` when it points nowhere. */
-export function canonicalPath(pathname: string): string | null {
-  const route = resolvePath(pathname);
-  return route ? pathFor(route.key, route.lang, route.params) : null;
-}
-
 interface LocationLike {
   pathname: string;
   search?: string;
   hash?: string;
+}
+
+/**
+ * The canonical URL of a location, keeping query and hash
+ * (`/en/kontakt?kind=painting` → `/en/contact?kind=painting`), or `null` when it points nowhere.
+ */
+export function canonicalPath({ pathname, search = '', hash = '' }: LocationLike): string | null {
+  const route = resolvePath(pathname);
+  return route ? `${pathFor(route.key, route.lang, route.params)}${search}${hash}` : null;
 }
 
 /**

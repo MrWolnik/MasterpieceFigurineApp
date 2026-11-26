@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 
 /** Width from which the full navigation is shown and the hamburger is hidden (tokens.css `md`). */
-export const DESKTOP_MEDIA_QUERY = '(min-width: 900px)';
+const DESKTOP_MEDIA_QUERY = '(min-width: 900px)';
 
 /**
  * Open/close state of the mobile menu. It closes on Esc (focus goes back to the toggle),
@@ -16,43 +16,38 @@ export function useMobileMenu() {
   const isOpen = openOn === pathname;
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  const close = useCallback(() => {
+  const close = () => {
     setOpenOn(null);
-  }, []);
+  };
 
-  const toggle = useCallback(() => {
-    setOpenOn((current) => (current === pathname ? null : pathname));
-  }, [pathname]);
+  const toggle = () => {
+    setOpenOn(isOpen ? null : pathname);
+  };
 
+  // While open: close on Escape or when the layout switches to desktop.
   useEffect(() => {
     if (!isOpen) {
       return;
     }
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpenOn(null);
         toggleRef.current?.focus();
       }
     };
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen || typeof window.matchMedia !== 'function') {
-      return;
-    }
     const desktop = window.matchMedia(DESKTOP_MEDIA_QUERY);
-    const onChange = (event: MediaQueryListEvent) => {
+    const onLayoutChange = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setOpenOn(null);
       }
     };
-    desktop.addEventListener('change', onChange);
+
+    document.addEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', onLayoutChange);
     return () => {
-      desktop.removeEventListener('change', onChange);
+      document.removeEventListener('keydown', onKeyDown);
+      desktop.removeEventListener('change', onLayoutChange);
     };
   }, [isOpen]);
 

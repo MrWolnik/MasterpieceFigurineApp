@@ -60,13 +60,19 @@ describe('resolvePath', () => {
 
 describe('canonicalPath', () => {
   it("maps another language's slug to the canonical one", () => {
-    expect(canonicalPath('/en/kontakt')).toBe('/en/contact');
-    expect(canonicalPath('/pl/contact')).toBe('/pl/kontakt');
-    expect(canonicalPath('/pl/privacy')).toBe('/pl/prywatnosc');
+    expect(canonicalPath({ pathname: '/en/kontakt' })).toBe('/en/contact');
+    expect(canonicalPath({ pathname: '/pl/contact' })).toBe('/pl/kontakt');
+    expect(canonicalPath({ pathname: '/pl/privacy' })).toBe('/pl/prywatnosc');
+  });
+
+  it('keeps the query string and hash', () => {
+    expect(
+      canonicalPath({ pathname: '/en/kontakt', search: '?kind=painting', hash: '#form' }),
+    ).toBe('/en/contact?kind=painting#form');
   });
 
   it('returns null for unknown paths', () => {
-    expect(canonicalPath('/en/nope')).toBeNull();
+    expect(canonicalPath({ pathname: '/en/nope' })).toBeNull();
   });
 });
 

@@ -1,23 +1,15 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { createMemoryRouter, RouterProvider } from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { screen, within } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { createAppRoutes } from './router';
+import { renderRoutes } from './test/test-utils';
 
-function renderApp(initialEntry: string) {
-  const router = createMemoryRouter(createAppRoutes(), { initialEntries: [initialEntry] });
-  render(<RouterProvider router={router} />);
-  return { router, user: userEvent.setup() };
+function renderApp(route: string) {
+  return renderRoutes(createAppRoutes(), { route });
 }
 
 function mockBrowserLanguages(languages: string[]) {
   vi.spyOn(navigator, 'languages', 'get').mockReturnValue(languages);
 }
-
-afterEach(() => {
-  vi.restoreAllMocks();
-  document.documentElement.lang = '';
-});
 
 describe('app routes', () => {
   it.each([
