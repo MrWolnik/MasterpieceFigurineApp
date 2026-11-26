@@ -1,0 +1,17 @@
+{
+  "kind": "figurine",
+  "slug": "kosmiczny-marine",
+  "title": {
+    "pl": "Kosmiczny marine",
+    "en": "Space Marine"
+  },
+  "description": {
+    "pl": "Przykładowy opis pracy „Kosmiczny marine”.",
+    "en": "Sample description of “Space Marine”."
+  },
+  "tags": ["warhammer", "sci-fi"],
+  "cover": "/works/kosmiczny-marine/cover.svg",
+  "images": [],
+  "featured": false,
+  "order": 8
+}

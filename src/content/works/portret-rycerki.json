@@ -1,0 +1,26 @@
+{
+  "kind": "painting",
+  "slug": "portret-rycerki",
+  "title": {
+    "pl": "Portret rycerki",
+    "en": "Portrait of a Knight"
+  },
+  "description": {
+    "pl": "Przykładowy opis obrazu „Portret rycerki”.",
+    "en": "Sample description of “Portrait of a Knight”."
+  },
+  "tags": ["akryl", "portret"],
+  "cover": "/works/portret-rycerki/cover.svg",
+  "image": "/works/portret-rycerki/full.svg",
+  "imageHiRes": "/works/portret-rycerki/full@2x.svg",
+  "medium": {
+    "pl": "Akryl na płótnie",
+    "en": "Acrylic on canvas"
+  },
+  "size": "40 × 60 cm",
+  "year": 2024,
+  "coverFocus": "50% 25%",
+  "images": [],
+  "featured": false,
+  "order": 5
+}

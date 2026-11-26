@@ -1,0 +1,18 @@
+{
+  "kind": "figurine",
+  "slug": "smocza-kaplanka",
+  "title": {
+    "pl": "Smocza kapłanka",
+    "en": "Dragon Priestess"
+  },
+  "description": {
+    "pl": "Przykładowy opis pracy „Smocza kapłanka”.",
+    "en": "Sample description of “Dragon Priestess”."
+  },
+  "tags": ["dnd", "fantasy"],
+  "cover": "/works/smocza-kaplanka/cover.svg",
+  "frames": 36,
+  "images": ["/works/smocza-kaplanka/detail-1.svg"],
+  "featured": true,
+  "order": 2
+}

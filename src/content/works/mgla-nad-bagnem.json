@@ -1,0 +1,25 @@
+{
+  "kind": "painting",
+  "slug": "mgla-nad-bagnem",
+  "title": {
+    "pl": "Mgła nad bagnem",
+    "en": "Mist over the Marsh"
+  },
+  "description": {
+    "pl": "Przykładowy opis obrazu „Mgła nad bagnem”.",
+    "en": "Sample description of “Mist over the Marsh”."
+  },
+  "tags": ["olej", "pejzaz"],
+  "cover": "/works/mgla-nad-bagnem/cover.svg",
+  "image": "/works/mgla-nad-bagnem/full.svg",
+  "imageHiRes": "/works/mgla-nad-bagnem/full@2x.svg",
+  "medium": {
+    "pl": "Olej na płótnie",
+    "en": "Oil on canvas"
+  },
+  "size": "70 × 50 cm",
+  "year": 2025,
+  "images": [],
+  "featured": true,
+  "order": 3
+}
