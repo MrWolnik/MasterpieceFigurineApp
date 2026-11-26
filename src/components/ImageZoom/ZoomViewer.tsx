@@ -32,19 +32,20 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
     };
   }, [hiResSrc]);
 
+  const zoomIn = () => {
+    zoomBy(ZOOM_STEP);
+  };
+  const zoomOut = () => {
+    zoomBy(1 / ZOOM_STEP);
+  };
+
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const actions: Partial<Record<string, () => void>> = {
       // Handled here too (not only by the native `cancel`) so Esc always closes the viewer.
       Escape: onClose,
-      '+': () => {
-        zoomBy(ZOOM_STEP);
-      },
-      '=': () => {
-        zoomBy(ZOOM_STEP);
-      },
-      '-': () => {
-        zoomBy(1 / ZOOM_STEP);
-      },
+      '+': zoomIn,
+      '=': zoomIn, // `+` without Shift on most keyboards
+      '-': zoomOut,
       '0': reset,
       ArrowLeft: () => {
         pan(KEY_PAN, 0);
@@ -76,9 +77,7 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
           className={styles.tool}
           aria-label={t('imageZoom.zoomOut')}
           disabled={state.scale <= MIN_SCALE}
-          onClick={() => {
-            zoomBy(1 / ZOOM_STEP);
-          }}
+          onClick={zoomOut}
         >
           −
         </button>
@@ -90,9 +89,7 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
           className={styles.tool}
           aria-label={t('imageZoom.zoomIn')}
           disabled={state.scale >= MAX_SCALE}
-          onClick={() => {
-            zoomBy(ZOOM_STEP);
-          }}
+          onClick={zoomIn}
         >
           +
         </button>

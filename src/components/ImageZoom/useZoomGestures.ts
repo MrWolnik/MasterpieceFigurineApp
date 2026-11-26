@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState, type PointerEvent, type RefObject } from 'react';
+import { useRef, useState, type PointerEvent, type RefObject } from 'react';
+import { useNonPassiveWheel } from './useNonPassiveWheel';
 import { INITIAL_ZOOM, panBy, zoomAt, type Point, type Size, type ZoomState } from './zoomMath';
 
 /** Scale used by a double click / double tap when the image is not zoomed. */
 const DOUBLE_TAP_SCALE = 2.5;
 /** Wheel delta (px) that doubles or halves the zoom. */
 const WHEEL_PX_PER_DOUBLING = 400;
+
+/** The stage centre: zooming here keeps the image centred. */
+const CENTRE: Point = { x: 0, y: 0 };
 
 interface Pinch {
   distance: number;
@@ -32,6 +36,8 @@ export function useZoomGestures(
   const pointers = useRef(new Map<number, Point>());
   const pinch = useRef<Pinch | null>(null);
 
+  // --- Measuring ---
+
   /** Image size at 1× and viewport size; layout sizes ignore the CSS transform. */
   function sizes(): [Size, Size] {
     const image = imageRef.current;
@@ -45,18 +51,15 @@ export function useZoomGestures(
   /** Converts client coordinates to a point relative to the stage centre. */
   function toStage(clientX: number, clientY: number): Point {
     const rect = stageRef.current?.getBoundingClientRect();
-    if (!rect) return { x: 0, y: 0 };
+    if (!rect) return CENTRE;
     return { x: clientX - rect.left - rect.width / 2, y: clientY - rect.top - rect.height / 2 };
   }
 
-  function zoomTo(scale: number, focus: Point = { x: 0, y: 0 }) {
-    setState((current) => zoomAt(current, scale, focus, ...sizes()));
-  }
+  // --- Zoom and pan actions (also used by the toolbar and keyboard) ---
 
-  function zoomBy(factor: number, focus?: Point) {
-    setState((current) =>
-      zoomAt(current, current.scale * factor, focus ?? { x: 0, y: 0 }, ...sizes()),
-    );
+  /** Multiplies the zoom by `factor`, keeping the point under `focus` in place. */
+  function zoomBy(factor: number, focus: Point = CENTRE) {
+    setState((current) => zoomAt(current, current.scale * factor, focus, ...sizes()));
   }
 
   function pan(dx: number, dy: number) {
@@ -67,33 +70,24 @@ export function useZoomGestures(
     setState(INITIAL_ZOOM);
   }
 
-  // React registers wheel listeners as passive, so preventDefault (stop page scroll) needs a
-  // native listener.
-  const wheelRef = useRef<(event: WheelEvent) => void>(() => undefined);
-  useEffect(() => {
-    // Refreshed after every render so the native listener always sees the latest state.
-    wheelRef.current = (event: WheelEvent) => {
-      event.preventDefault();
-      const factor = 2 ** (-event.deltaY / WHEEL_PX_PER_DOUBLING);
-      zoomBy(factor, toStage(event.clientX, event.clientY));
-    };
+  // --- Wheel ---
+
+  useNonPassiveWheel(stageRef, (event) => {
+    event.preventDefault();
+    zoomBy(2 ** (-event.deltaY / WHEEL_PX_PER_DOUBLING), toStage(event.clientX, event.clientY));
   });
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    const onWheel = (event: WheelEvent) => {
-      wheelRef.current(event);
-    };
-    stage.addEventListener('wheel', onWheel, { passive: false });
-    return () => {
-      stage.removeEventListener('wheel', onWheel);
-    };
-  }, [stageRef]);
+
+  // --- Pointers: one drags, two pinch ---
 
   function startPinch() {
     const [a, b] = [...pointers.current.values()];
     pinch.current =
       a && b ? { distance: distance(a, b), centre: midpoint(a, b), start: state } : null;
+  }
+
+  function endPointer(event: PointerEvent<HTMLElement>) {
+    pointers.current.delete(event.pointerId);
+    pinch.current = null;
   }
 
   const handlers = {
@@ -128,17 +122,11 @@ export function useZoomGestures(
         pan(point.x - previous.x, point.y - previous.y);
       }
     },
-    onPointerUp(event: PointerEvent<HTMLElement>) {
-      pointers.current.delete(event.pointerId);
-      pinch.current = null;
-    },
-    onPointerCancel(event: PointerEvent<HTMLElement>) {
-      pointers.current.delete(event.pointerId);
-      pinch.current = null;
-    },
+    onPointerUp: endPointer,
+    onPointerCancel: endPointer,
     onDoubleClick(event: { clientX: number; clientY: number }) {
       if (state.scale > 1) reset();
-      else zoomTo(DOUBLE_TAP_SCALE, toStage(event.clientX, event.clientY));
+      else zoomBy(DOUBLE_TAP_SCALE / state.scale, toStage(event.clientX, event.clientY));
     },
   };
 
