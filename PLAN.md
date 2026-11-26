@@ -299,7 +299,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 - [x] **Z1.1 Model danych.** Schemat zod jako unia rozróżniana po polu `kind` (`figurine` | `painting`), wczytywanie JSON-ów przez `import.meta.glob`, funkcje `getWorks({ kind?, tag? })`, `getFeatured`, `getBySlug`, `getTags(kind?)`. 8 przykładowych prac z obrazkami zastępczymi: 5 figurek (w tym 2 z klatkami 360°) i 3 obrazy (pionowy, poziomy, kwadratowy).
       _Testy:_ jednostkowe dla sortowania, filtrowania po rodzaju i tagu, wyszukiwania po slugu oraz błędu przy niepoprawnym JSON-ie (np. obraz bez `image`, figurka z polem `medium`).
-- [ ] **Z1.2 Kafelek i siatka.** `WorkCard` i `WorkGrid` (CSS Grid, leniwe ładowanie zdjęć). Kafelki mają jednakowe proporcje, a kadr obrazu bierzemy z `coverFocus`. Mała ikonka rodzaju pracy (figurka lub obraz) i ikonka „360°” dla figurek z klatkami.
+- [x] **Z1.2 Kafelek i siatka.** `WorkCard` i `WorkGrid` (CSS Grid, leniwe ładowanie zdjęć). Kafelki mają jednakowe proporcje, a kadr obrazu bierzemy z `coverFocus`. Mała ikonka rodzaju pracy (figurka lub obraz) i ikonka „360°” dla figurek z klatkami.
       _Testy:_ komponentowe (kafelek pokazuje tytuł w bieżącym języku, tagi, właściwą ikonkę rodzaju i link do szczegółów).
 - [ ] **Z1.3 Strona Portfolio.** Wstęp i siatka wszystkich prac.
       _Testy:_ e2e (wszystkie prace widoczne, kliknięcie otwiera szczegóły). Zrzuty ekranu przy szerokościach 360, 768 i 1440 px.
