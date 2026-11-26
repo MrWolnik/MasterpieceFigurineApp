@@ -1,15 +1,19 @@
 import { useTranslation } from 'react-i18next';
-import { site } from '../../config/site';
-import styles from '../Page.module.css';
+import { Hero } from '../../components/Hero/Hero';
+import styles from './Home.module.css';
 
-// Placeholder home page. Hero and featured works arrive in Etap 2.
+const FEATURED_ID = 'featured';
+
 export function Home() {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.page}>
-      <h1>{site.brand}</h1>
-      <p>{t('app.tagline')}</p>
-    </div>
+    <>
+      <Hero nextSectionId={FEATURED_ID} />
+      {/* Filled with featured works in Z2.3. */}
+      <section id={FEATURED_ID} className={styles.featured} aria-labelledby="featured-title">
+        <h2 id="featured-title">{t('home.featured.title')}</h2>
+      </section>
+    </>
   );
 }

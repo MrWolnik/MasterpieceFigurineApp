@@ -113,5 +113,16 @@
     "close": "Zamknij",
     "level": "Powiększenie: {{percent}}%",
     "hint": "Kółko myszy, szczypanie lub przyciski +/−. Przeciągnij, aby przesunąć."
+  },
+  "home": {
+    "hero": {
+      "lead": "Maluję figurki do gier bitewnych i RPG oraz obrazy na zamówienie – od pojedynczego bohatera po całą armię i od małego formatu po duże płótno. Każde zlecenie wyceniam indywidualnie.",
+      "cta": "Zamów malowanie",
+      "portraitAlt": "Julia przy swoim stanowisku malarskim",
+      "scroll": "Przewiń do wyróżnionych prac"
+    },
+    "featured": {
+      "title": "Wyróżnione prace"
+    }
   }
 }

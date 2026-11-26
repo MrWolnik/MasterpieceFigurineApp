@@ -4,18 +4,22 @@ import { renderWithProviders } from '../../test/test-utils';
 import { Home } from './Home';
 
 describe('Home', () => {
-  it('renders the Polish tagline by default', () => {
+  it('shows the hero and a featured section the scroll indicator points to', () => {
     renderWithProviders(<Home />);
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: 'MasterpieceFigurineJ' }),
-    ).toBeInTheDocument();
-    expect(screen.getByText('Malowanie figurek i obrazy na zamówienie')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Julia' })).toBeInTheDocument();
+    const featured = screen.getByRole('region', { name: 'Wyróżnione prace' });
+    expect(featured).toHaveAttribute('id', 'featured');
+    expect(screen.getByRole('link', { name: 'Przewiń do wyróżnionych prac' })).toHaveAttribute(
+      'href',
+      `#${featured.id}`,
+    );
   });
 
-  it('renders the English tagline when the language is English', () => {
+  it('is translated to English', () => {
     renderWithProviders(<Home />, { language: 'en' });
 
     expect(screen.getByText('Figurine painting and commissioned paintings')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Featured works' })).toBeInTheDocument();
   });
 });

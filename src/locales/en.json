@@ -113,5 +113,16 @@
     "close": "Close",
     "level": "Zoom: {{percent}}%",
     "hint": "Mouse wheel, pinch or the +/− buttons. Drag to move."
+  },
+  "home": {
+    "hero": {
+      "lead": "I paint miniatures for wargames and RPGs, and paintings on commission – from a single hero to a whole army, and from small formats to large canvases. Every commission is priced individually.",
+      "cta": "Order a painting",
+      "portraitAlt": "Julia at her painting desk",
+      "scroll": "Scroll to featured works"
+    },
+    "featured": {
+      "title": "Featured works"
+    }
   }
 }

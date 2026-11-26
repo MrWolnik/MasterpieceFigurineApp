@@ -1,0 +1,117 @@
+.hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  gap: var(--space-8);
+  /* The rest of the screen under the sticky header; `svh` ignores the iOS address bar. */
+  min-height: calc(100svh - var(--header-height));
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-8) var(--container-padding) var(--space-16);
+}
+
+/* Mobile: text first, so the order button is visible without scrolling. */
+.text {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.photo {
+  order: 1;
+}
+
+.photo img {
+  width: 100%;
+  max-height: 60svh;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 56.25rem) {
+  .hero {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-16);
+  }
+
+  .photo {
+    order: 0;
+  }
+
+  .photo img {
+    max-height: calc(100svh - var(--header-height) - var(--space-24));
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-4xl);
+}
+
+.lead {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: var(--color-accent-hover);
+}
+
+.scroll {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  translate: -50% 0;
+  border-radius: 50%;
+  color: var(--color-accent);
+}
+
+/* Only the arrow moves, so the link stays a still, easy-to-hit target. */
+.scroll svg {
+  animation: nudge 2s var(--ease-out) infinite;
+}
+
+.scroll:hover {
+  color: var(--color-accent-hover);
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll svg {
+    animation: none;
+  }
+}

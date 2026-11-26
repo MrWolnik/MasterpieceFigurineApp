@@ -88,6 +88,8 @@
 
   /* Stacking */
   --z-header: 100;
+  /* Sticky header: 2.75rem controls + vertical padding (--space-3 × 2) + 1px border. */
+  --header-height: calc(2.75rem + 2 * var(--space-3) + 1px);
   --z-overlay: 1000;
 }
 

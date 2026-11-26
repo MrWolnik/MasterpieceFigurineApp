@@ -20,9 +20,7 @@ describe('app routes', () => {
     mockBrowserLanguages(browserLanguages);
     const { router } = renderApp('/');
 
-    expect(
-      await screen.findByRole('heading', { level: 1, name: 'MasterpieceFigurineJ' }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'Julia' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe(expected);
   });
 
@@ -90,7 +88,7 @@ describe('app routes', () => {
   it.each([
     ['/EN/contact', '/en/contact', 'Contact'],
     ['/en/Contact', '/en/contact', 'Contact'],
-    ['/PL', '/pl', 'MasterpieceFigurineJ'],
+    ['/PL', '/pl', 'Julia'],
     ['/pl/Portfolio/nocny-wartownik', '/pl/portfolio/nocny-wartownik', 'Nocny wartownik'],
   ])('redirects %s to the lower-case canonical URL %s', async (path, expected, heading) => {
     const { router } = renderApp(path);
@@ -113,7 +111,7 @@ describe('app routes', () => {
 
   it('moves focus to the main content after navigating, but not on the first load', async () => {
     const { user } = renderApp('/pl');
-    await screen.findByRole('heading', { level: 1, name: 'MasterpieceFigurineJ' });
+    await screen.findByRole('heading', { level: 1, name: 'Julia' });
     expect(screen.getByRole('main')).not.toHaveFocus();
 
     await user.click(within(screen.getByRole('banner')).getByRole('link', { name: 'Kontakt' }));
