@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useTagLabel } from '../../lib/useTagLabel';
-import type { WorkKind } from '../../lib/works';
+import { WORK_KINDS, type WorkKind } from '../../lib/works';
 import styles from './PortfolioFilters.module.css';
 
 interface PortfolioFiltersProps {
@@ -23,18 +23,21 @@ export function PortfolioFilters({
   const { t } = useTranslation();
   const tagLabel = useTagLabel();
 
+  const kindLabels: Record<WorkKind, string> = {
+    figurine: t('works.filters.figurines'),
+    painting: t('works.filters.paintings'),
+  };
   const kindOptions = [
     { value: undefined, label: t('works.filters.all') },
-    { value: 'figurine', label: t('works.filters.figurines') },
-    { value: 'painting', label: t('works.filters.paintings') },
-  ] as const;
+    ...WORK_KINDS.map((value) => ({ value, label: kindLabels[value] })),
+  ];
 
   return (
     <div className={styles.filters}>
       <div className={styles.kinds} role="group" aria-label={t('works.filters.kindLabel')}>
         {kindOptions.map(({ value, label }) => (
           <button
-            key={label}
+            key={value ?? 'all'}
             type="button"
             className={styles.kind}
             aria-pressed={kind === value}

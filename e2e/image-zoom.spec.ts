@@ -1,11 +1,12 @@
 import { expect, test, type Page } from '@playwright/test';
 
-// Runs against the dev server: until Z1.7 the viewer is only mounted on /styleguide.
+// Runs on the real painting page (production build), so it covers what visitors get.
+const PAGE = '/pl/portfolio/mgla-nad-bagnem';
 
 const HI_RES = '/works/mgla-nad-bagnem/full@2x.svg';
 
 async function openViewer(page: Page) {
-  await page.goto('/styleguide');
+  await page.goto(PAGE);
   await page.getByRole('button', { name: 'Powiększ obraz: Mgła nad bagnem' }).click();
   const dialog = page.getByRole('dialog', { name: 'Podgląd obrazu: Mgła nad bagnem' });
   await expect(dialog).toBeVisible();
@@ -14,14 +15,14 @@ async function openViewer(page: Page) {
 
 const level = (page: Page) => page.getByText(/^Powiększenie: \d+%$/);
 
-test.describe('image zoom (styleguide demo)', () => {
+test.describe('image zoom', () => {
   test('loads the high-resolution image only after opening', async ({ page }) => {
     const hiResRequests: string[] = [];
     page.on('request', (request) => {
       if (request.url().endsWith(HI_RES)) hiResRequests.push(request.url());
     });
 
-    await page.goto('/styleguide');
+    await page.goto(PAGE);
     await expect(page.getByRole('button', { name: /Powiększ obraz/ })).toBeVisible();
     expect(hiResRequests).toEqual([]);
 
@@ -30,8 +31,8 @@ test.describe('image zoom (styleguide demo)', () => {
     expect(hiResRequests.length).toBeGreaterThan(0);
   });
 
-  test('buttons, wheel and Esc', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'dev-only', 'desktop interactions');
+  test('buttons, wheel and Esc', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'desktop interactions');
     const dialog = await openViewer(page);
 
     await dialog.getByRole('button', { name: 'Powiększ' }).click();
@@ -54,8 +55,8 @@ test.describe('image zoom (styleguide demo)', () => {
     await expect(page.getByRole('button', { name: /Powiększ obraz/ })).toBeFocused();
   });
 
-  test('pinch zooms the image', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'dev-only-mobile-webkit', 'touch profile only');
+  test('pinch zooms the image', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'touch profile only');
     await openViewer(page);
     const stage = page.getByTestId('zoom-stage');
     await expect(level(page)).toHaveText('Powiększenie: 100%');

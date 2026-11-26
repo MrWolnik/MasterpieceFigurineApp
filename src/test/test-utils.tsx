@@ -2,8 +2,16 @@ import { render, type RenderOptions, type RenderResult } from '@testing-library/
 import userEvent, { type UserEvent } from '@testing-library/user-event';
 import type { ReactElement, ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { createMemoryRouter, MemoryRouter, RouterProvider, type RouteObject } from 'react-router';
+import {
+  createMemoryRouter,
+  MemoryRouter,
+  Route,
+  Routes,
+  RouterProvider,
+  type RouteObject,
+} from 'react-router';
 import { createI18n, type Language } from '../lib/i18n';
+import { getBySlug, type Work } from '../lib/works';
 
 interface ProviderOptions extends Omit<RenderOptions, 'wrapper'> {
   /** Initial URL for the in-memory router. Defaults to `/pl`. */
@@ -45,4 +53,27 @@ export function renderRoutes(routes: RouteObject[], { route = '/pl' }: { route?:
   const router = createMemoryRouter(routes, { initialEntries: [route] });
   render(<RouterProvider router={router} />);
   return { router, user: userEvent.setup() };
+}
+
+/**
+ * Renders a page under the route pattern `path` (e.g. `/:lang/portfolio/:slug`) at the URL
+ * `route`, in the language of the URL prefix, so `useParams` and links behave as in the app.
+ */
+export function renderPage(
+  page: ReactElement,
+  { path, route }: { path: string; route: string },
+): RenderWithProvidersResult {
+  return renderWithProviders(
+    <Routes>
+      <Route path={path} element={page} />
+    </Routes>,
+    { route, language: route.startsWith('/en') ? 'en' : 'pl' },
+  );
+}
+
+/** A work from the sample content; throws if the slug is missing, so tests fail clearly. */
+export function sampleWork(slug: string): Work {
+  const work = getBySlug(slug);
+  if (!work) throw new Error(`Missing sample work ${slug}`);
+  return work;
 }

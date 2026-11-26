@@ -40,6 +40,9 @@ export const paintingSchema = z.strictObject({
 
 export const workSchema = z.discriminatedUnion('kind', [figurineSchema, paintingSchema]);
 
+/** Every work kind, in display order (filters list them in this order). */
+export const WORK_KINDS = workSchema.options.map((option) => option.shape.kind.value);
+
 export type Figurine = z.infer<typeof figurineSchema>;
 export type Painting = z.infer<typeof paintingSchema>;
 export type Work = z.infer<typeof workSchema>;

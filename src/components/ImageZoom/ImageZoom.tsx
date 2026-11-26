@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './ImageZoom.module.css';
 import { ZoomViewer } from './ZoomViewer';
+import { ZoomIcon } from '../icons/ZoomIcon';
 
 export interface ImageZoomProps {
   /** Medium-size image shown on the page. */
@@ -52,20 +53,7 @@ export function ImageZoom({ src, hiResSrc, alt }: ImageZoomProps) {
       >
         <img className={styles.preview} src={src} alt={alt} />
         <span className={styles.zoomBadge} aria-hidden="true">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <circle cx="10.5" cy="10.5" r="6.5" />
-            <path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6" />
-          </svg>
+          <ZoomIcon />
         </span>
       </button>
       <dialog

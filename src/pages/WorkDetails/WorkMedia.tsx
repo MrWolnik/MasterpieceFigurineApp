@@ -22,8 +22,8 @@ export function WorkMedia({ work, title }: WorkMediaProps) {
     );
   }
 
-  const photos = [work.cover, ...work.images];
-  const gallery = work.frames ? work.images : photos;
+  // With a turntable the cover is just one of its frames, so the gallery shows only the details.
+  const gallery = work.frames ? work.images : [work.cover, ...work.images];
 
   return (
     <div className={styles.media}>

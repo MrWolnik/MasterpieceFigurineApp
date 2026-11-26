@@ -25,7 +25,7 @@ export function WorkNav({ previous, next }: Neighbours) {
       )}
       {next && (
         <Link
-          className={`${styles.navLink ?? ''} ${styles.navNext ?? ''}`}
+          className={[styles.navLink, styles.navNext].join(' ')}
           rel="next"
           to={pathFor('work', language, { slug: next.slug })}
         >

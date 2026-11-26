@@ -1,14 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { renderWithProviders } from '../../test/test-utils';
-import { getBySlug, type Work } from '../../lib/works';
+import { renderWithProviders, sampleWork as work } from '../../test/test-utils';
 import { WorkCard } from './WorkCard';
-
-function work(slug: string): Work {
-  const found = getBySlug(slug);
-  if (!found) throw new Error(`Missing sample work ${slug}`);
-  return found;
-}
 
 describe('WorkCard', () => {
   it('shows the title in Polish and links to the Polish details page', () => {

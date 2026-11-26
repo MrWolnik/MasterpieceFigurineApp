@@ -1,8 +1,8 @@
 import { screen, within } from '@testing-library/react';
-import { Route, Routes, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { getWorks } from '../../lib/works';
-import { renderWithProviders } from '../../test/test-utils';
+import { renderPage } from '../../test/test-utils';
 import { Portfolio } from './Portfolio';
 
 function LocationProbe() {
@@ -11,19 +11,12 @@ function LocationProbe() {
 }
 
 function renderPortfolio(route = '/en/portfolio') {
-  return renderWithProviders(
-    <Routes>
-      <Route
-        path="/:lang/portfolio"
-        element={
-          <>
-            <Portfolio />
-            <LocationProbe />
-          </>
-        }
-      />
-    </Routes>,
-    { route, language: route.startsWith('/en') ? 'en' : 'pl' },
+  return renderPage(
+    <>
+      <Portfolio />
+      <LocationProbe />
+    </>,
+    { path: '/:lang/portfolio', route },
   );
 }
 

@@ -1,16 +1,10 @@
 import { screen, within } from '@testing-library/react';
-import { Route, Routes } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { renderWithProviders } from '../../test/test-utils';
+import { renderPage } from '../../test/test-utils';
 import { WorkDetails } from './WorkDetails';
 
 function renderWork(route: string) {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/:lang/portfolio/:slug" element={<WorkDetails />} />
-    </Routes>,
-    { route, language: route.startsWith('/en') ? 'en' : 'pl' },
-  );
+  return renderPage(<WorkDetails />, { path: '/:lang/portfolio/:slug', route });
 }
 
 describe('WorkDetails', () => {
