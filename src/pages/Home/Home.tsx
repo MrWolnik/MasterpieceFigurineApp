@@ -1,15 +1,14 @@
 import { useTranslation } from 'react-i18next';
+import styles from '../Page.module.css';
 
-// Placeholder shell. Routing, language switching and layout arrive in Z0.5–Z0.6.
-function App() {
+// Placeholder home page. Hero and featured works arrive in Etap 2.
+export function Home() {
   const { t } = useTranslation();
 
   return (
-    <main>
+    <main className={styles.page}>
       <h1>{t('app.title')}</h1>
       <p>{t('app.tagline')}</p>
     </main>
   );
 }
-
-export default App;

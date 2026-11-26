@@ -1,0 +1,8 @@
+/* Shared page shell for the placeholder pages until the real layouts arrive. */
+.page {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-12) var(--container-padding);
+  display: grid;
+  gap: var(--space-6);
+}
