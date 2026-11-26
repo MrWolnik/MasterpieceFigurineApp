@@ -1,0 +1,100 @@
+/*
+ * Design tokens — the single source of truth for colours, type, spacing and motion.
+ * Palette from PLAN.md §2. Contrast ratios (WCAG 2.x) are noted for text colours.
+ *
+ * Breakpoints (CSS custom properties cannot be used inside media queries, so use these literals):
+ *   sm  600px  — large phones / small tablets
+ *   md  900px  — tablets
+ *   lg 1200px  — desktop
+ */
+:root {
+  color-scheme: dark;
+
+  /* Colour — surfaces */
+  --color-bg: #0e0d0b; /* near black, warm */
+  --color-surface: #1a1815;
+  --color-border: rgb(232 225 211 / 12%);
+  --color-border-strong: rgb(232 225 211 / 24%);
+
+  /* Colour — text */
+  --color-text: #e8e1d3; /* ivory: 14.9:1 on bg, 13.6:1 on surface */
+  --color-text-muted: #9a9183; /* 6.3:1 on bg, 5.7:1 on surface */
+
+  /* Colour — accent */
+  --color-accent: #b8893b; /* old gold: 6.2:1 on bg, 5.6:1 on surface */
+  --color-accent-hover: #cfa154;
+  --color-on-accent: #0e0d0b; /* text on accent backgrounds: 6.2:1 */
+
+  /* Colour — feedback */
+  --color-error: #7a1f1f; /* dark red: backgrounds and borders only (1.9:1 as text on bg) */
+  --color-on-error: #e8e1d3; /* text on error backgrounds: 7.9:1 */
+  --color-error-text: #d06a5f; /* error messages on dark surfaces: 5.5:1 on bg, 5.0:1 on surface */
+
+  /* Typography */
+  --font-heading: 'Cinzel Variable', 'Cinzel', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-4xl: clamp(2.5rem, 1.75rem + 3.5vw, 4.5rem);
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.6;
+  --tracking-heading: 0.04em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --container-max: 75rem;
+  --container-padding: clamp(1rem, 4vw, 2.5rem);
+
+  /* Shape — minimal style, small radii */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* Elevation */
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 45%);
+  --shadow-accent: 0 0 0 1px var(--color-accent), 0 0 18px rgb(184 137 59 / 25%);
+
+  /* Focus */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+
+  /* Motion — zeroed for prefers-reduced-motion in global.css */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 500ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Stacking */
+  --z-header: 100;
+  --z-overlay: 1000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

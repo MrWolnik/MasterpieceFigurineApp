@@ -29,7 +29,8 @@ Na stronie **nie ma cen**. Każde zlecenie jest wyceniane indywidualnie po zgło
   - tekst `#E8E1D3` (kość słoniowa)
   - tekst drugorzędny `#9A9183`
   - akcent `#B8893B` (stare złoto)
-  - błąd lub ostrzeżenie `#7A1F1F` (ciemna czerwień)
+  - błąd lub ostrzeżenie `#7A1F1F` (ciemna czerwień), tylko jako tło lub ramka, bo jako tekst na ciemnym tle ma za mały kontrast (1,9:1)
+  - tekst komunikatów błędów `#D06A5F` (jaśniejsza czerwień, kontrast 5,5:1)
 - Fonty: **Cinzel** na nagłówki, **Inter** na tekst. Oba trzymamy lokalnie przez `@fontsource`. Cinzel musi obsługiwać polskie znaki, co sprawdzamy w Z0.3.
 - Delikatne animacje. Wyłączamy je, gdy użytkownik ma w systemie ustawione `prefers-reduced-motion`.
 
@@ -287,7 +288,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Gotowe gdy:_ jest przykładowy test jednostkowy i przykładowy test e2e, oba przechodzą, a hook pre-commit działa.
 - [x] **Z0.3 CI.** Workflow GitHub Actions z pkt 5 (cache npm, raport Playwright jako artefakt przy błędzie). Instrukcja w README, jak włączyć ochronę gałęzi `main`.
       _Gotowe gdy:_ pull request pokazuje zielony status CI.
-- [ ] **Z0.4 Design tokens i style globalne.** `tokens.css`, fonty przez `@fontsource` z polskimi znakami, reset CSS, ciemne tło z subtelną teksturą lub vignette. Strona testowa `/styleguide` (tylko w trybie dev).
+- [x] **Z0.4 Design tokens i style globalne.** `tokens.css`, fonty przez `@fontsource` z polskimi znakami, reset CSS, ciemne tło z subtelną teksturą lub vignette. Strona testowa `/styleguide` (tylko w trybie dev).
       _Testy:_ e2e sprawdzający, że `/styleguide` się renderuje i nie ma błędów kontrastu (axe).
 - [ ] **Z0.5 Routing i i18n.** Trasy z prefiksem `/:lang`, przekierowanie z `/`, przełącznik języka zostający na tej samej podstronie, `<html lang>` zmieniający się z językiem, strona 404.
       _Testy:_ jednostkowe dla mapowania tras PL↔EN. E2e: przekierowanie z `/`, przełączanie języka na każdej podstronie, nieznany adres pokazuje 404. Test sprawdzający, że `pl.json` i `en.json` mają te same klucze.
@@ -381,3 +382,5 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-26 | React 19 i TypeScript 6 (TS 7 jeszcze nieobsługiwany przez typescript-eslint) |
 | 2026-11-26 | ESLint + Prettier zamiast oxlint z szablonu Vite                             |
 | 2026-11-26 | Repozytorium publiczne (ochrona `main` bez GitHub Pro); być może Pro w przyszłości |
+| 2026-11-26 | Dodatkowy kolor `#D06A5F` na tekst błędów (WCAG AA); `#7A1F1F` tylko na tło i ramki |
+| 2026-11-26 | Fonty zmienne `@fontsource-variable` (Cinzel, Inter) zamiast stałych grubości |

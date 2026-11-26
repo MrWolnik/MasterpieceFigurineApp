@@ -1,8 +1,13 @@
+import '@fontsource-variable/cinzel';
+import '@fontsource-variable/inter';
+import './styles/tokens.css';
+import './styles/global.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
-import App from './App';
+import { RouterProvider } from 'react-router/dom';
 import { createI18n } from './lib/i18n';
+import { router } from './router';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -14,7 +19,7 @@ const i18n = createI18n();
 createRoot(rootElement).render(
   <StrictMode>
     <I18nextProvider i18n={i18n}>
-      <App />
+      <RouterProvider router={router} />
     </I18nextProvider>
   </StrictMode>,
 );
