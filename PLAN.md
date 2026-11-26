@@ -316,7 +316,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 - [x] **Z2.1 Sekcja Hero.** Dwie kolumny, 100vh, na mobile elementy jeden pod drugim, wskaźnik przewijania.
 - [x] **Z2.2 Przewijanie o cały ekran.** `scroll-snap` między Hero a wyróżnionymi pracami. W razie problemów na iOS snap działa tylko na desktopie.
-- [ ] **Z2.3 Wyróżnione prace.** 1–3 prace `featured` z Turntable i przycisk „Zobacz całe portfolio”.
+- [x] **Z2.3 Wyróżnione prace.** 1–3 prace `featured` z Turntable i przycisk „Zobacz całe portfolio”.
       _Testy (całego etapu):_ e2e (CTA prowadzi do kontaktu, wyróżnione prace są widoczne po przewinięciu, link do portfolio działa), skan axe strony głównej.
 
 ### Etap 3 — Kontakt i formularz

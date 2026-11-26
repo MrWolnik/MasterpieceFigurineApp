@@ -122,7 +122,8 @@
       "scroll": "Scroll to featured works"
     },
     "featured": {
-      "title": "Featured works"
+      "title": "Featured works",
+      "cta": "See the whole portfolio"
     }
   }
 }
