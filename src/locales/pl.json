@@ -122,7 +122,8 @@
       "scroll": "Przewiń do wyróżnionych prac"
     },
     "featured": {
-      "title": "Wyróżnione prace"
+      "title": "Wyróżnione prace",
+      "cta": "Zobacz całe portfolio"
     }
   }
 }

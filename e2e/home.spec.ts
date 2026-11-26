@@ -35,6 +35,44 @@ test.describe('home page', () => {
       .toBeGreaterThanOrEqual(headerBottom);
   });
 
+  test('featured works are visible after scrolling, with a 360° preview', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/pl');
+
+    await page.getByRole('link', { name: 'Przewiń do wyróżnionych prac' }).click();
+
+    const featured = page.getByRole('region', { name: 'Wyróżnione prace' });
+    await expect(featured.getByRole('slider', { name: /Nocny wartownik/ })).toBeInViewport();
+    const rest = [
+      featured.getByRole('link', { name: 'Smocza kapłanka' }),
+      featured.getByRole('link', { name: 'Zobacz całe portfolio' }),
+    ];
+    for (const item of rest) {
+      // On desktop the whole section fits one screen; on phones the works are stacked.
+      if (isMobile) await item.scrollIntoViewIfNeeded();
+      await expect(item).toBeInViewport();
+    }
+  });
+
+  test('a featured work links to its details', async ({ page }) => {
+    await page.goto('/pl');
+
+    await page.getByRole('link', { name: 'Nocny wartownik' }).click();
+
+    await expect(page).toHaveURL(urlOf('/pl/portfolio/nocny-wartownik'));
+  });
+
+  test('the portfolio link works', async ({ page }) => {
+    await page.goto('/en');
+
+    await page.getByRole('link', { name: 'See the whole portfolio' }).click();
+
+    await expect(page).toHaveURL(urlOf('/en/portfolio'));
+    await expect(page.getByRole('heading', { level: 1, name: 'Portfolio' })).toBeVisible();
+  });
+
   test('has no detectable accessibility violations', async ({ page }) => {
     await page.goto('/pl');
 

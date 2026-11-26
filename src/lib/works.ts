@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { workSchema, type Work, type WorkKind } from './works.schema';
+import { workSchema, type Figurine, type Work, type WorkKind } from './works.schema';
 
 export { WORK_KINDS } from './works.schema';
 export type { Figurine, Painting, Work, WorkKind } from './works.schema';
@@ -72,9 +72,16 @@ export function getWorks(filter: WorkFilter = {}): Work[] {
   return filterWorks(allWorks, filter);
 }
 
-/** Works marked `featured`; shown on the home page (Z2.3). */
+/** Works marked `featured`, sorted by `order`. */
 export function getFeatured(): Work[] {
   return allWorks.filter((work) => work.featured);
+}
+
+/** Featured figurines for the home page, at most `limit` (PLAN 3.1: 1–3 with a 360° view). */
+export function getFeaturedFigurines(limit = 3): Figurine[] {
+  return getFeatured()
+    .filter((work): work is Figurine => work.kind === 'figurine')
+    .slice(0, limit);
 }
 
 export function getBySlug(slug: string): Work | undefined {

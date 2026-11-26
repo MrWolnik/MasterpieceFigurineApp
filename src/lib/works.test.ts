@@ -5,6 +5,7 @@ import {
   findNeighbours,
   getBySlug,
   getFeatured,
+  getFeaturedFigurines,
   getNeighbours,
   getTags,
   getWorks,
@@ -168,6 +169,12 @@ describe('sample content', () => {
   it('finds works by slug', () => {
     expect(getBySlug('mgla-nad-bagnem')?.kind).toBe('painting');
     expect(getBySlug('missing')).toBeUndefined();
+  });
+
+  it('picks featured figurines only, up to the limit', () => {
+    const figurines = getFeaturedFigurines();
+    expect(figurines.map((w) => w.slug)).toEqual(['nocny-wartownik', 'smocza-kaplanka']);
+    expect(getFeaturedFigurines(1)).toHaveLength(1);
   });
 
   it('links neighbours of the same kind', () => {
