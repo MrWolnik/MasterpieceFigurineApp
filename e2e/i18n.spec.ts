@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { expectNoA11yViolations, urlOf } from './helpers.js';
 
 const pages = [
-  { pl: '/pl', en: '/en', plHeading: 'MasterpieceFigurineJ', enHeading: 'MasterpieceFigurineJ' },
+  { pl: '/pl', en: '/en', plHeading: 'Julia', enHeading: 'Julia' },
   { pl: '/pl/portfolio', en: '/en/portfolio', plHeading: 'Portfolio', enHeading: 'Portfolio' },
   {
     pl: '/pl/portfolio/nocny-wartownik',

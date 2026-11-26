@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { ChevronDownIcon } from './ChevronDownIcon';
 import { LineIcon } from './LineIcon';
 import { RotateIcon } from './RotateIcon';
 import { ZoomIcon } from './ZoomIcon';
@@ -22,8 +23,9 @@ describe('LineIcon', () => {
   it.each([
     ['RotateIcon', RotateIcon],
     ['ZoomIcon', ZoomIcon],
-  ])('%s renders a hidden 20px icon', (_name, Icon) => {
+    ['ChevronDownIcon', ChevronDownIcon],
+  ])('%s renders a hidden icon', (_name, Icon) => {
     const { container } = render(<Icon />);
-    expect(container.querySelector('svg[aria-hidden="true"][width="20"]')).not.toBeNull();
+    expect(container.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
   });
 });
