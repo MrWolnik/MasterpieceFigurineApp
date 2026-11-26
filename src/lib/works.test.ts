@@ -10,6 +10,7 @@ import {
   getWorks,
   parseWorks,
   sortWorks,
+  WORK_KINDS,
   type Work,
 } from './works';
 
@@ -144,6 +145,10 @@ describe('query helpers', () => {
     expect(findNeighbours(works, 'p1')).toEqual({ previous: undefined, next: undefined });
     expect(findNeighbours(works, 'missing')).toEqual({});
   });
+});
+
+it('lists every work kind once', () => {
+  expect(WORK_KINDS).toEqual(['figurine', 'painting']);
 });
 
 describe('sample content', () => {

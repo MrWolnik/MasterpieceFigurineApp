@@ -44,7 +44,7 @@ export function WorkDetails() {
                 <li key={tag}>
                   <Link
                     className={styles.tag}
-                    to={`${portfolio}?${filtersToParams({ tag }).toString()}`}
+                    to={{ pathname: portfolio, search: filtersToParams({ tag }).toString() }}
                   >
                     {tagLabel(tag)}
                   </Link>
@@ -55,7 +55,7 @@ export function WorkDetails() {
           <div className={styles.order}>
             <Link
               className={styles.cta}
-              to={`${pathFor('contact', language)}?${orderParams.toString()}`}
+              to={{ pathname: pathFor('contact', language), search: orderParams.toString() }}
             >
               {t('pages.work.orderSimilar')}
             </Link>

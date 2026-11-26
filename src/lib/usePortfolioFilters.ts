@@ -1,11 +1,14 @@
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import { getTags, type WorkFilter, type WorkKind } from './works';
-
-const kinds: readonly WorkKind[] = ['figurine', 'painting'];
+import { getTags, WORK_KINDS, type WorkFilter, type WorkKind } from './works';
 
 function isWorkKind(value: string | null): value is WorkKind {
-  return kinds.includes(value as WorkKind);
+  return WORK_KINDS.includes(value as WorkKind);
+}
+
+/** `tag` if works of `kind` use it, otherwise no tag filter. */
+function tagIfUsed(kind: WorkKind | undefined, tag: string | null | undefined): string | undefined {
+  return tag && getTags(kind).includes(tag) ? tag : undefined;
 }
 
 /**
@@ -15,9 +18,7 @@ function isWorkKind(value: string | null): value is WorkKind {
 export function parseFilters(params: URLSearchParams): WorkFilter {
   const rawKind = params.get('kind');
   const kind = isWorkKind(rawKind) ? rawKind : undefined;
-  const rawTag = params.get('tag');
-  const tag = rawTag && getTags(kind).includes(rawTag) ? rawTag : undefined;
-  return { kind, tag };
+  return { kind, tag: tagIfUsed(kind, params.get('tag')) };
 }
 
 /** Serialises filters into URL params, leaving out empty values (`?kind=painting&tag=olej`). */
@@ -53,9 +54,7 @@ export function usePortfolioFilters() {
     ...filters,
     /** Changes the kind; drops the tag when the new kind does not use it. */
     setKind: (kind: WorkKind | undefined) => {
-      const { tag: currentTag } = current();
-      const tag = currentTag && getTags(kind).includes(currentTag) ? currentTag : undefined;
-      update({ kind, tag });
+      update({ kind, tag: tagIfUsed(kind, current().tag) });
     },
     setTag: (tag: string | undefined) => {
       update({ kind: current().kind, tag });

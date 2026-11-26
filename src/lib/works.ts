@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { workSchema, type Work, type WorkKind } from './works.schema';
 
+export { WORK_KINDS } from './works.schema';
 export type { Figurine, Painting, Work, WorkKind } from './works.schema';
 
 export interface WorkFilter {
@@ -53,10 +54,14 @@ export function filterWorks(works: readonly Work[], { kind, tag }: WorkFilter = 
   return works.filter((work) => (!kind || work.kind === kind) && (!tag || work.tags.includes(tag)));
 }
 
+/** Unique tags (alphabetical) used by all works or by works of one kind. */
 export function collectTags(works: readonly Work[], kind?: WorkKind): string[] {
   const tags = new Set(filterWorks(works, { kind }).flatMap((work) => work.tags));
   return [...tags].sort((a, b) => a.localeCompare(b));
 }
+
+// The pure helpers above take a list of works, so tests can pass fixtures. The `get*`
+// functions below apply them to the site content bundled from `src/content/works`.
 
 const allWorks = parseWorks(
   import.meta.glob('/src/content/works/*.json', { eager: true, import: 'default' }),
@@ -67,6 +72,7 @@ export function getWorks(filter: WorkFilter = {}): Work[] {
   return filterWorks(allWorks, filter);
 }
 
+/** Works marked `featured`; shown on the home page (Z2.3). */
 export function getFeatured(): Work[] {
   return allWorks.filter((work) => work.featured);
 }
@@ -75,7 +81,6 @@ export function getBySlug(slug: string): Work | undefined {
   return allWorks.find((work) => work.slug === slug);
 }
 
-/** Unique tags (alphabetical) used by all works or by works of one kind. */
 export function getTags(kind?: WorkKind): string[] {
   return collectTags(allWorks, kind);
 }
