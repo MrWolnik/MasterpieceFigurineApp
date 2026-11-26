@@ -1,4 +1,5 @@
 import { I18nextProvider } from 'react-i18next';
+import { ImageZoom } from '../../components/ImageZoom/ImageZoom';
 import { Turntable } from '../../components/Turntable/Turntable';
 import { createI18n } from '../../lib/i18n';
 import styles from './Styleguide.module.css';
@@ -103,6 +104,18 @@ export function Styleguide() {
         <div className={styles.demo}>
           <I18nextProvider i18n={demoI18n}>
             <Turntable slug="nocny-wartownik" frames={36} format="svg" title="Nocny wartownik" />
+          </I18nextProvider>
+        </div>
+      </section>
+      <section aria-labelledby="sg-image-zoom" className={styles.section}>
+        <h2 id="sg-image-zoom">Image zoom</h2>
+        <div className={styles.demo}>
+          <I18nextProvider i18n={demoI18n}>
+            <ImageZoom
+              src="/works/mgla-nad-bagnem/full.svg"
+              hiResSrc="/works/mgla-nad-bagnem/full@2x.svg"
+              alt="Mgła nad bagnem"
+            />
           </I18nextProvider>
         </div>
       </section>

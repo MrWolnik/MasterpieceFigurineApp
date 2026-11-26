@@ -92,5 +92,15 @@
     "angle": "Angle {{angle}}°",
     "hint": "Drag or use the arrow keys to rotate",
     "loading": "Loading the 360° view"
+  },
+  "imageZoom": {
+    "open": "Zoom image: {{alt}}",
+    "dialog": "Image viewer: {{alt}}",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "reset": "Fit to screen",
+    "close": "Close",
+    "level": "Zoom: {{percent}}%",
+    "hint": "Mouse wheel, pinch or the +/− buttons. Drag to move."
   }
 }

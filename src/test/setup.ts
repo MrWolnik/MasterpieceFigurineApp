@@ -28,6 +28,21 @@ if (!('setPointerCapture' in Element.prototype)) {
   });
 }
 
+// jsdom has no modal dialogs. Minimal stand-in: open/close toggle the `open` attribute and
+// close() fires the `close` event, like the browser does.
+if (!('showModal' in HTMLDialogElement.prototype)) {
+  Object.assign(HTMLDialogElement.prototype, {
+    showModal(this: HTMLDialogElement) {
+      this.setAttribute('open', '');
+    },
+    close(this: HTMLDialogElement) {
+      if (!this.hasAttribute('open')) return;
+      this.removeAttribute('open');
+      this.dispatchEvent(new Event('close'));
+    },
+  });
+}
+
 // Any request without a matching handler fails the test, so no test hits the real network.
 beforeAll(() => {
   server.listen({ onUnhandledFrame: 'error' });
