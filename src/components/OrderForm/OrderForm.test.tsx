@@ -44,6 +44,14 @@ describe('OrderForm', () => {
     expect(description).toHaveAttribute('placeholder', expect.stringMatching(/obraz zawiśnie/));
   });
 
+  it('changes the photo field label with the order type', async () => {
+    const { user } = renderForm();
+    expect(screen.getByLabelText('Zdjęcie Twojej figurki')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('radio', { name: 'Obraz na zamówienie' }));
+    expect(screen.getByLabelText('Inspiracje lub zdjęcia referencyjne')).toBeInTheDocument();
+  });
+
   it('?kind=painting presets the painting order', () => {
     renderForm('/en/contact?kind=painting', 'en');
 

@@ -1,0 +1,103 @@
+.dropzone {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: var(--weight-medium);
+}
+
+.area {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-8) var(--space-4);
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.area:hover,
+.dragging {
+  border-color: var(--color-accent);
+}
+
+.dropzone:has(.input:focus-visible) .area {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.browse {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Visually hidden but focusable; the dashed area is its visible label. */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.errors p {
+  margin: 0;
+  color: var(--color-error-text);
+  font-size: var(--text-sm);
+}
+
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  width: 6rem;
+}
+
+.preview img {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.name {
+  overflow: hidden;
+  font-size: var(--text-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-lg);
+  cursor: pointer;
+}

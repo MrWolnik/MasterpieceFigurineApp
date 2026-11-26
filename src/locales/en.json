@@ -218,6 +218,26 @@
     },
     "consent": {
       "label": "I agree to the processing of my data to answer this request, as described in the <policy>privacy policy</policy>."
+    },
+    "files": {
+      "label": {
+        "figurine": "Photo of your figurine",
+        "painting": "Inspirations or reference photos"
+      },
+      "hint": {
+        "figurine": "Show the unpainted figurine or a similar result you like.",
+        "painting": "Add paintings, photos or GIFs that capture the mood."
+      },
+      "limits": "JPG, PNG, WEBP or GIF, up to 3 files of 5 MB each.",
+      "drop": "Drag and drop photos here",
+      "browse": "or choose from your device",
+      "selected": "Selected files",
+      "remove": "Remove file {{name}}",
+      "rejected": {
+        "type": "{{name}}: only JPG, PNG, WEBP and GIF files are allowed.",
+        "size": "{{name}}: the file is larger than 5 MB.",
+        "count": "{{name}}: you can add up to 3 files."
+      }
     }
   }
 }

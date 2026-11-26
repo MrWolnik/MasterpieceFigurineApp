@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
-import { useForm, useWatch, type Resolver } from 'react-hook-form';
+import { Controller, useForm, useWatch, type Resolver } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
 import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
+import { Dropzone } from '../Dropzone/Dropzone';
 import { FieldError, FormField } from './FormField';
 import styles from './OrderForm.module.css';
 import { PaintingFields } from './PaintingFields';
@@ -137,6 +138,20 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
           <input className={styles.input} type="date" {...aria} {...register('deadline')} />
         )}
       </FormField>
+
+      <Controller
+        control={control}
+        name="files"
+        render={({ field }) => (
+          <Dropzone
+            name="files"
+            label={t(`form.files.label.${kind}`)}
+            hint={t(`form.files.hint.${kind}`)}
+            files={field.value}
+            onChange={field.onChange}
+          />
+        )}
+      />
 
       <div className={styles.field}>
         <label className={styles.consent}>
