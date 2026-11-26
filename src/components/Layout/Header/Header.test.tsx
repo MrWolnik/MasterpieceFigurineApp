@@ -37,20 +37,36 @@ describe('Header', () => {
   });
 
   it.each([
-    ['/pl/kontakt', 'Kontakt'],
-    ['/pl/portfolio', 'Portfolio'],
-    ['/pl/portfolio/nocny-wartownik', 'Portfolio'],
-  ])('highlights the active page link on %s', (route, active) => {
+    ['/pl/kontakt', 'Kontakt', 'Portfolio'],
+    ['/pl/portfolio', 'Portfolio', 'Kontakt'],
+    ['/pl/portfolio/', 'Portfolio', 'Kontakt'],
+  ])('marks the link of the current page on %s', (route, current, other) => {
     renderWithProviders(<Header />, { route });
 
-    for (const name of ['Portfolio', 'Kontakt']) {
-      const link = screen.getByRole('link', { name });
-      if (name === active) {
-        expect(link).toHaveAttribute('aria-current', 'page');
-      } else {
-        expect(link).not.toHaveAttribute('aria-current');
-      }
-    }
+    const currentLink = screen.getByRole('link', { name: current });
+    expect(currentLink).toHaveAttribute('aria-current', 'page');
+    expect(currentLink).toHaveAttribute('data-active', 'true');
+    const otherLink = screen.getByRole('link', { name: other });
+    expect(otherLink).not.toHaveAttribute('aria-current');
+    expect(otherLink).toHaveAttribute('data-active', 'false');
+  });
+
+  it('highlights the section on a work page without calling it the current page', () => {
+    renderWithProviders(<Header />, { route: '/pl/portfolio/nocny-wartownik' });
+
+    const portfolio = screen.getByRole('link', { name: 'Portfolio' });
+    expect(portfolio).toHaveAttribute('data-active', 'true');
+    expect(portfolio).not.toHaveAttribute('aria-current');
+  });
+
+  it('puts the toggle right before the menu it controls, so Tab enters the open menu', () => {
+    renderWithProviders(<Header />);
+
+    const menu = document.getElementById(menuButton().getAttribute('aria-controls') ?? '');
+    expect(menu).not.toBeNull();
+    expect(menuButton().nextElementSibling).toBe(menu);
+    expect(menu).toContainElement(screen.getByRole('navigation', { name: 'Główna nawigacja' }));
+    expect(menu).toContainElement(screen.getByRole('navigation', { name: 'Język' }));
   });
 
   it('highlights nothing on the home page', () => {
@@ -62,16 +78,16 @@ describe('Header', () => {
 
   it('opens and closes the menu with the toggle button', async () => {
     const { user } = renderWithProviders(<Header />);
-    const nav = screen.getByRole('navigation', { name: 'Główna nawigacja' });
+    const menu = document.getElementById('site-menu');
 
     expect(menuButton()).toHaveAttribute('aria-expanded', 'false');
-    expect(menuButton()).toHaveAttribute('aria-controls', nav.id);
-    expect(nav).toHaveAttribute('data-open', 'false');
+    expect(menuButton()).toHaveAttribute('aria-controls', 'site-menu');
+    expect(menu).toHaveAttribute('data-open', 'false');
 
     await user.click(menuButton());
     expect(menuButton()).toHaveAttribute('aria-expanded', 'true');
     expect(menuButton()).toHaveAccessibleName('Zamknij menu');
-    expect(nav).toHaveAttribute('data-open', 'true');
+    expect(menu).toHaveAttribute('data-open', 'true');
 
     await user.click(menuButton());
     expect(menuButton()).toHaveAttribute('aria-expanded', 'false');

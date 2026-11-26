@@ -34,15 +34,26 @@ function matchKey(rest: string, slugLanguage: Language): Omit<ResolvedRoute, 'la
   for (const key of routeKeys) {
     const match = matchPath({ path: `/${routePaths[key][slugLanguage]}` }, rest);
     if (match) {
-      return { key, params: definedParams(match.params) };
+      return { key, params: decodedParams(match.params) };
     }
   }
   return null;
 }
 
-function definedParams(params: Params): RouteParams {
+/** `matchPath` leaves params percent-encoded, while `generatePath` encodes them again. */
+function decodeParam(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value; // malformed encoding: keep it as is rather than throw
+  }
+}
+
+function decodedParams(params: Params): RouteParams {
   return Object.fromEntries(
-    Object.entries(params).filter((entry): entry is [string, string] => entry[1] !== undefined),
+    Object.entries(params)
+      .filter((entry): entry is [string, string] => entry[1] !== undefined)
+      .map(([key, value]) => [key, decodeParam(value)]),
   );
 }
 

@@ -38,6 +38,11 @@ describe('resolvePath', () => {
       params: { slug: 'abc' },
     });
     expect(resolvePath('/en/')).toEqual({ lang: 'en', key: 'home', params: {} });
+    expect(resolvePath('/pl/portfolio/za%C5%BC')).toEqual({
+      lang: 'pl',
+      key: 'work',
+      params: { slug: 'zaż' },
+    });
   });
 
   it("falls back to another language's slug", () => {
@@ -85,6 +90,23 @@ describe('switchLanguagePath', () => {
         'en',
       ),
     ).toBe('/en/contact?kind=painting#form');
+  });
+
+  it('does not double-encode percent-encoded slugs', () => {
+    expect(switchLanguagePath({ pathname: '/pl/portfolio/a%20b' }, 'en')).toBe(
+      '/en/portfolio/a%20b',
+    );
+    expect(switchLanguagePath({ pathname: '/pl/portfolio/za%C5%BC' }, 'en')).toBe(
+      '/en/portfolio/za%C5%BC',
+    );
+  });
+
+  it('keeps a slug with malformed encoding instead of throwing', () => {
+    expect(resolvePath('/pl/portfolio/a%E0b')).toEqual({
+      lang: 'pl',
+      key: 'work',
+      params: { slug: 'a%E0b' },
+    });
   });
 
   it('sends unknown pages to the home page of the target language', () => {
