@@ -46,12 +46,12 @@ test.describe('language switcher', () => {
       await expect(page.getByRole('heading', { level: 1, name: plHeading })).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('lang', 'pl');
 
-      await page.getByRole('banner').getByRole('link', { name: 'EN – English' }).click();
+      await page.getByRole('contentinfo').getByRole('link', { name: 'EN – English' }).click();
       await expect(page).toHaveURL(urlOf(en));
       await expect(page.getByRole('heading', { level: 1, name: enHeading })).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
-      await page.getByRole('banner').getByRole('link', { name: 'PL – Polski' }).click();
+      await page.getByRole('contentinfo').getByRole('link', { name: 'PL – Polski' }).click();
       await expect(page).toHaveURL(urlOf(pl));
       await expect(page.locator('html')).toHaveAttribute('lang', 'pl');
     });
@@ -63,6 +63,22 @@ test('a slug from the other language redirects to the canonical page', async ({ 
 
   await expect(page).toHaveURL(urlOf('/en/contact'));
   await expect(page.getByRole('heading', { level: 1, name: 'Contact' })).toBeVisible();
+});
+
+test('a URL in other letter case redirects to the lower-case canonical page', async ({ page }) => {
+  await page.goto('/EN/Contact');
+
+  await expect(page).toHaveURL(urlOf('/en/contact'));
+  await expect(page.getByRole('heading', { level: 1, name: 'Contact' })).toBeVisible();
+});
+
+test('switching language keeps a percent-encoded slug intact', async ({ page }) => {
+  await page.goto('/pl/portfolio/za%C5%BC%C3%B3%C5%82%C4%87');
+  await expect(page.getByRole('heading', { level: 1, name: 'Praca: zażółć' })).toBeVisible();
+
+  await page.getByRole('contentinfo').getByRole('link', { name: 'EN – English' }).click();
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Work: zażółć' })).toBeVisible();
 });
 
 test.describe('404 page', () => {
