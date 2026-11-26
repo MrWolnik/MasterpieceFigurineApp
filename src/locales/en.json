@@ -17,7 +17,8 @@
   },
   "pages": {
     "portfolio": {
-      "title": "Portfolio"
+      "title": "Portfolio",
+      "intro": "Selected works: hand-painted miniatures for tabletop wargames and RPGs, and commissioned paintings. Click a work to see the details."
     },
     "work": {
       "title": "Work: {{slug}}"

@@ -17,7 +17,8 @@
   },
   "pages": {
     "portfolio": {
-      "title": "Portfolio"
+      "title": "Portfolio",
+      "intro": "Wybrane prace: ręcznie malowane figurki do gier bitewnych i RPG oraz obrazy na zamówienie. Kliknij pracę, żeby zobaczyć szczegóły."
     },
     "work": {
       "title": "Praca: {{slug}}"
