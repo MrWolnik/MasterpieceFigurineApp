@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { RouterProvider } from 'react-router/dom';
 import { createI18n } from './lib/i18n';
-import { router } from './router';
+import { createAppRouter } from './router';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -15,6 +15,7 @@ if (!rootElement) {
 }
 
 const i18n = createI18n();
+const router = createAppRouter(i18n);
 
 createRoot(rootElement).render(
   <StrictMode>

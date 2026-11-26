@@ -2,5 +2,23 @@
   "app": {
     "title": "MasterpieceFigurineJ",
     "tagline": "Figurine painting and commissioned paintings"
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  },
+  "languages": {
+    "pl": { "short": "PL", "name": "PL – Polski" },
+    "en": { "short": "EN", "name": "EN – English" }
+  },
+  "pages": {
+    "portfolio": { "title": "Portfolio" },
+    "work": { "title": "Work: {{slug}}" },
+    "contact": { "title": "Contact" },
+    "privacy": { "title": "Privacy policy" },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This page does not exist or has been moved.",
+      "backHome": "Back to the home page"
+    }
   }
 }

@@ -290,7 +290,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Gotowe gdy:_ pull request pokazuje zielony status CI.
 - [x] **Z0.4 Design tokens i style globalne.** `tokens.css`, fonty przez `@fontsource` z polskimi znakami, reset CSS, ciemne tło z subtelną teksturą lub vignette. Strona testowa `/styleguide` (tylko w trybie dev).
       _Testy:_ e2e sprawdzający, że `/styleguide` się renderuje i nie ma błędów kontrastu (axe).
-- [ ] **Z0.5 Routing i i18n.** Trasy z prefiksem `/:lang`, przekierowanie z `/`, przełącznik języka zostający na tej samej podstronie, `<html lang>` zmieniający się z językiem, strona 404.
+- [x] **Z0.5 Routing i i18n.** Trasy z prefiksem `/:lang`, przekierowanie z `/`, przełącznik języka zostający na tej samej podstronie, `<html lang>` zmieniający się z językiem, strona 404.
       _Testy:_ jednostkowe dla mapowania tras PL↔EN. E2e: przekierowanie z `/`, przełączanie języka na każdej podstronie, nieznany adres pokazuje 404. Test sprawdzający, że `pl.json` i `en.json` mają te same klucze.
 - [ ] **Z0.6 Layout.** Header (nawigacja + przełącznik języka), menu hamburger na mobile, Footer z ikonami social media, `src/config/site.ts` według pkt 6. Linki social media otwierają się w nowej karcie z `rel="noopener noreferrer"`.
       _Testy:_ komponentowe (menu otwiera i zamyka się, link aktywnej strony jest wyróżniony, wpis z pustym `url` nie renderuje ikony, a wpis z linkiem renderuje ją z poprawnym `href` i `aria-label`). E2e: nawigacja klawiaturą i na profilu telefonu.
@@ -384,3 +384,5 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-26 | Repozytorium publiczne (ochrona `main` bez GitHub Pro); być może Pro w przyszłości |
 | 2026-11-26 | Dodatkowy kolor `#D06A5F` na tekst błędów (WCAG AA); `#7A1F1F` tylko na tło i ramki |
 | 2026-11-26 | Fonty zmienne `@fontsource-variable` (Cinzel, Inter) zamiast stałych grubości |
+| 2026-11-26 | Slug z innego języka (np. `/en/kontakt`) przekierowuje na właściwy adres (`/en/contact`); nieznany adres pokazuje 404 |
+| 2026-11-26 | Wykrywanie języka przeglądarki bez dodatkowej biblioteki; `public/_redirects` dla Netlify (SPA fallback) |

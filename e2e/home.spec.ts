@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('home page', () => {
   test('renders the brand heading', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/pl');
 
     await expect(page).toHaveTitle('MasterpieceFigurineJ');
     await expect(
@@ -12,7 +12,7 @@ test.describe('home page', () => {
   });
 
   test('has no detectable accessibility violations', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/pl');
 
     const results = await new AxeBuilder({ page }).analyze();
 
