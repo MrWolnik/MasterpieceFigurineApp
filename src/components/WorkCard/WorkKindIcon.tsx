@@ -1,5 +1,6 @@
 import type { WorkKind } from '../../lib/works';
 import type { ReactNode } from 'react';
+import { LineIcon } from '../icons/LineIcon';
 
 // Our own simplified line glyphs (24×24, stroked with currentColor).
 const glyphs: Record<WorkKind, ReactNode> = {
@@ -24,20 +25,8 @@ const glyphs: Record<WorkKind, ReactNode> = {
 /** Decorative icon; the caller provides the accessible name. */
 export function WorkKindIcon({ kind }: { kind: WorkKind }) {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-      data-kind={kind}
-    >
+    <LineIcon size={18} data-kind={kind}>
       {glyphs[kind]}
-    </svg>
+    </LineIcon>
   );
 }

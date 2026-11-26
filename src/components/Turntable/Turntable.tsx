@@ -11,12 +11,14 @@ import styles from './Turntable.module.css';
 import { frameAngle, frameFromDrag, framePath, wrapFrame } from './turntableMath';
 import { useAutoRotate } from './useAutoRotate';
 import { useFramePreloader } from './useFramePreloader';
+import { RotateIcon } from '../icons/RotateIcon';
 
 export interface TurntableProps {
   /** Work slug; frames live in `/works/<slug>/frames/`. */
   slug: string;
   /** Number of frames in a full turn. */
   frames: number;
+  /** Frame file extension, e.g. `webp` → `/works/<slug>/frames/001.webp`. */
   format: string;
   /** Work title, used in the accessible name. */
   title: string;
@@ -145,21 +147,7 @@ export function Turntable({ slug, frames, format, title, autoRotate = true }: Tu
         )}
       </div>
       <figcaption className={styles.hint} data-hidden={interacted}>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M3 12a9 4 0 0 0 18 0" />
-          <path d="M18 9l3 3-3 3" />
-        </svg>
+        <RotateIcon />
         {t('turntable.hint')}
       </figcaption>
     </figure>
