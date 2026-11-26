@@ -10,8 +10,8 @@ export function ContactDetails() {
   const showSocials = import.meta.env.DEV || site.socials.some(({ url }) => url.trim() !== '');
 
   return (
-    <section className={styles.details} aria-labelledby="contact-details-title">
-      <h2 id="contact-details-title">{t('pages.contact.details.title')}</h2>
+    <section className={styles.details} aria-label={t('pages.contact.details.title')}>
+      <h2>{t('pages.contact.details.title')}</h2>
       <p className={styles.row}>
         <span className={styles.label}>{t('pages.contact.details.email')}</span>
         <ProtectedEmail

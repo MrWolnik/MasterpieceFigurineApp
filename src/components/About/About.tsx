@@ -13,8 +13,8 @@ export function About() {
   const steps: Step[] = t('pages.contact.about.steps', { returnObjects: true });
 
   return (
-    <section className={styles.about} aria-labelledby="about-title">
-      <h2 id="about-title">{t('pages.contact.about.title')}</h2>
+    <section className={styles.about} aria-label={t('pages.contact.about.title')}>
+      <h2>{t('pages.contact.about.title')}</h2>
       {paragraphs.map((text) => (
         <p key={text}>{text}</p>
       ))}

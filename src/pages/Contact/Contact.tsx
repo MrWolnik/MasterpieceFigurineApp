@@ -1,9 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { About } from '../../components/About/About';
 import { ContactDetails } from '../../components/ContactDetails/ContactDetails';
+import { OrderForm } from '../../components/OrderForm/OrderForm';
 import styles from './Contact.module.css';
 
-/** Contact page: about Julia, contact details and (Z3.3) the order form. */
+// Replaced by the Netlify Forms submission in Z3.5.
+const submitOrder = () => Promise.resolve();
+
+/** Contact page: about Julia, contact details and the order form. */
 export function Contact() {
   const { t } = useTranslation();
 
@@ -18,6 +22,7 @@ export function Contact() {
           <About />
           <ContactDetails />
         </div>
+        <OrderForm onSubmit={submitOrder} />
       </div>
     </div>
   );

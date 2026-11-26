@@ -160,5 +160,64 @@
       "title": "Featured works",
       "cta": "See the whole portfolio"
     }
+  },
+  "form": {
+    "title": "Order request",
+    "intro": "Fields marked * are required. Give an e-mail or a phone number.",
+    "required": "required",
+    "kind": {
+      "legend": "Type of commission",
+      "figurine": "Figurine painting",
+      "painting": "Commissioned painting"
+    },
+    "name": {
+      "label": "Name"
+    },
+    "email": {
+      "label": "E-mail"
+    },
+    "phone": {
+      "label": "Phone",
+      "hint": "In international format, e.g. +44 7700 900123."
+    },
+    "description": {
+      "label": "Description – what you want to achieve",
+      "placeholder": {
+        "figurine": "E.g. which miniature, colour scheme, style (tabletop, display), how many…",
+        "painting": "E.g. subject, mood, colours, where the painting will hang…"
+      },
+      "prefill": "I would like a work similar to: {{title}}. "
+    },
+    "dimensions": {
+      "label": "Preferred size",
+      "placeholder": "e.g. 50 × 70 cm"
+    },
+    "technique": {
+      "label": "Technique",
+      "choose": "Choose…",
+      "oil": "Oil",
+      "acrylic": "Acrylic",
+      "watercolor": "Watercolour",
+      "any": "No preference"
+    },
+    "deadline": {
+      "label": "Deadline",
+      "hint": "Optional – when the work should be ready."
+    },
+    "submit": "Send request",
+    "errors": {
+      "required": "This field is required.",
+      "email": "Enter a valid e-mail address.",
+      "phone": "Enter the number in international format, e.g. +44 7700 900123.",
+      "contact": "Give an e-mail or a phone number.",
+      "descriptionShort": "The description must be at least 20 characters.",
+      "deadlinePast": "The deadline cannot be earlier than today.",
+      "deadlineInvalid": "Enter a valid date.",
+      "consent": "Consent is required to send the request.",
+      "tooManyFiles": "You can add up to 3 files."
+    },
+    "consent": {
+      "label": "I agree to the processing of my data to answer this request, as described in the <policy>privacy policy</policy>."
+    }
   }
 }

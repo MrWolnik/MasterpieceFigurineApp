@@ -160,5 +160,64 @@
       "title": "Wyróżnione prace",
       "cta": "Zobacz całe portfolio"
     }
+  },
+  "form": {
+    "title": "Formularz zgłoszenia",
+    "intro": "Pola oznaczone * są wymagane. Podaj e-mail albo telefon.",
+    "required": "wymagane",
+    "kind": {
+      "legend": "Rodzaj zlecenia",
+      "figurine": "Malowanie figurki",
+      "painting": "Obraz na zamówienie"
+    },
+    "name": {
+      "label": "Imię"
+    },
+    "email": {
+      "label": "E-mail"
+    },
+    "phone": {
+      "label": "Telefon",
+      "hint": "W formacie międzynarodowym, np. +48 600 123 456."
+    },
+    "description": {
+      "label": "Opis – co chcesz osiągnąć",
+      "placeholder": {
+        "figurine": "Np. jaka to figurka, jaka kolorystyka, styl (tabletop, pokazowy), ile sztuk…",
+        "painting": "Np. temat, nastrój, kolorystyka, gdzie obraz zawiśnie…"
+      },
+      "prefill": "Chcę podobną pracę do: {{title}}. "
+    },
+    "dimensions": {
+      "label": "Preferowane wymiary",
+      "placeholder": "np. 50 × 70 cm"
+    },
+    "technique": {
+      "label": "Technika",
+      "choose": "Wybierz…",
+      "oil": "Olej",
+      "acrylic": "Akryl",
+      "watercolor": "Akwarela",
+      "any": "Bez znaczenia"
+    },
+    "deadline": {
+      "label": "Termin",
+      "hint": "Opcjonalnie – kiedy praca ma być gotowa."
+    },
+    "submit": "Wyślij zgłoszenie",
+    "errors": {
+      "required": "To pole jest wymagane.",
+      "email": "Wpisz poprawny adres e-mail.",
+      "phone": "Wpisz numer w formacie międzynarodowym, np. +48 600 123 456.",
+      "contact": "Podaj e-mail albo telefon.",
+      "descriptionShort": "Opis musi mieć co najmniej 20 znaków.",
+      "deadlinePast": "Termin nie może być wcześniejszy niż dziś.",
+      "deadlineInvalid": "Wpisz poprawną datę.",
+      "consent": "Zgoda jest wymagana, żeby wysłać zgłoszenie.",
+      "tooManyFiles": "Możesz dodać najwyżej 3 pliki."
+    },
+    "consent": {
+      "label": "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zgłoszenie zgodnie z <policy>polityką prywatności</policy>."
+    }
   }
 }
