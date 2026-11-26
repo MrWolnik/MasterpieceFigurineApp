@@ -90,6 +90,12 @@ test.describe('portfolio filters', () => {
     await page.goto('/en/portfolio');
 
     await page.getByRole('button', { name: 'Figurines' }).click();
+    // Choosing a kind drops the other kind's tags, so the tag buttons move. Wait for the new
+    // layout, as a user would; otherwise the next click can land where D&D used to be.
+    await expect(page.getByRole('button', { name: 'Figurines' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
     await page.getByRole('button', { name: 'D&D' }).click();
 
     await expect(page).toHaveURL(urlOf('/en/portfolio\\?kind=figurine&tag=dnd'));
