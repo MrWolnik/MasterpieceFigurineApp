@@ -41,6 +41,9 @@ export function Turntable({ slug, frames, format, title, autoRotate = true }: Tu
   const dragRef = useRef<Drag | null>(null);
   const [frame, setFrame] = useState(0);
   const [interacted, setInteracted] = useState(false);
+  // Set synchronously on the first interaction: the interval may still fire once before React
+  // re-renders and clears it, and that late step must not move the frame under the user.
+  const interactedRef = useRef(false);
 
   const urls = useMemo(
     () => Array.from({ length: frames }, (_, i) => framePath(slug, i, format)),
@@ -50,11 +53,13 @@ export function Turntable({ slug, frames, format, title, autoRotate = true }: Tu
   const ready = loaded >= frames;
 
   const step = useCallback(() => {
+    if (interactedRef.current) return;
     setFrame((current) => wrapFrame(current + 1, frames));
   }, [frames]);
   useAutoRotate(rootRef, autoRotate && ready && !interacted, step);
 
   function stopAutoRotate() {
+    interactedRef.current = true;
     setInteracted(true);
   }
 
