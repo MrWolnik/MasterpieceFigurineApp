@@ -21,7 +21,18 @@
       "intro": "Selected works: hand-painted miniatures for tabletop wargames and RPGs, and commissioned paintings. Click a work to see the details."
     },
     "work": {
-      "title": "Work: {{slug}}"
+      "kindLabel": "Type",
+      "medium": "Medium",
+      "size": "Size",
+      "year": "Year",
+      "gallery": "Photo gallery",
+      "photo": "{{title}} – photo {{n}}",
+      "nav": "Other works of this type",
+      "previous": "Previous: {{title}}",
+      "next": "Next: {{title}}",
+      "backToPortfolio": "Back to the portfolio",
+      "orderSimilar": "I want a similar one",
+      "orderSimilarHint": "Order a work in a similar style – priced individually."
     },
     "contact": {
       "title": "Contact"

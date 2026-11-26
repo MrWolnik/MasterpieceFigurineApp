@@ -28,11 +28,11 @@ describe('app routes', () => {
 
   it.each([
     ['/pl/portfolio', 'Portfolio', 'pl'],
-    ['/pl/portfolio/nocny-wartownik', 'Praca: nocny-wartownik', 'pl'],
+    ['/pl/portfolio/nocny-wartownik', 'Nocny wartownik', 'pl'],
     ['/pl/kontakt', 'Kontakt', 'pl'],
     ['/pl/prywatnosc', 'Polityka prywatności', 'pl'],
     ['/en/portfolio', 'Portfolio', 'en'],
-    ['/en/portfolio/nocny-wartownik', 'Work: nocny-wartownik', 'en'],
+    ['/en/portfolio/nocny-wartownik', 'Night Sentinel', 'en'],
     ['/en/contact', 'Contact', 'en'],
     ['/en/privacy', 'Privacy policy', 'en'],
   ])('renders %s in the right language', async (path, heading, lang) => {
@@ -91,7 +91,7 @@ describe('app routes', () => {
     ['/EN/contact', '/en/contact', 'Contact'],
     ['/en/Contact', '/en/contact', 'Contact'],
     ['/PL', '/pl', 'MasterpieceFigurineJ'],
-    ['/pl/Portfolio/x', '/pl/portfolio/x', 'Praca: x'],
+    ['/pl/Portfolio/nocny-wartownik', '/pl/portfolio/nocny-wartownik', 'Nocny wartownik'],
   ])('redirects %s to the lower-case canonical URL %s', async (path, expected, heading) => {
     const { router } = renderApp(path);
 

@@ -7,8 +7,8 @@ const pages = [
   {
     pl: '/pl/portfolio/nocny-wartownik',
     en: '/en/portfolio/nocny-wartownik',
-    plHeading: 'Praca: nocny-wartownik',
-    enHeading: 'Work: nocny-wartownik',
+    plHeading: 'Nocny wartownik',
+    enHeading: 'Night Sentinel',
   },
   { pl: '/pl/kontakt', en: '/en/contact', plHeading: 'Kontakt', enHeading: 'Contact' },
   {
@@ -71,11 +71,15 @@ test('a URL in other letter case redirects to the lower-case canonical page', as
 
 test('switching language keeps a percent-encoded slug intact', async ({ page }) => {
   await page.goto('/pl/portfolio/za%C5%BC%C3%B3%C5%82%C4%87');
-  await expect(page.getByRole('heading', { level: 1, name: 'Praca: zażółć' })).toBeVisible();
+  // No such work, so the 404 shows, but the language switch must keep the slug as is.
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Nie znaleziono strony' }),
+  ).toBeVisible();
 
   await page.getByRole('contentinfo').getByRole('link', { name: 'EN – English' }).click();
 
-  await expect(page.getByRole('heading', { level: 1, name: 'Work: zażółć' })).toBeVisible();
+  await expect(page).toHaveURL(urlOf('/en/portfolio/za%C5%BC%C3%B3%C5%82%C4%87'));
+  await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
 });
 
 test.describe('404 page', () => {
