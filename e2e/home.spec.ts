@@ -87,12 +87,11 @@ test.describe('full-screen scrolling', () => {
     test.skip(isMobile, 'snapping is desktop only');
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/pl');
-    // Browsers may shorten `y proximity` to `y`, since proximity is the default.
-    await expect.poll(() => snapType(page)).toMatch(/^y( proximity)?$/);
+    await expect.poll(() => snapType(page)).toBe('y mandatory');
 
-    // A partial scroll settles with the featured section right under the header.
-    await page.mouse.move(640, 400);
-    await page.mouse.wheel(0, 600);
+    // A small scroll (one arrow press) moves a whole screen: the featured section ends up
+    // right under the header. (Playwright's synthetic wheel does not snap like a real mouse.)
+    await page.keyboard.press('ArrowDown');
     const heading = page.getByRole('heading', { level: 2, name: 'Wyróżnione prace' });
     const headerBottom = await page
       .getByRole('banner')
