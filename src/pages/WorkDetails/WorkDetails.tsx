@@ -32,7 +32,8 @@ export function WorkDetails() {
         ← {t('pages.work.backToPortfolio')}
       </Link>
       <div className={styles.layout}>
-        <WorkMedia work={work} title={title} />
+        {/* Keyed by slug: "Next" reuses this page, and the turntable/zoom must start fresh. */}
+        <WorkMedia key={work.slug} work={work} title={title} />
         <div className={styles.info}>
           <h1 className={styles.title}>{title}</h1>
           <WorkMeta work={work} />

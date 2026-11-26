@@ -28,6 +28,10 @@ export function parseWorks(files: Record<string, unknown>): Work[] {
         `Invalid work file ${path}: slug "${result.data.slug}" must match the file name`,
       );
     }
+    const photos = [result.data.cover, ...result.data.images];
+    if (new Set(photos).size !== photos.length) {
+      throw new Error(`Invalid work file ${path}: images must be unique and not repeat the cover`);
+    }
     return result.data;
   });
 

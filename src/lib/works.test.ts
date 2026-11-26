@@ -87,6 +87,13 @@ describe('parseWorks', () => {
     );
   });
 
+  it.each([
+    ['a repeated image', ['/a.svg', '/a.svg']],
+    ['the cover among images', ['/works/a/cover.svg']],
+  ])('rejects %s', (_name, images) => {
+    expect(() => parseWorks(files(figurine('a', { images })))).toThrow(/images must be unique/);
+  });
+
   it('rejects duplicate slugs', () => {
     expect(() =>
       parseWorks({
