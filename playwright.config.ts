@@ -9,7 +9,7 @@ const previewURL = `http://localhost:${String(PREVIEW_PORT)}`;
 const devURL = `http://localhost:${String(DEV_PORT)}`;
 
 // Dev-only pages (e.g. /styleguide) are not in the production build, so they run against `vite`.
-const DEV_ONLY_SPECS = /(styleguide|turntable|image-zoom)\.spec\.ts/;
+const DEV_ONLY_SPECS = /(styleguide|turntable)\.spec\.ts/;
 
 /**
  * Most e2e tests run against the production build served by `vite preview`,
@@ -53,12 +53,6 @@ export default defineConfig({
       name: 'dev-only-webkit',
       testMatch: /turntable\.spec\.ts/,
       use: { ...devices['Desktop Safari'], baseURL: devURL },
-    },
-    {
-      // Pinch-to-zoom on a phone in WebKit (PLAN Z1.6).
-      name: 'dev-only-mobile-webkit',
-      testMatch: /image-zoom\.spec\.ts/,
-      use: { ...devices['iPhone 15'], baseURL: devURL },
     },
   ],
   webServer: [
