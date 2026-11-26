@@ -18,6 +18,11 @@
     scroll-snap-align: start;
   }
 
+  /* Without its own snap point the footer is pulled back to the featured section. */
+  :global(html.home-snap) :global(footer) {
+    scroll-snap-align: end;
+  }
+
   .featured {
     min-height: calc(100svh - var(--header-height));
   }

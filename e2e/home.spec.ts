@@ -107,6 +107,19 @@ test.describe('full-screen scrolling', () => {
     await expect(heading).toBeInViewport();
   });
 
+  test('the footer stays reachable at the bottom of the page', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'snapping is desktop only');
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/pl');
+    await expect.poll(() => snapType(page)).not.toBe('none');
+
+    await page.keyboard.press('End');
+
+    await expect(page.getByRole('contentinfo')).toBeInViewport();
+    await page.waitForTimeout(500); // a wrong snap would pull the page back up here
+    await expect(page.getByRole('contentinfo')).toBeInViewport();
+  });
+
   test('does not snap on phones or on other pages', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/pl');
