@@ -53,5 +53,28 @@
       "privacy": "Polityka prywatności",
       "copyright": "© {{year}} {{brand}}"
     }
+  },
+  "works": {
+    "kind": {
+      "figurine": "Figurka",
+      "painting": "Obraz"
+    },
+    "turntable": "Podgląd 360°",
+    "tagsLabel": "Tagi",
+    "empty": "Brak prac do wyświetlenia."
+  },
+  "tags": {
+    "warhammer": "Warhammer",
+    "nmm": "NMM",
+    "dnd": "D&D",
+    "fantasy": "Fantasy",
+    "osl": "OSL",
+    "sci-fi": "Sci-fi",
+    "olej": "Olej",
+    "akryl": "Akryl",
+    "akwarela": "Akwarela",
+    "pejzaz": "Pejzaż",
+    "portret": "Portret",
+    "kwiaty": "Kwiaty"
   }
 }
