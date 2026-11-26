@@ -62,7 +62,16 @@
     },
     "turntable": "Podgląd 360°",
     "tagsLabel": "Tagi",
-    "empty": "Brak prac do wyświetlenia."
+    "empty": "Brak prac do wyświetlenia.",
+    "filters": {
+      "all": "Wszystko",
+      "kindLabel": "Rodzaj pracy",
+      "figurines": "Figurki",
+      "paintings": "Obrazy",
+      "tagLabel": "Tagi",
+      "allTags": "Wszystkie tagi",
+      "count": "Liczba prac: {{count}}"
+    }
   },
   "tags": {
     "warhammer": "Warhammer",

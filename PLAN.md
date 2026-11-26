@@ -303,7 +303,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Testy:_ komponentowe (kafelek pokazuje tytuł w bieżącym języku, tagi, właściwą ikonkę rodzaju i link do szczegółów).
 - [x] **Z1.3 Strona Portfolio.** Wstęp i siatka wszystkich prac.
       _Testy:_ e2e (wszystkie prace widoczne, kliknięcie otwiera szczegóły). Zrzuty ekranu przy szerokościach 360, 768 i 1440 px.
-- [ ] **Z1.4 Filtry.** Przełącznik rodzaju „Wszystko / Figurki / Obrazy” i przyciski tagów. Lista tagów zależy od wybranego rodzaju, a stan filtrów trafia do adresu (`?kind=painting&tag=olej`).
+- [x] **Z1.4 Filtry.** Przełącznik rodzaju „Wszystko / Figurki / Obrazy” i przyciski tagów. Lista tagów zależy od wybranego rodzaju, a stan filtrów trafia do adresu (`?kind=painting&tag=olej`).
       _Testy:_ komponentowe dla filtrowania i zmiany listy tagów po zmianie rodzaju. E2e: wejście z `?kind=` i `?tag=` pokazuje przefiltrowaną listę.
 - [ ] **Z1.5 Komponent Turntable (360°).** Obrót przeciąganiem (Pointer Events) i strzałkami, wskaźnik ładowania, autoobrót zatrzymujący się po dotknięciu, pierwsza klatka widoczna od razu, reszta wczytywana w tle. Ma `aria-label` i podpowiedź.
       _Testy:_ jednostkowe dla wyliczania klatki z przesunięcia (zawijanie 35 → 0 → 35). Komponentowe: strzałki zmieniają klatkę, a autoobrót wyłącza się przy `prefers-reduced-motion`. E2e: przeciąganie zmienia klatkę w Chromium i WebKit.
