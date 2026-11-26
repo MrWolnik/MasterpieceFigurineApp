@@ -43,7 +43,8 @@ When `PLAN.md` and this file disagree, `PLAN.md` wins.
 - Never push to `main` directly; work on branches named `feat/z1-5-turntable`, `fix/...`,
   `test/...`, `chore/...`
 - Use Conventional Commits (`feat(portfolio): add tag filter`, `test(form): ...`, `chore: ...`)
-- Small, focused commits; ask before pushing or opening a PR
+- Small, focused commits. After each task, push its branch and open a PR without asking;
+  never merge (the owner merges)
 - Never force-push or rewrite history without asking
 
 ## Communication
