@@ -7,18 +7,53 @@
     "label": "Język"
   },
   "languages": {
-    "pl": { "short": "PL", "name": "PL – Polski" },
-    "en": { "short": "EN", "name": "EN – English" }
+    "pl": {
+      "short": "PL",
+      "name": "PL – Polski"
+    },
+    "en": {
+      "short": "EN",
+      "name": "EN – English"
+    }
   },
   "pages": {
-    "portfolio": { "title": "Portfolio" },
-    "work": { "title": "Praca: {{slug}}" },
-    "contact": { "title": "Kontakt" },
-    "privacy": { "title": "Polityka prywatności" },
+    "portfolio": {
+      "title": "Portfolio"
+    },
+    "work": {
+      "title": "Praca: {{slug}}"
+    },
+    "contact": {
+      "title": "Kontakt"
+    },
+    "privacy": {
+      "title": "Polityka prywatności"
+    },
     "notFound": {
       "title": "Nie znaleziono strony",
       "description": "Ta strona nie istnieje albo została przeniesiona.",
       "backHome": "Wróć na stronę główną"
+    }
+  },
+  "layout": {
+    "skipToContent": "Przejdź do treści",
+    "homeLink": "MasterpieceFigurineJ",
+    "nav": {
+      "label": "Główna nawigacja",
+      "portfolio": "Portfolio",
+      "contact": "Kontakt"
+    },
+    "menu": {
+      "open": "Otwórz menu",
+      "close": "Zamknij menu"
+    },
+    "footer": {
+      "social": "Media społecznościowe",
+      "newTab": "{{label}} (otwiera się w nowej karcie)",
+      "placeholder": "{{label}} (link jeszcze nieustawiony)",
+      "email": "Napisz e-mail: {{email}}",
+      "privacy": "Polityka prywatności",
+      "copyright": "© {{year}} {{brand}}"
     }
   }
 }

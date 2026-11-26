@@ -8,8 +8,8 @@ export function WorkDetails() {
   const { slug = '' } = useParams();
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1>{t('pages.work.title', { slug })}</h1>
-    </main>
+    </div>
   );
 }

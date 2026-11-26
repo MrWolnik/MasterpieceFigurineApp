@@ -6,7 +6,7 @@ import {
   type LoaderFunctionArgs,
   type RouteObject,
 } from 'react-router';
-import { LanguageLayout } from './components/Layout/LanguageLayout/LanguageLayout';
+import { Layout } from './components/Layout/Layout';
 import { detectBrowserLanguage, languages, type Language } from './lib/i18n';
 import { canonicalPath, pathFor, routePaths, type RouteKey } from './lib/routes';
 import { Contact } from './pages/Contact/Contact';
@@ -41,7 +41,7 @@ function languageRoute(lang: Language, i18n: i18n): RouteObject {
       await i18n.changeLanguage(lang);
       return null;
     },
-    Component: LanguageLayout,
+    Component: Layout,
     children: [
       { index: true, Component: Home },
       ...Object.entries(pages).map(([key, Component]) => ({
@@ -74,7 +74,7 @@ export function createAppRoutes(i18n: i18n): RouteObject[] {
 
   // No (valid) language prefix: show the 404 in the browser's language.
   routes.push({
-    Component: LanguageLayout,
+    Component: Layout,
     children: [
       {
         path: '*',

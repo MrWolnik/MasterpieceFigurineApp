@@ -7,18 +7,53 @@
     "label": "Language"
   },
   "languages": {
-    "pl": { "short": "PL", "name": "PL – Polski" },
-    "en": { "short": "EN", "name": "EN – English" }
+    "pl": {
+      "short": "PL",
+      "name": "PL – Polski"
+    },
+    "en": {
+      "short": "EN",
+      "name": "EN – English"
+    }
   },
   "pages": {
-    "portfolio": { "title": "Portfolio" },
-    "work": { "title": "Work: {{slug}}" },
-    "contact": { "title": "Contact" },
-    "privacy": { "title": "Privacy policy" },
+    "portfolio": {
+      "title": "Portfolio"
+    },
+    "work": {
+      "title": "Work: {{slug}}"
+    },
+    "contact": {
+      "title": "Contact"
+    },
+    "privacy": {
+      "title": "Privacy policy"
+    },
     "notFound": {
       "title": "Page not found",
       "description": "This page does not exist or has been moved.",
       "backHome": "Back to the home page"
+    }
+  },
+  "layout": {
+    "skipToContent": "Skip to content",
+    "homeLink": "MasterpieceFigurineJ",
+    "nav": {
+      "label": "Main navigation",
+      "portfolio": "Portfolio",
+      "contact": "Contact"
+    },
+    "menu": {
+      "open": "Open menu",
+      "close": "Close menu"
+    },
+    "footer": {
+      "social": "Social media",
+      "newTab": "{{label}} (opens in a new tab)",
+      "placeholder": "{{label}} (link not set yet)",
+      "email": "Send an e-mail: {{email}}",
+      "privacy": "Privacy policy",
+      "copyright": "© {{year}} {{brand}}"
     }
   }
 }

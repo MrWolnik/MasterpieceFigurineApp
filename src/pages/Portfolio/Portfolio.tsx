@@ -6,8 +6,8 @@ export function Portfolio() {
   const { t } = useTranslation();
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1>{t('pages.portfolio.title')}</h1>
-    </main>
+    </div>
   );
 }
