@@ -8,7 +8,7 @@ describe('WorkGrid', () => {
   it('renders one tile per work, in order', () => {
     const works = getWorks();
     renderWithProviders(<WorkGrid works={works} />, { language: 'en' });
-    const headings = screen.getAllByRole('heading', { level: 3 });
+    const headings = screen.getAllByRole('heading', { level: 2 });
     expect(headings.map((h) => h.textContent)).toEqual(works.map((w) => w.title.en));
   });
 
@@ -19,6 +19,12 @@ describe('WorkGrid', () => {
     );
     expect(loading.slice(0, 2)).toEqual(['eager', 'eager']);
     expect(loading.slice(2).every((value) => value === 'lazy')).toBe(true);
+  });
+
+  it('uses the requested heading level for tile titles', () => {
+    renderWithProviders(<WorkGrid works={getWorks({ kind: 'painting' })} headingLevel={3} />);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(3);
+    expect(screen.queryByRole('heading', { level: 2 })).not.toBeInTheDocument();
   });
 
   it('shows a message when there are no works', () => {

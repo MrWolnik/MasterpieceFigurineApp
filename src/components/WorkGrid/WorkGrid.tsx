@@ -6,7 +6,13 @@ import styles from './WorkGrid.module.css';
 /** Tiles above the fold on most screens; their covers load eagerly for a faster LCP. */
 const EAGER_COUNT = 2;
 
-export function WorkGrid({ works }: { works: readonly Work[] }) {
+interface WorkGridProps {
+  works: readonly Work[];
+  /** Heading level of the tile titles (2 under a page `h1`, 3 inside an `h2` section). */
+  headingLevel?: 2 | 3;
+}
+
+export function WorkGrid({ works, headingLevel = 2 }: WorkGridProps) {
   const { t } = useTranslation();
 
   if (works.length === 0) {
@@ -17,7 +23,7 @@ export function WorkGrid({ works }: { works: readonly Work[] }) {
     <ul className={styles.grid}>
       {works.map((work, index) => (
         <li key={work.slug}>
-          <WorkCard work={work} eager={index < EAGER_COUNT} />
+          <WorkCard work={work} eager={index < EAGER_COUNT} headingLevel={headingLevel} />
         </li>
       ))}
     </ul>
