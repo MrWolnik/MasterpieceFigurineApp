@@ -132,6 +132,36 @@ describe('Turntable', () => {
     expect(frameSrc()).toBe('/works/demo/frames/001.svg');
   });
 
+  it('stops auto-rotating when reduced motion is switched on while open', async () => {
+    let reduce = false;
+    const listeners = new Set<() => void>();
+    vi.stubGlobal('matchMedia', (query: string) => ({
+      get matches() {
+        return reduce;
+      },
+      media: query,
+      addEventListener: (_type: string, listener: () => void) => listeners.add(listener),
+      removeEventListener: (_type: string, listener: () => void) => listeners.delete(listener),
+    }));
+    vi.useFakeTimers();
+    renderTurntable(true);
+    await act(async () => {
+      await vi.runOnlyPendingTimersAsync();
+    });
+
+    act(() => {
+      reduce = true;
+      listeners.forEach((listener) => {
+        listener();
+      });
+    });
+    const frame = frameSrc();
+    act(() => {
+      vi.advanceTimersByTime(AUTO_ROTATE_INTERVAL_MS * 5);
+    });
+    expect(frameSrc()).toBe(frame);
+  });
+
   it('shows the hint until the first interaction', async () => {
     const user = userEvent.setup();
     renderTurntable();

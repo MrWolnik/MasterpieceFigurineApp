@@ -1,10 +1,24 @@
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, useSyncExternalStore, type RefObject } from 'react';
 
 /** Delay between auto-rotation frames; 36 frames ≈ 3 s per turn. */
 export const AUTO_ROTATE_INTERVAL_MS = 80;
 
-function prefersReducedMotion(): boolean {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener('change', onChange);
+  return () => {
+    query.removeEventListener('change', onChange);
+  };
+}
+
+/** Follows the OS setting live, so switching it on stops a running rotation. */
+function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+  );
 }
 
 /** Whether `ref` is on screen and the tab is visible; true where IntersectionObserver is missing. */
@@ -47,7 +61,8 @@ export function useAutoRotate(
   step: () => void,
 ): void {
   const visible = useIsVisible(ref);
-  const active = enabled && visible && !prefersReducedMotion();
+  const reducedMotion = usePrefersReducedMotion();
+  const active = enabled && visible && !reducedMotion;
 
   useEffect(() => {
     if (!active) return;
