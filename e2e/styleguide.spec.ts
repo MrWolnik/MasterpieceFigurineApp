@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { expectNoA11yViolations } from './helpers.js';
 
 test.describe('styleguide (dev only)', () => {
   test.beforeEach(async ({ page }) => {
@@ -14,9 +14,7 @@ test.describe('styleguide (dev only)', () => {
   });
 
   test('has no colour-contrast or other accessibility violations', async ({ page }) => {
-    const results = await new AxeBuilder({ page }).analyze();
-
-    expect(results.violations).toEqual([]);
+    await expectNoA11yViolations(page);
   });
 
   test('loads Cinzel and Inter, including the latin-ext subset for Polish letters', async ({

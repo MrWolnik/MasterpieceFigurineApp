@@ -4,6 +4,7 @@ const PREVIEW_PORT = 4173;
 const DEV_PORT = 5173;
 const isCI = Boolean(process.env.CI);
 
+const previewCommand = `npm run preview -- --port ${String(PREVIEW_PORT)} --strictPort`;
 const previewURL = `http://localhost:${String(PREVIEW_PORT)}`;
 const devURL = `http://localhost:${String(DEV_PORT)}`;
 
@@ -19,7 +20,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  ...(isCI ? { workers: 1 } : {}),
+  workers: isCI ? 1 : undefined,
   reporter: isCI
     ? [['html', { open: 'never' }], ['github']]
     : [['html', { open: 'never' }], ['list']],
@@ -29,15 +30,19 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [
-    { name: 'chromium', testIgnore: DEV_ONLY_SPECS, use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', testIgnore: DEV_ONLY_SPECS, use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', testIgnore: DEV_ONLY_SPECS, use: { ...devices['Desktop Safari'] } },
-    // iPhone profile: WebKit matters for the 360° turntable and scroll behaviour on iOS.
-    {
-      name: 'mobile-safari',
+    ...(
+      [
+        ['chromium', 'Desktop Chrome'],
+        ['firefox', 'Desktop Firefox'],
+        ['webkit', 'Desktop Safari'],
+        // iPhone profile: WebKit matters for the 360° turntable and scroll behaviour on iOS.
+        ['mobile-safari', 'iPhone 15'],
+      ] as const
+    ).map(([name, device]) => ({
+      name,
       testIgnore: DEV_ONLY_SPECS,
-      use: { ...devices['iPhone 15'] },
-    },
+      use: { ...devices[device] },
+    })),
     {
       name: 'dev-only',
       testMatch: DEV_ONLY_SPECS,
@@ -47,9 +52,7 @@ export default defineConfig({
   webServer: [
     {
       // CI has already built the app in an earlier step, so it only serves `dist`.
-      command: isCI
-        ? `npm run preview -- --port ${String(PREVIEW_PORT)} --strictPort`
-        : `npm run build && npm run preview -- --port ${String(PREVIEW_PORT)} --strictPort`,
+      command: isCI ? previewCommand : `npm run build && ${previewCommand}`,
       url: previewURL,
       reuseExistingServer: !isCI,
       timeout: 120_000,

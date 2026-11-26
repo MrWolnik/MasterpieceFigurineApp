@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { expectNoA11yViolations } from './helpers.js';
 
 test.describe('home page', () => {
   test('renders the brand heading', async ({ page }) => {
@@ -14,9 +14,7 @@ test.describe('home page', () => {
   test('has no detectable accessibility violations', async ({ page }) => {
     await page.goto('/pl');
 
-    const results = await new AxeBuilder({ page }).analyze();
-
-    expect(results.violations).toEqual([]);
+    await expectNoA11yViolations(page);
   });
 });
 
