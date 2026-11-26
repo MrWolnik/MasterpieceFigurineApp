@@ -75,3 +75,21 @@ export function getBySlug(slug: string): Work | undefined {
 export function getTags(kind?: WorkKind): string[] {
   return collectTags(allWorks, kind);
 }
+
+export interface Neighbours {
+  previous?: Work;
+  next?: Work;
+}
+
+/** The works before and after `slug` among works of the same kind (no wrap-around). */
+export function findNeighbours(works: readonly Work[], slug: string): Neighbours {
+  const current = works.find((work) => work.slug === slug);
+  if (!current) return {};
+  const sameKind = filterWorks(works, { kind: current.kind });
+  const index = sameKind.indexOf(current);
+  return { previous: sameKind[index - 1], next: sameKind[index + 1] };
+}
+
+export function getNeighbours(slug: string): Neighbours {
+  return findNeighbours(allWorks, slug);
+}

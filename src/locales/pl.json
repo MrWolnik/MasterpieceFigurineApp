@@ -21,7 +21,18 @@
       "intro": "Wybrane prace: ręcznie malowane figurki do gier bitewnych i RPG oraz obrazy na zamówienie. Kliknij pracę, żeby zobaczyć szczegóły."
     },
     "work": {
-      "title": "Praca: {{slug}}"
+      "kindLabel": "Rodzaj",
+      "medium": "Technika",
+      "size": "Wymiary",
+      "year": "Rok",
+      "gallery": "Galeria zdjęć",
+      "photo": "{{title}} – zdjęcie {{n}}",
+      "nav": "Inne prace tego rodzaju",
+      "previous": "Poprzednia: {{title}}",
+      "next": "Następna: {{title}}",
+      "backToPortfolio": "Wróć do portfolio",
+      "orderSimilar": "Chcę podobną",
+      "orderSimilarHint": "Zamów pracę w podobnym stylu – wycena indywidualna."
     },
     "contact": {
       "title": "Kontakt"

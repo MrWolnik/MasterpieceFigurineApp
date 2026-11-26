@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import {
   collectTags,
   filterWorks,
+  findNeighbours,
   getBySlug,
   getFeatured,
+  getNeighbours,
   getTags,
   getWorks,
   parseWorks,
@@ -127,6 +129,14 @@ describe('query helpers', () => {
     expect(collectTags(works)).toEqual(['dnd', 'nmm', 'olej', 'warhammer']);
     expect(collectTags(works, 'painting')).toEqual(['nmm', 'olej']);
   });
+
+  it('finds neighbours within the same kind, without wrapping', () => {
+    expect(findNeighbours(works, 'f1')).toEqual({ previous: undefined, next: works[2] });
+    expect(findNeighbours(works, 'f2').previous?.slug).toBe('f1');
+    expect(findNeighbours(works, 'f2').next).toBeUndefined();
+    expect(findNeighbours(works, 'p1')).toEqual({ previous: undefined, next: undefined });
+    expect(findNeighbours(works, 'missing')).toEqual({});
+  });
 });
 
 describe('sample content', () => {
@@ -146,6 +156,12 @@ describe('sample content', () => {
   it('finds works by slug', () => {
     expect(getBySlug('mgla-nad-bagnem')?.kind).toBe('painting');
     expect(getBySlug('missing')).toBeUndefined();
+  });
+
+  it('links neighbours of the same kind', () => {
+    const { previous, next } = getNeighbours('portret-rycerki');
+    expect(previous?.slug).toBe('mgla-nad-bagnem');
+    expect(next?.slug).toBe('zloty-ogrod');
   });
 
   it('has featured works and tags for each kind', () => {
