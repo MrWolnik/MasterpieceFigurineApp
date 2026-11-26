@@ -71,6 +71,20 @@ describe('WorkDetails', () => {
     );
   });
 
+  it('starts the turntable afresh after moving to the next work', async () => {
+    const { user } = renderWork('/pl/portfolio/nocny-wartownik');
+    const slider = () => screen.getByRole('slider', { name: /Podgląd 360°/ });
+
+    slider().focus();
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+    expect(slider()).toHaveAttribute('aria-valuenow', '20');
+
+    await user.click(screen.getByRole('link', { name: /Następna: Smocza kapłanka/ }));
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Smocza kapłanka' })).toBeInTheDocument();
+    expect(slider()).toHaveAttribute('aria-valuenow', '0');
+  });
+
   it('has no previous link on the first work of a kind', () => {
     renderWork('/pl/portfolio/nocny-wartownik');
 
