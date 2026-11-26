@@ -46,12 +46,12 @@ test.describe('language switcher', () => {
       await expect(page.getByRole('heading', { level: 1, name: plHeading })).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('lang', 'pl');
 
-      await page.getByRole('link', { name: 'EN – English' }).click();
+      await page.getByRole('banner').getByRole('link', { name: 'EN – English' }).click();
       await expect(page).toHaveURL(urlOf(en));
       await expect(page.getByRole('heading', { level: 1, name: enHeading })).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
-      await page.getByRole('link', { name: 'PL – Polski' }).click();
+      await page.getByRole('banner').getByRole('link', { name: 'PL – Polski' }).click();
       await expect(page).toHaveURL(urlOf(pl));
       await expect(page.locator('html')).toHaveAttribute('lang', 'pl');
     });
