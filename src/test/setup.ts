@@ -43,6 +43,15 @@ if (!('showModal' in HTMLDialogElement.prototype)) {
   });
 }
 
+// jsdom has no object URLs; previews (Dropzone) only need a unique string per file.
+if (!('createObjectURL' in URL)) {
+  let next = 0;
+  Object.assign(URL, {
+    createObjectURL: () => `blob:test/${String((next += 1))}`,
+    revokeObjectURL: () => undefined,
+  });
+}
+
 // Any request without a matching handler fails the test, so no test hits the real network.
 beforeAll(() => {
   server.listen({ onUnhandledFrame: 'error' });

@@ -35,10 +35,87 @@
       "orderSimilarHint": "Order a work in a similar style – priced individually."
     },
     "contact": {
-      "title": "Contact"
+      "title": "Contact",
+      "intro": "Have an idea for a figurine or a painting? Describe it – I'll reply with a quote and a date.",
+      "about": {
+        "title": "About me",
+        "paragraphs": [
+          "I have been painting tabletop and RPG miniatures for over ten years – from single heroes to whole armies.",
+          "I also paint commissioned pictures: oils, acrylics and watercolours, often inspired by fantasy and night light.",
+          "I love dark, moody palettes, careful tonal transitions and details you only notice up close."
+        ],
+        "processTitle": "How we work together",
+        "steps": [
+          {
+            "title": "Request",
+            "text": "You fill in the form: what you want to achieve, photos or inspirations and a deadline if you have one."
+          },
+          {
+            "title": "Custom quote",
+            "text": "After your request I prepare a quote and a date tailored to your project."
+          },
+          {
+            "title": "Painting",
+            "text": "I paint and send progress photos so you can ask for changes."
+          },
+          {
+            "title": "Delivery",
+            "text": "The finished work reaches you carefully packed."
+          }
+        ],
+        "commissions": "I take commissions for figurine painting and for paintings. Every commission is quoted individually."
+      },
+      "details": {
+        "title": "Contact details",
+        "email": "E-mail",
+        "emailLink": "Send an e-mail: {{email}}",
+        "social": "You can also find me here"
+      }
     },
     "privacy": {
-      "title": "Privacy policy"
+      "title": "Privacy policy",
+      "draft": "Template to complete – replace the parts in square brackets with real details before publishing.",
+      "updated": "Last updated: [date]",
+      "contact": "Contact about your data:",
+      "sections": [
+        {
+          "title": "Data controller",
+          "paragraphs": [
+            "The controller of your personal data is [full name / company name], [address], who runs the MasterpieceFigurineJ website."
+          ]
+        },
+        {
+          "title": "What data I collect",
+          "paragraphs": [
+            "Through the order form: your name, e-mail address or phone number, the description of the commission, preferred size and technique (for paintings), deadline and any photos or GIFs you upload.",
+            "The website uses no tracking cookies and no analytics tools."
+          ]
+        },
+        {
+          "title": "Purpose and legal basis",
+          "paragraphs": [
+            "I process the data only to answer your request, prepare a quote and – if we agree – carry out the commission (Art. 6(1)(a) and (b) GDPR)."
+          ]
+        },
+        {
+          "title": "Who receives the data",
+          "paragraphs": [
+            "Form submissions are transmitted and stored by Netlify, Inc. (hosting and form handling), and notifications reach my e-mail inbox. [Add details on transfers outside the EEA and safeguards.]"
+          ]
+        },
+        {
+          "title": "How long I keep the data",
+          "paragraphs": [
+            "Until we finish discussing the commission, and if it goes ahead, for the period required by law [e.g. tax law]. Requests with no further contact are deleted after [e.g. 12 months]."
+          ]
+        },
+        {
+          "title": "Your rights",
+          "paragraphs": [
+            "You have the right to access, rectify and erase your data, to restrict its processing, to data portability and to withdraw consent at any time. You can also lodge a complaint with a supervisory authority (in Poland: the President of UODO)."
+          ]
+        }
+      ]
     },
     "notFound": {
       "title": "Page not found",
@@ -125,5 +202,93 @@
       "title": "Featured works",
       "cta": "See the whole portfolio"
     }
+  },
+  "form": {
+    "title": "Order request",
+    "intro": "Fields marked * are required. Give an e-mail or a phone number.",
+    "required": "required",
+    "kind": {
+      "legend": "Type of commission",
+      "figurine": "Figurine painting",
+      "painting": "Commissioned painting"
+    },
+    "name": {
+      "label": "Name"
+    },
+    "email": {
+      "label": "E-mail"
+    },
+    "phone": {
+      "label": "Phone",
+      "hint": "In international format, e.g. +44 7700 900123."
+    },
+    "description": {
+      "label": "Description – what you want to achieve",
+      "placeholder": {
+        "figurine": "E.g. which miniature, colour scheme, style (tabletop, display), how many…",
+        "painting": "E.g. subject, mood, colours, where the painting will hang…"
+      },
+      "prefill": "I would like a work similar to: {{title}}. "
+    },
+    "dimensions": {
+      "label": "Preferred size",
+      "placeholder": "e.g. 50 × 70 cm"
+    },
+    "technique": {
+      "label": "Technique",
+      "choose": "Choose…",
+      "oil": "Oil",
+      "acrylic": "Acrylic",
+      "watercolor": "Watercolour",
+      "any": "No preference"
+    },
+    "deadline": {
+      "label": "Deadline",
+      "hint": "Optional – when the work should be ready."
+    },
+    "submit": "Send request",
+    "errors": {
+      "required": "This field is required.",
+      "email": "Enter a valid e-mail address.",
+      "phone": "Enter the number in international format, e.g. +44 7700 900123.",
+      "contact": "Give an e-mail or a phone number.",
+      "descriptionShort": "The description must be at least 20 characters.",
+      "deadlinePast": "The deadline cannot be earlier than today.",
+      "deadlineInvalid": "Enter a valid date.",
+      "consent": "Consent is required to send the request.",
+      "tooManyFiles": "You can add only 1 file."
+    },
+    "consent": {
+      "label": "I agree to the processing of my data to answer this request, as described in the <policy>privacy policy</policy>."
+    },
+    "files": {
+      "label": {
+        "figurine": "Photo of your figurine",
+        "painting": "Inspiration or reference photo"
+      },
+      "hint": {
+        "figurine": "Show the unpainted figurine or a similar result you like.",
+        "painting": "Add a painting, photo or GIF that captures the mood."
+      },
+      "limits": "JPG, PNG, WEBP or GIF, 1 file up to 5 MB.",
+      "drop": "Drag and drop a photo here",
+      "browse": "or choose from your device",
+      "selected": "Selected file",
+      "remove": "Remove file {{name}}",
+      "rejected": {
+        "type": "{{name}}: only JPG, PNG, WEBP and GIF files are allowed.",
+        "size": "{{name}}: the file is larger than 5 MB.",
+        "count": "{{name}}: you can add only 1 file – remove the current one first."
+      }
+    },
+    "subject": "[{{kind}}] New request – {{name}}",
+    "sending": "Sending…",
+    "honeypot": "Do not fill in this field",
+    "success": {
+      "title": "Thank you for your request!",
+      "text": "I will get back to you as soon as I can – usually within 2–3 working days.",
+      "again": "Send another request"
+    },
+    "failure": "The request could not be sent. Your answers are still in the form – try again in a moment or send an e-mail."
   }
 }
