@@ -49,7 +49,7 @@ describe('OrderForm', () => {
     expect(screen.getByLabelText('Zdjęcie Twojej figurki')).toBeInTheDocument();
 
     await user.click(screen.getByRole('radio', { name: 'Obraz na zamówienie' }));
-    expect(screen.getByLabelText('Inspiracje lub zdjęcia referencyjne')).toBeInTheDocument();
+    expect(screen.getByLabelText('Inspiracja lub zdjęcie referencyjne')).toBeInTheDocument();
   });
 
   it('?kind=painting presets the painting order', () => {

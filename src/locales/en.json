@@ -256,7 +256,7 @@
       "deadlinePast": "The deadline cannot be earlier than today.",
       "deadlineInvalid": "Enter a valid date.",
       "consent": "Consent is required to send the request.",
-      "tooManyFiles": "You can add up to 3 files."
+      "tooManyFiles": "You can add only 1 file."
     },
     "consent": {
       "label": "I agree to the processing of my data to answer this request, as described in the <policy>privacy policy</policy>."
@@ -264,21 +264,21 @@
     "files": {
       "label": {
         "figurine": "Photo of your figurine",
-        "painting": "Inspirations or reference photos"
+        "painting": "Inspiration or reference photo"
       },
       "hint": {
         "figurine": "Show the unpainted figurine or a similar result you like.",
-        "painting": "Add paintings, photos or GIFs that capture the mood."
+        "painting": "Add a painting, photo or GIF that captures the mood."
       },
-      "limits": "JPG, PNG, WEBP or GIF, up to 3 files of 5 MB each.",
-      "drop": "Drag and drop photos here",
+      "limits": "JPG, PNG, WEBP or GIF, 1 file up to 5 MB.",
+      "drop": "Drag and drop a photo here",
       "browse": "or choose from your device",
-      "selected": "Selected files",
+      "selected": "Selected file",
       "remove": "Remove file {{name}}",
       "rejected": {
         "type": "{{name}}: only JPG, PNG, WEBP and GIF files are allowed.",
         "size": "{{name}}: the file is larger than 5 MB.",
-        "count": "{{name}}: you can add up to 3 files."
+        "count": "{{name}}: you can add only 1 file – remove the current one first."
       }
     },
     "subject": "[{{kind}}] New request – {{name}}",

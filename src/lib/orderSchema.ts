@@ -7,7 +7,7 @@ export const TECHNIQUES = ['oil', 'acrylic', 'watercolor', 'any'] as const;
 export type Technique = (typeof TECHNIQUES)[number];
 
 export const MIN_DESCRIPTION = 20;
-export const MAX_FILES = 3;
+export const MAX_FILES = 1;
 
 /** Error messages are keys under `form.errors` in the locale files. */
 export const ORDER_ERRORS = [

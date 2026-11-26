@@ -256,7 +256,7 @@
       "deadlinePast": "Termin nie może być wcześniejszy niż dziś.",
       "deadlineInvalid": "Wpisz poprawną datę.",
       "consent": "Zgoda jest wymagana, żeby wysłać zgłoszenie.",
-      "tooManyFiles": "Możesz dodać najwyżej 3 pliki."
+      "tooManyFiles": "Możesz dodać tylko 1 plik."
     },
     "consent": {
       "label": "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zgłoszenie zgodnie z <policy>polityką prywatności</policy>."
@@ -264,21 +264,21 @@
     "files": {
       "label": {
         "figurine": "Zdjęcie Twojej figurki",
-        "painting": "Inspiracje lub zdjęcia referencyjne"
+        "painting": "Inspiracja lub zdjęcie referencyjne"
       },
       "hint": {
         "figurine": "Pokaż figurkę przed malowaniem albo podobny efekt, który Ci się podoba.",
-        "painting": "Dodaj obrazy, zdjęcia lub GIF-y, które oddają klimat."
+        "painting": "Dodaj obraz, zdjęcie lub GIF, który oddaje klimat."
       },
-      "limits": "JPG, PNG, WEBP lub GIF, maksymalnie 3 pliki po 5 MB.",
-      "drop": "Przeciągnij i upuść zdjęcia tutaj",
+      "limits": "JPG, PNG, WEBP lub GIF, 1 plik do 5 MB.",
+      "drop": "Przeciągnij i upuść zdjęcie tutaj",
       "browse": "albo wybierz z dysku",
-      "selected": "Wybrane pliki",
+      "selected": "Wybrany plik",
       "remove": "Usuń plik {{name}}",
       "rejected": {
         "type": "{{name}}: dozwolone są tylko pliki JPG, PNG, WEBP i GIF.",
         "size": "{{name}}: plik jest większy niż 5 MB.",
-        "count": "{{name}}: możesz dodać najwyżej 3 pliki."
+        "count": "{{name}}: możesz dodać tylko 1 plik – najpierw usuń obecny."
       }
     },
     "subject": "[{{kind}}] Nowe zgłoszenie – {{name}}",

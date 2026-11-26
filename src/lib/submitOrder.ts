@@ -4,8 +4,8 @@ import type { Order } from './orderSchema';
 /** Name of the Netlify form; the static copy in `index.html` declares the same name and fields. */
 export const ORDER_FORM_NAME = 'order';
 export const HONEYPOT_FIELD = 'bot-field';
-/** Netlify keeps one file per field, so each photo gets its own field. */
-export const PHOTO_FIELDS = ['photo1', 'photo2', 'photo3'] as const;
+/** One photo per order keeps a submission under Netlify's request size limit. */
+export const PHOTO_FIELD = 'photo';
 
 /** E-mail subject for Julia, always in Polish, e.g. "[Obraz] Nowe zgłoszenie – Anna". */
 export function orderSubject(order: Pick<Order, 'kind' | 'name'>): string {
@@ -28,10 +28,8 @@ export function orderFormData(order: Order): FormData {
     data.set('dimensions', order.dimensions);
     data.set('technique', order.technique);
   }
-  order.files.forEach((file, index) => {
-    const field = PHOTO_FIELDS[index];
-    if (field) data.set(field, file);
-  });
+  const [photo] = order.files;
+  if (photo) data.set(PHOTO_FIELD, photo);
   data.set('consent', 'yes');
   return data;
 }

@@ -13,7 +13,7 @@ interface DropzoneProps {
   name?: string;
 }
 
-/** Drag-and-drop or pick up to 3 images (5 MB each), with thumbnails and removal. */
+/** Drag-and-drop or pick one image (up to 5 MB), with thumbnails and removal. */
 export function Dropzone({ label, hint, files, onChange, name }: DropzoneProps) {
   const { t } = useTranslation();
   const inputId = useId();
@@ -68,7 +68,6 @@ export function Dropzone({ label, hint, files, onChange, name }: DropzoneProps) 
         className={styles.input}
         type="file"
         name={name}
-        multiple
         accept={ACCEPTED_TYPES.join(',')}
         aria-label={label} // not aria-labelledby: that crashes Firefox under axe
         aria-describedby={hintId}

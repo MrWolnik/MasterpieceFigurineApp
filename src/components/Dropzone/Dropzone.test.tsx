@@ -22,12 +22,12 @@ function setup(initial: File[] = []) {
 const previews = () => screen.queryAllByRole('listitem');
 
 describe('Dropzone', () => {
-  it('adds picked images with thumbnails, including an animated GIF', async () => {
+  it('adds a picked image with a thumbnail, also an animated GIF', async () => {
     const { user, input } = setup();
 
-    await user.upload(input, [image('a.png'), image('b.gif', 10, 'image/gif')]);
+    await user.upload(input, image('b.gif', 10, 'image/gif'));
 
-    expect(previews()).toHaveLength(2);
+    expect(previews()).toHaveLength(1);
     expect(screen.getByText('b.gif')).toBeInTheDocument();
     expect(screen.getAllByRole('presentation')[0]).toHaveAttribute(
       'src',
@@ -55,28 +55,30 @@ describe('Dropzone', () => {
     expect(screen.getByRole('status')).toHaveTextContent('big.jpg: plik jest większy niż 5 MB.');
   });
 
-  it('rejects a fourth file', async () => {
-    const { user, input } = setup([image('1.png'), image('2.png'), image('3.png')]);
+  it('rejects a second file', async () => {
+    const { user, input } = setup([image('1.png')]);
 
-    await user.upload(input, image('4.png'));
+    await user.upload(input, image('2.png'));
 
-    expect(previews()).toHaveLength(3);
-    expect(screen.getByRole('status')).toHaveTextContent('4.png: możesz dodać najwyżej 3 pliki.');
+    expect(previews()).toHaveLength(1);
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '2.png: możesz dodać tylko 1 plik – najpierw usuń obecny.',
+    );
   });
 
   it('removes a file', async () => {
-    const { user } = setup([image('1.png'), image('2.png')]);
+    const { user } = setup([image('1.png')]);
 
     await user.click(screen.getByRole('button', { name: 'Usuń plik 1.png' }));
 
-    expect(previews()).toHaveLength(1);
+    expect(previews()).toHaveLength(0);
     expect(screen.queryByText('1.png')).not.toBeInTheDocument();
   });
 
-  it('accepts files dropped onto the area', () => {
+  it('accepts a file dropped onto the area', () => {
     setup();
 
-    fireEvent.drop(screen.getByText('Przeciągnij i upuść zdjęcia tutaj'), {
+    fireEvent.drop(screen.getByText('Przeciągnij i upuść zdjęcie tutaj'), {
       dataTransfer: { files: [image('dropped.webp', 10, 'image/webp')] },
     });
 

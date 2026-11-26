@@ -73,8 +73,8 @@ describe('order schema', () => {
     expect(order).toMatchObject({ kind: 'painting', dimensions: '50 × 70 cm', technique: 'oil' });
   });
 
-  it('allows at most 3 files', () => {
-    const files = Array.from({ length: 4 }, (_, i) => new File(['x'], `${String(i)}.png`));
+  it('allows at most 1 file', () => {
+    const files = Array.from({ length: 2 }, (_, i) => new File(['x'], `${String(i)}.png`));
     expect(errorsOf(valid({ files }))).toEqual({ files: 'tooManyFiles' });
   });
 });

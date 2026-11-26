@@ -27,11 +27,8 @@ describe('orderFormData', () => {
     expect(data.has('technique')).toBe(false);
   });
 
-  it('sends painting fields and each photo in its own field', () => {
-    const files = [
-      new File(['a'], 'a.png', { type: 'image/png' }),
-      new File(['b'], 'b.gif', { type: 'image/gif' }),
-    ];
+  it('sends painting fields and the photo', () => {
+    const files = [new File(['b'], 'b.gif', { type: 'image/gif' })];
     const data = orderFormData({
       ...figurine,
       kind: 'painting',
@@ -42,8 +39,6 @@ describe('orderFormData', () => {
 
     expect(data.get('dimensions')).toBe('50 × 70 cm');
     expect(data.get('technique')).toBe('oil');
-    expect((data.get('photo1') as File).name).toBe('a.png');
-    expect((data.get('photo2') as File).name).toBe('b.gif');
-    expect(data.has('photo3')).toBe(false);
+    expect((data.get('photo') as File).name).toBe('b.gif');
   });
 });
