@@ -3,6 +3,7 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { BODY_RADIUS, surfacePoint } from './turntable-geometry.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const worksDir = join(root, 'src/content/works');
@@ -24,14 +25,28 @@ function svg(width, height, label, sub, hue) {
 `;
 }
 
-/** Figurine silhouette rotated by `angle` degrees, so turntable frames visibly differ. */
+/**
+ * Figurine on a turntable rotated by `angle` degrees. A gold stripe on the body, a staff held
+ * on one side and a notch on the base move around the figure (x = r·sin θ, in front while
+ * cos θ > 0), so the sequence reads as a full 360° turn rather than a back-and-forth squash.
+ */
 function frameSvg(label, index, total, hue) {
   const angle = Math.round((360 / total) * index);
-  const squash = Math.abs(Math.cos((angle * Math.PI) / 180)) * 0.7 + 0.3;
+  const stripe = surfacePoint(angle);
+  const staff = surfacePoint(angle, 90, BODY_RADIUS + 45);
+  const notch = surfacePoint(angle, 0, 220);
+  const stripeW = 36 * stripe.width;
+  const stripeSvg = stripe.front
+    ? `<rect x="${(stripe.x - stripeW / 2).toFixed(1)}" y="-180" width="${stripeW.toFixed(1)}" height="380" fill="#d8b76a" clip-path="url(#body)"/>`
+    : '';
+  const staffSvg = `<g opacity="${staff.front ? 1 : 0.45}"><rect x="${(staff.x - 9).toFixed(1)}" y="-260" width="18" height="470" rx="9" fill="#8a6a3a"/><circle cx="${staff.x.toFixed(1)}" cy="-270" r="26" fill="#d8b76a"/></g>`;
+  const body = `<rect x="-80" y="-180" width="160" height="380" rx="60" fill="hsl(${hue} 40% 40%)"/><rect x="-80" y="-180" width="160" height="380" rx="60" fill="url(#shade)"/>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<defs><linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.35"/><stop offset="0.5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.35"/></linearGradient><clipPath id="body"><rect x="-80" y="-180" width="160" height="380" rx="60"/></clipPath></defs>
 <rect width="100%" height="100%" fill="hsl(${hue} 25% 12%)"/>
 <ellipse cx="400" cy="640" rx="220" ry="40" fill="#2a2620"/>
-<g transform="translate(400 400) scale(${squash.toFixed(3)} 1)"><rect x="-80" y="-180" width="160" height="380" rx="60" fill="hsl(${hue} 40% 40%)"/><rect x="-80" y="-180" width="40" height="380" rx="20" fill="#d8b76a"/></g>
+<circle cx="${(400 + notch.x).toFixed(1)}" cy="${(640 + 40 * notch.depth).toFixed(1)}" r="10" fill="#d8b76a" opacity="${notch.front ? 1 : 0.4}"/>
+<g transform="translate(400 400)">${staff.front ? '' : staffSvg}${body}${stripeSvg}${staff.front ? staffSvg : ''}</g>
 <text x="400" y="90" fill="#d8b76a" font-family="serif" font-size="44" text-anchor="middle">${label}</text>
 <text x="400" y="750" fill="#cfc6b4" font-family="sans-serif" font-size="32" text-anchor="middle">${String(index + 1).padStart(3, '0')} / ${total} · ${angle}°</text>
 </svg>
