@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
-import { MemoryRouter, useLocation } from 'react-router';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { filtersToParams, parseFilters, usePortfolioFilters } from './usePortfolioFilters';
 
@@ -43,9 +43,12 @@ describe('usePortfolioFilters', () => {
     const wrapper = ({ children }: { children: ReactNode }) => (
       <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
     );
-    return renderHook(() => ({ filters: usePortfolioFilters(), location: useLocation() }), {
-      wrapper,
-    });
+    return renderHook(
+      () => ({ filters: usePortfolioFilters(), location: useLocation(), navigate: useNavigate() }),
+      {
+        wrapper,
+      },
+    );
   }
 
   it('keeps both changes when kind and tag are set before a re-render', () => {
@@ -58,6 +61,22 @@ describe('usePortfolioFilters', () => {
 
     expect(result.current.location.search).toBe('?kind=figurine&tag=dnd');
     expect(result.current.filters).toMatchObject({ kind: 'figurine', tag: 'dnd' });
+  });
+
+  it('builds on the URL again after an outside navigation', () => {
+    const { result } = renderFilters();
+
+    act(() => {
+      result.current.filters.setTag('dnd');
+    });
+    act(() => {
+      void result.current.navigate('/en/portfolio?kind=painting');
+    });
+    act(() => {
+      result.current.filters.setTag('olej');
+    });
+
+    expect(result.current.location.search).toBe('?kind=painting&tag=olej');
   });
 
   it('drops a tag that the new kind does not use', () => {
