@@ -1,0 +1,58 @@
+.turntable {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: grab;
+  /* Let the page scroll vertically on touch screens; horizontal moves rotate the figurine. */
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.progress {
+  position: absolute;
+  inset: auto var(--space-4) var(--space-4);
+  height: 3px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border-strong);
+  overflow: hidden;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transition: width var(--duration-fast) linear;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.hint[data-hidden='true'] {
+  opacity: 0;
+}

@@ -19,6 +19,15 @@ Object.defineProperty(window, 'matchMedia', {
     }) as unknown as MediaQueryList,
 });
 
+// jsdom has no pointer capture; components that drag (Turntable) call it on pointerdown.
+if (!('setPointerCapture' in Element.prototype)) {
+  Object.assign(Element.prototype, {
+    setPointerCapture: () => undefined,
+    releasePointerCapture: () => undefined,
+    hasPointerCapture: () => false,
+  });
+}
+
 // Any request without a matching handler fails the test, so no test hits the real network.
 beforeAll(() => {
   server.listen({ onUnhandledFrame: 'error' });

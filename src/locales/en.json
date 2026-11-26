@@ -86,5 +86,11 @@
     "pejzaz": "Landscape",
     "portret": "Portrait",
     "kwiaty": "Flowers"
+  },
+  "turntable": {
+    "label": "360° view: {{title}}",
+    "angle": "Angle {{angle}}°",
+    "hint": "Drag or use the arrow keys to rotate",
+    "loading": "Loading the 360° view"
   }
 }

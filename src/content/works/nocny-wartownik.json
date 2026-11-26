@@ -12,6 +12,7 @@
   "tags": ["warhammer", "nmm"],
   "cover": "/works/nocny-wartownik/cover.svg",
   "frames": 36,
+  "framesFormat": "svg",
   "images": [],
   "featured": true,
   "order": 1
