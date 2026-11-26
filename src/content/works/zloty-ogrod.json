@@ -1,0 +1,25 @@
+{
+  "kind": "painting",
+  "slug": "zloty-ogrod",
+  "title": {
+    "pl": "Złoty ogród",
+    "en": "Golden Garden"
+  },
+  "description": {
+    "pl": "Przykładowy opis obrazu „Złoty ogród”.",
+    "en": "Sample description of “Golden Garden”."
+  },
+  "tags": ["akwarela", "kwiaty"],
+  "cover": "/works/zloty-ogrod/cover.svg",
+  "image": "/works/zloty-ogrod/full.svg",
+  "imageHiRes": "/works/zloty-ogrod/full@2x.svg",
+  "medium": {
+    "pl": "Akwarela na papierze",
+    "en": "Watercolour on paper"
+  },
+  "size": "30 × 30 cm",
+  "year": 2025,
+  "images": [],
+  "featured": false,
+  "order": 7
+}

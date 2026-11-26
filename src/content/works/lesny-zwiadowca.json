@@ -1,0 +1,17 @@
+{
+  "kind": "figurine",
+  "slug": "lesny-zwiadowca",
+  "title": {
+    "pl": "Leśny zwiadowca",
+    "en": "Forest Scout"
+  },
+  "description": {
+    "pl": "Przykładowy opis pracy „Leśny zwiadowca”.",
+    "en": "Sample description of “Forest Scout”."
+  },
+  "tags": ["dnd", "nmm"],
+  "cover": "/works/lesny-zwiadowca/cover.svg",
+  "images": [],
+  "featured": false,
+  "order": 6
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "figurine",
+  "slug": "krasnoludzki-kowal",
+  "title": {
+    "pl": "Krasnoludzki kowal",
+    "en": "Dwarf Smith"
+  },
+  "description": {
+    "pl": "Przykładowy opis pracy „Krasnoludzki kowal”.",
+    "en": "Sample description of “Dwarf Smith”."
+  },
+  "tags": ["warhammer", "osl"],
+  "cover": "/works/krasnoludzki-kowal/cover.svg",
+  "images": ["/works/krasnoludzki-kowal/detail-1.svg", "/works/krasnoludzki-kowal/detail-2.svg"],
+  "featured": false,
+  "order": 4
+}

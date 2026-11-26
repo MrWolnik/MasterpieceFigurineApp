@@ -1,0 +1,18 @@
+{
+  "kind": "figurine",
+  "slug": "nocny-wartownik",
+  "title": {
+    "pl": "Nocny wartownik",
+    "en": "Night Sentinel"
+  },
+  "description": {
+    "pl": "Przykładowy opis pracy „Nocny wartownik”.",
+    "en": "Sample description of “Night Sentinel”."
+  },
+  "tags": ["warhammer", "nmm"],
+  "cover": "/works/nocny-wartownik/cover.svg",
+  "frames": 36,
+  "images": [],
+  "featured": true,
+  "order": 1
+}
