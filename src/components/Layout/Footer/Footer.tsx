@@ -4,6 +4,7 @@ import { site } from '../../../config/site';
 import { pathFor } from '../../../lib/routes';
 import { useLanguage } from '../../../lib/useLanguage';
 import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwitcher';
+import { ProtectedEmail } from '../../ProtectedEmail/ProtectedEmail';
 import { SocialLinks } from '../SocialLinks/SocialLinks';
 import styles from './Footer.module.css';
 
@@ -16,14 +17,11 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.contact}>
           <SocialLinks socials={site.socials} showPlaceholders={import.meta.env.DEV} />
-          {/* Bot protection for the address arrives in Z3.2. */}
-          <a
+          <ProtectedEmail
             className={styles.email}
-            href={`mailto:${site.contactEmail}`}
-            aria-label={t('layout.footer.email', { email: site.contactEmail })}
-          >
-            {site.contactEmail}
-          </a>
+            address={site.contactEmail}
+            label={t('layout.footer.email', { email: site.contactEmail })}
+          />
         </div>
 
         <div className={styles.meta}>
