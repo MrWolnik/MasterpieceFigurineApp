@@ -62,7 +62,16 @@
     },
     "turntable": "360° view",
     "tagsLabel": "Tags",
-    "empty": "No works to show."
+    "empty": "No works to show.",
+    "filters": {
+      "all": "All",
+      "kindLabel": "Type of work",
+      "figurines": "Figurines",
+      "paintings": "Paintings",
+      "tagLabel": "Tags",
+      "allTags": "All tags",
+      "count": "Works shown: {{count}}"
+    }
   },
   "tags": {
     "warhammer": "Warhammer",
