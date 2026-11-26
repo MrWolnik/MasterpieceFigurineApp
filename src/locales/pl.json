@@ -35,7 +35,42 @@
       "orderSimilarHint": "Zamów pracę w podobnym stylu – wycena indywidualna."
     },
     "contact": {
-      "title": "Kontakt"
+      "title": "Kontakt",
+      "intro": "Masz pomysł na figurkę albo obraz? Opisz go – odpiszę z wyceną i terminem.",
+      "about": {
+        "title": "O mnie",
+        "paragraphs": [
+          "Maluję figurki do gier bitewnych i RPG od ponad dziesięciu lat – od pojedynczych bohaterów po całe armie.",
+          "Tworzę też obrazy na zamówienie: oleje, akryle i akwarele, często inspirowane fantastyką i nocnym światłem.",
+          "Lubię ciemne, nastrojowe palety, staranne przejścia tonalne i detale, które widać dopiero z bliska."
+        ],
+        "processTitle": "Jak wygląda współpraca",
+        "steps": [
+          {
+            "title": "Zgłoszenie",
+            "text": "Wypełniasz formularz: co chcesz osiągnąć, zdjęcia lub inspiracje i ewentualny termin."
+          },
+          {
+            "title": "Wycena indywidualna",
+            "text": "Po zgłoszeniu przygotowuję wycenę i termin dopasowane do Twojego projektu."
+          },
+          {
+            "title": "Praca",
+            "text": "Maluję i wysyłam zdjęcia postępów, żeby można było wprowadzić poprawki."
+          },
+          {
+            "title": "Odbiór",
+            "text": "Gotowa praca trafia do Ciebie starannie zapakowana."
+          }
+        ],
+        "commissions": "Przyjmuję zlecenia na malowanie figurek i na obrazy. Każde zlecenie wyceniam indywidualnie."
+      },
+      "details": {
+        "title": "Dane kontaktowe",
+        "email": "E-mail",
+        "emailLink": "Napisz e-mail: {{email}}",
+        "social": "Znajdziesz mnie też tutaj"
+      }
     },
     "privacy": {
       "title": "Polityka prywatności"

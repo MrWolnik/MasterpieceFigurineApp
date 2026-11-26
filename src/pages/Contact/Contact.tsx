@@ -1,13 +1,24 @@
 import { useTranslation } from 'react-i18next';
-import styles from '../Page.module.css';
+import { About } from '../../components/About/About';
+import { ContactDetails } from '../../components/ContactDetails/ContactDetails';
+import styles from './Contact.module.css';
 
-// Placeholder page; the real content arrives in Etap 3.
+/** Contact page: about Julia, contact details and (Z3.3) the order form. */
 export function Contact() {
   const { t } = useTranslation();
 
   return (
     <div className={styles.page}>
-      <h1>{t('pages.contact.title')}</h1>
+      <div className={styles.header}>
+        <h1>{t('pages.contact.title')}</h1>
+        <p className={styles.intro}>{t('pages.contact.intro')}</p>
+      </div>
+      <div className={styles.layout}>
+        <div className={styles.side}>
+          <About />
+          <ContactDetails />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+.page {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-12) var(--container-padding);
+  display: grid;
+  gap: var(--space-8);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.intro {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.side {
+  display: grid;
+  gap: var(--space-12);
+  align-content: start;
+}
+
+@media (min-width: 56.25rem) {
+  .layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}

@@ -35,7 +35,42 @@
       "orderSimilarHint": "Order a work in a similar style – priced individually."
     },
     "contact": {
-      "title": "Contact"
+      "title": "Contact",
+      "intro": "Have an idea for a figurine or a painting? Describe it – I'll reply with a quote and a date.",
+      "about": {
+        "title": "About me",
+        "paragraphs": [
+          "I have been painting tabletop and RPG miniatures for over ten years – from single heroes to whole armies.",
+          "I also paint commissioned pictures: oils, acrylics and watercolours, often inspired by fantasy and night light.",
+          "I love dark, moody palettes, careful tonal transitions and details you only notice up close."
+        ],
+        "processTitle": "How we work together",
+        "steps": [
+          {
+            "title": "Request",
+            "text": "You fill in the form: what you want to achieve, photos or inspirations and a deadline if you have one."
+          },
+          {
+            "title": "Custom quote",
+            "text": "After your request I prepare a quote and a date tailored to your project."
+          },
+          {
+            "title": "Painting",
+            "text": "I paint and send progress photos so you can ask for changes."
+          },
+          {
+            "title": "Delivery",
+            "text": "The finished work reaches you carefully packed."
+          }
+        ],
+        "commissions": "I take commissions for figurine painting and for paintings. Every commission is quoted individually."
+      },
+      "details": {
+        "title": "Contact details",
+        "email": "E-mail",
+        "emailLink": "Send an e-mail: {{email}}",
+        "social": "You can also find me here"
+      }
     },
     "privacy": {
       "title": "Privacy policy"

@@ -1,0 +1,51 @@
+.about {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.about p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+.about .commissions {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.step {
+  display: grid;
+  gap: var(--space-1);
+  padding-left: var(--space-12);
+  position: relative;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+}
+
+.step span {
+  color: var(--color-text-muted);
+}
