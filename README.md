@@ -35,12 +35,19 @@ npm run dev
 | `npm run test:e2e`         | Build, serve and run Playwright e2e tests (Chromium, Firefox, WebKit, iPhone) |
 | `npm run test:e2e:install` | Download Playwright browsers and system dependencies                          |
 
+## Design tokens
+
+Colours, type, spacing and motion live in `src/styles/tokens.css`; base styles and the reset in
+`src/styles/global.css`. Run `npm run dev` and open <http://localhost:5173/styleguide> to see
+them all. The styleguide exists only in development and is left out of production builds.
+
 ## Testing
 
 - **Unit and component tests** live next to the code as `*.test.ts(x)`. Render components with
   `renderWithProviders()` from `src/test/test-utils.tsx` (router + i18n, returns a `user`).
 - **Network** is mocked with MSW (`src/test/msw-handlers.ts`). Unhandled requests fail the test.
 - **E2E tests** live in `/e2e` and run against the production build (`vite preview`).
+  Dev-only pages (`e2e/styleguide.spec.ts`) run against the dev server in the `dev-only` project.
   Accessibility is checked with `@axe-core/playwright`.
 - **Pre-commit hook** (Husky + lint-staged) runs Prettier, ESLint, related Vitest tests and the
   type check on staged files.

@@ -19,3 +19,11 @@ test.describe('home page', () => {
     expect(results.violations).toEqual([]);
   });
 });
+
+test.describe('production build', () => {
+  test('does not include the dev-only styleguide', async ({ page }) => {
+    await page.goto('/styleguide');
+
+    await expect(page.getByRole('heading', { name: 'Styleguide' })).toHaveCount(0);
+  });
+});
