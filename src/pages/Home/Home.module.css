@@ -3,3 +3,29 @@
   margin-inline: auto;
   padding: var(--space-16) var(--container-padding) var(--space-24);
 }
+
+/*
+ * Full-screen scrolling between the hero and the featured works (desktop only: snapping on
+ * iOS Safari is jumpy). `mandatory`: `proximity` only snaps right next to a section edge, so a
+ * normal scroll stopped half-way. The footer has its own snap point to stay reachable, and a
+ * section taller than the screen still scrolls freely inside. Home puts the class on <html>
+ * (the scroll container) while it is shown.
+ */
+@media (min-width: 56.25rem) {
+  :global(html.home-snap) {
+    scroll-snap-type: y mandatory;
+  }
+
+  .home > section {
+    scroll-snap-align: start;
+  }
+
+  /* Without its own snap point the footer is pulled back to the featured section. */
+  :global(html.home-snap) :global(footer) {
+    scroll-snap-align: end;
+  }
+
+  .featured {
+    min-height: calc(100svh - var(--header-height));
+  }
+}

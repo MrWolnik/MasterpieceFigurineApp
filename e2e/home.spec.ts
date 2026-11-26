@@ -78,3 +78,56 @@ test.describe('production build', () => {
     await expect(page.getByRole('heading', { name: 'Styleguide' })).toHaveCount(0);
   });
 });
+
+test.describe('full-screen scrolling', () => {
+  const snapType = (page: import('@playwright/test').Page) =>
+    page.evaluate(() => getComputedStyle(document.documentElement).scrollSnapType);
+
+  test('snaps from the hero to the featured works on desktop', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'snapping is desktop only');
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/pl');
+    await expect.poll(() => snapType(page)).toBe('y mandatory');
+
+    // A small scroll (one arrow press) moves a whole screen: the featured section ends up
+    // right under the header. (Playwright's synthetic wheel does not snap like a real mouse.)
+    await page.keyboard.press('ArrowDown');
+    const heading = page.getByRole('heading', { level: 2, name: 'Wyróżnione prace' });
+    const headerBottom = await page
+      .getByRole('banner')
+      .evaluate((el) => el.getBoundingClientRect().bottom);
+    await expect
+      .poll(() =>
+        page
+          .getByRole('region', { name: 'Wyróżnione prace' })
+          .evaluate((el) => Math.round(el.getBoundingClientRect().top)),
+      )
+      .toBe(Math.round(headerBottom));
+    await expect(heading).toBeInViewport();
+  });
+
+  test('the footer stays reachable at the bottom of the page', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'snapping is desktop only');
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/pl');
+    await expect.poll(() => snapType(page)).not.toBe('none');
+
+    await page.keyboard.press('End');
+
+    await expect(page.getByRole('contentinfo')).toBeInViewport();
+    await page.waitForTimeout(500); // a wrong snap would pull the page back up here
+    await expect(page.getByRole('contentinfo')).toBeInViewport();
+  });
+
+  test('does not snap on phones or on other pages', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/pl');
+    await expect(page.getByRole('heading', { level: 1, name: 'Julia' })).toBeVisible();
+    expect(await snapType(page)).toBe('none');
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/pl/portfolio');
+    await expect(page.getByRole('heading', { level: 1, name: 'Portfolio' })).toBeVisible();
+    expect(await snapType(page)).toBe('none');
+  });
+});
