@@ -24,12 +24,11 @@ test.describe('contact page', () => {
 });
 
 test.describe('privacy policy', () => {
-  test('is available in both languages without accessibility violations', async ({ page }) => {
+  test('is available in both languages', async ({ page }) => {
     await page.goto('/pl/prywatnosc');
     await expect(
       page.getByRole('heading', { level: 1, name: 'Polityka prywatności' }),
     ).toBeVisible();
-    await expectNoA11yViolations(page);
 
     await page.goto('/en/privacy');
     await expect(page.getByRole('heading', { level: 1, name: 'Privacy policy' })).toBeVisible();

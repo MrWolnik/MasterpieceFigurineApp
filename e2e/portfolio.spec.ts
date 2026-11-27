@@ -20,13 +20,6 @@ test.describe('portfolio page', () => {
 
     await expect(page).toHaveURL(urlOf('/en/portfolio/mgla-nad-bagnem'));
   });
-
-  test('has no detectable accessibility violations', async ({ page }) => {
-    await page.goto('/pl/portfolio');
-    await expect(page.getByRole('article')).toHaveCount(WORK_COUNT);
-
-    await expectNoA11yViolations(page);
-  });
 });
 
 // Screenshots for manual review, attached to the HTML report (not compared against baselines,

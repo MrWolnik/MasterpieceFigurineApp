@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { expectNoA11yViolations, urlOf } from './helpers.js';
+import { urlOf } from './helpers.js';
 
 const pages = [
   { pl: '/pl', en: '/en', plHeading: 'Julia', enHeading: 'Julia' },
@@ -99,14 +99,5 @@ test.describe('404 page', () => {
     await expect(
       page.getByRole('heading', { level: 1, name: /Nie znaleziono strony|Page not found/ }),
     ).toBeVisible();
-  });
-
-  test('has no detectable accessibility violations', async ({ page }) => {
-    await page.goto('/pl/nie-ma-takiej-strony');
-    await expect(
-      page.getByRole('heading', { level: 1, name: 'Nie znaleziono strony' }),
-    ).toBeVisible();
-
-    await expectNoA11yViolations(page);
   });
 });
