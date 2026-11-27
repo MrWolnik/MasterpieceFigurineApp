@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { expectNoA11yViolations, urlOf } from './helpers.js';
 
 // Keep in sync with src/content/works (8 sample works, sorted by `order`).

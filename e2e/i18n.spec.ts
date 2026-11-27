@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { expectNoA11yViolations, urlOf } from './helpers.js';
 
 const pages = [

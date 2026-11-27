@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from './fixtures';
 
 // A short screen, so the last portfolio tile is surely below the fold.
 test.use({ viewport: { width: 390, height: 700 } });

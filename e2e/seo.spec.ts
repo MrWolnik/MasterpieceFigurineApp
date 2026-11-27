@@ -1,4 +1,4 @@
-import { expect, test, type APIRequestContext } from '@playwright/test';
+import { expect, test, type APIRequestContext } from './fixtures';
 
 /** Paths of every page listed in the built sitemap.xml (the site's own list of pages). */
 async function sitemapPaths(request: APIRequestContext): Promise<string[]> {
