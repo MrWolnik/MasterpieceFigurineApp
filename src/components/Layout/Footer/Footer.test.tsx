@@ -31,12 +31,13 @@ describe('Footer', () => {
   it('lists social media in the order of the config', () => {
     renderWithProviders(<Footer />);
 
-    // No links are configured yet, so tests (DEV mode) see the grey placeholders.
     const list = screen.getByRole('list', { name: 'Media społecznościowe' });
-    expect(
-      within(list)
-        .getAllByRole('img')
-        .map((icon) => icon.getAttribute('aria-label')),
-    ).toEqual(site.socials.map(({ label }) => `${label} (link jeszcze nieustawiony)`));
+    const links = within(list).getAllByRole('link');
+    expect(links.map((link) => link.getAttribute('aria-label'))).toEqual(
+      site.socials.map(({ label }) => `${label} (otwiera się w nowej karcie)`),
+    );
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(
+      site.socials.map(({ url }) => url),
+    );
   });
 });

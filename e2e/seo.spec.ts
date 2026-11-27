@@ -47,7 +47,7 @@ test.describe('prerendered HTML (before any JavaScript runs)', () => {
     const html = await (await request.get('/pl')).text();
     const json = /<script type="application\/ld\+json"[^>]*>([^<]+)<\/script>/.exec(html)?.[1];
     expect(JSON.parse(json ?? '{}')).toMatchObject({ '@type': 'Person', name: 'Julia' });
-    expect(json).not.toContain('@gmail');
+    expect(json).not.toContain('@example.com');
   });
 
   test('robots.txt allows crawling and names the sitemap; the share image exists', async ({

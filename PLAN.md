@@ -214,13 +214,14 @@ export const site = {
   artistName: 'Julia',
   brand: 'Masterpiece Figurine J',
   url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurinej.netlify.app',
-  contactEmail: 'dwolnik12310@gmail.com', // e-mail testowy; docelowy podamy przed startem
+  contactEmail: 'example@example.com', // e-mail zastępczy; docelowy podamy przed startem
   socials: [
     // Pusty `url` = ikona się nie wyświetla. Wystarczy wkleić link, żeby się pojawiła.
-    { id: 'instagram', label: 'Instagram', url: '' },
-    { id: 'facebook', label: 'Facebook', url: '' },
-    { id: 'tiktok', label: 'TikTok', url: '' },
-    { id: 'youtube', label: 'YouTube', url: '' },
+    // Na razie strony główne serwisów; przed startem podmieniamy na profile Julii.
+    { id: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/' },
+    { id: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/' },
+    { id: 'tiktok', label: 'TikTok', url: 'https://www.tiktok.com/' },
+    { id: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/' },
   ],
 } as const;
 ```
@@ -361,8 +362,8 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 ## 8. Otwarte pytania
 
-1. Docelowy e-mail do zgłoszeń. Na razie testowy `dwolnik12310@gmail.com`, a zmiana to jedna linijka w `site.ts` i ustawienie w Netlify.
-2. Linki do social media. Na razie puste pola w `site.ts`.
+1. Docelowy e-mail do zgłoszeń. Na stronie na razie zastępczy `example@example.com` (zmiana to jedna linijka w `site.ts`); powiadomienia Netlify idą na testowy `dwolnik12310@gmail.com` (ustawienie w panelu).
+2. Linki do social media. Na razie prowadzą na strony główne serwisów; profile Julii wpisujemy w `site.ts` przed startem.
 3. Logo. Na razie napis „MasterpieceFigurineJ” fontem Cinzel.
 
 ## 9. Decyzje
@@ -401,3 +402,5 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Animacje przy ładowaniu strony zostają (ważne dla odbioru strony, nawet kosztem wydajności); zanikanie startuje od `opacity: 0.01`, więc nie opóźnia LCP |
 | 2026-11-27 | JS prerenderowanych stron ładowany po pierwszym malowaniu (LCP 2,3 s zamiast 3,9 s na dławionym telefonie) |
 | 2026-11-27 | Lighthouse CI z prawdziwym dławieniem (`devtools`): symulacja zawyżała LCP obrazków w `<picture>` o ~3,5 s |
+| 2026-11-27 | E-mail na stronie zastępczy `example@example.com`; ikony social media widoczne i prowadzą na strony główne serwisów do czasu podania profili; strony główne nie trafiają do `sameAs` w danych strukturalnych |
+| 2026-11-27 | Prawdziwy status 404 dla nieznanych adresów (zamiast 200, „soft 404”) robimy po pierwszej publikacji |
