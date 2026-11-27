@@ -81,7 +81,7 @@
         {
           "title": "Data controller",
           "paragraphs": [
-            "The controller of your personal data is [full name / company name], [address], who runs the MasterpieceFigurineJ website."
+            "The controller of your personal data is [full name / company name], [address], who runs the MasterpieceFigurine website."
           ]
         },
         {
@@ -307,12 +307,12 @@
     },
     "privacy": {
       "title": "Privacy policy",
-      "description": "How MasterpieceFigurineJ processes the personal data sent through the order form."
+      "description": "How MasterpieceFigurine processes the personal data sent through the order form."
     },
     "notFound": {
       "title": "Page not found"
     },
-    "ogImageAlt": "MasterpieceFigurineJ – figurine painting and commissioned paintings",
+    "ogImageAlt": "MasterpieceFigurine – figurine painting and commissioned paintings",
     "jobTitle": "Miniature and fine art painter"
   }
 }

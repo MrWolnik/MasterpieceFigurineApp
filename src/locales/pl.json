@@ -81,7 +81,7 @@
         {
           "title": "Administrator danych",
           "paragraphs": [
-            "Administratorem Twoich danych osobowych jest [imię i nazwisko / nazwa firmy], [adres], prowadząca serwis MasterpieceFigurineJ."
+            "Administratorem Twoich danych osobowych jest [imię i nazwisko / nazwa firmy], [adres], prowadząca serwis MasterpieceFigurine."
           ]
         },
         {
@@ -307,12 +307,12 @@
     },
     "privacy": {
       "title": "Polityka prywatności",
-      "description": "Jak MasterpieceFigurineJ przetwarza dane osobowe przesłane przez formularz zgłoszenia."
+      "description": "Jak MasterpieceFigurine przetwarza dane osobowe przesłane przez formularz zgłoszenia."
     },
     "notFound": {
       "title": "Nie znaleziono strony"
     },
-    "ogImageAlt": "MasterpieceFigurineJ – malowanie figurek i obrazy na zamówienie",
+    "ogImageAlt": "MasterpieceFigurine – malowanie figurek i obrazy na zamówienie",
     "jobTitle": "Malarka figurek i obrazów"
   }
 }

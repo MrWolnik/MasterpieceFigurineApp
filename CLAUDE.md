@@ -1,4 +1,4 @@
-# MasterpieceFigurineJ – rules for Claude
+# MasterpieceFigurine – rules for Claude
 
 Portfolio site for Julia, a figurine and painting artist. The full plan, task list and
 decisions live in `PLAN.md` (written in Polish). All code, comments, commits and docs are in English.

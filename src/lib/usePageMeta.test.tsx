@@ -16,7 +16,7 @@ afterEach(() => {
 describe('applyPageMeta', () => {
   it('sets the title and adds the page tags', () => {
     applyPageMeta(document, getPageMeta('/en/contact'));
-    expect(document.title).toBe('Contact and commissions | MasterpieceFigurineJ');
+    expect(document.title).toBe('Contact and commissions | MasterpieceFigurine');
     expect(canonical()).toBe(absoluteUrl('/en/contact'));
     expect(document.head.querySelector('script[type="application/ld+json"]')).not.toBeNull();
   });
@@ -54,7 +54,7 @@ describe('usePageMeta', () => {
     expect(canonical()).toBe(absoluteUrl('/pl/kontakt'));
 
     await act(() => router.navigate('/en/privacy'));
-    expect(document.title).toBe('Privacy policy | MasterpieceFigurineJ');
+    expect(document.title).toBe('Privacy policy | MasterpieceFigurine');
     expect(canonical()).toBe(absoluteUrl('/en/privacy'));
   });
 });

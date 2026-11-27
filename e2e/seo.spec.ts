@@ -23,7 +23,7 @@ test.describe('prerendered HTML (before any JavaScript runs)', () => {
 
       expect(html, path).toContain(`<html lang="${lang ?? ''}">`);
       const title = /<title>([^<]*)<\/title>/.exec(html)?.[1] ?? '';
-      expect(title, path).toMatch(/.+ \| MasterpieceFigurineJ$/);
+      expect(title, path).toMatch(/.+ \| MasterpieceFigurine$/);
       expect(attribute(html, 'name="description"', 'content'), path).toBeTruthy();
       expect(attribute(html, 'rel="canonical"', 'href'), path).toMatch(new RegExp(`${path}$`));
       for (const hreflang of ['pl', 'en', 'x-default']) {
@@ -106,7 +106,7 @@ test.describe('hydration', () => {
     await page.goto('/pl');
     // The Hero button, as the header menu is collapsed on phones.
     await page.getByRole('link', { name: 'Zamów malowanie' }).click();
-    await expect(page).toHaveTitle('Kontakt i zamówienia | MasterpieceFigurineJ');
+    await expect(page).toHaveTitle('Kontakt i zamówienia | MasterpieceFigurine');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/pl\/kontakt$/);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
   });

@@ -38,7 +38,7 @@ body { width: 1200px; height: 630px; display: grid; place-items: center; color: 
 </style></head><body>
 <div class="frame"></div>
 <div class="content">
-  <div class="brand">MasterpieceFigurine<span style="color:#b8893b">J</span></div>
+  <div class="brand">MasterpieceFigurine</div>
   <div class="rule"></div>
   <div class="tagline">${pl.app.tagline}</div>
   <div class="tagline-en">${en.app.tagline}</div>

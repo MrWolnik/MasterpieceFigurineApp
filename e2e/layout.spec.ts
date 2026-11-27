@@ -32,7 +32,7 @@ test.describe('keyboard navigation (desktop)', () => {
 
     const expectedOrder = [
       page.getByRole('link', { name: 'Przejdź do treści' }),
-      banner.getByRole('link', { name: 'MasterpieceFigurineJ' }),
+      banner.getByRole('link', { name: 'MasterpieceFigurine' }),
       banner.getByRole('link', { name: 'Portfolio' }),
       banner.getByRole('link', { name: 'Kontakt' }),
       banner.getByRole('link', { name: 'PL – Polski' }),
