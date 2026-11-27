@@ -1,6 +1,6 @@
 // Serves the production build like Netlify does, for Lighthouse CI: clean URLs
 // (`/pl/kontakt` → `pl/kontakt.html`), the SPA fallback from public/_redirects, Brotli/gzip
-// compression and long caching of hashed assets (public/_headers). `vite preview` compresses
+// compression, the security headers and long caching of hashed assets (public/_headers). `vite preview` compresses
 // nothing, which would make the scores far worse than the real site's.
 // Usage: node scripts/serve-dist.mjs [--port 4174]
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -26,6 +26,15 @@ const TYPES = {
 const COMPRESSIBLE = new Set(['.html', '.js', '.css', '.json', '.xml', '.txt', '.svg']);
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 
+/** Sent with every response, as `/*` in public/_headers (serve-dist.test.mjs compares them). */
+export const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Content-Security-Policy': "frame-ancestors 'none'",
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+};
+
 function isFile(path) {
   return existsSync(path) && statSync(path).isFile();
 }
@@ -47,6 +56,7 @@ export function resolveFile(dist, pathname) {
 export function respond(file, pathname, acceptEncoding = '') {
   const type = extname(file);
   const headers = {
+    ...SECURITY_HEADERS,
     'Content-Type': TYPES[type] ?? 'application/octet-stream',
     'Cache-Control': pathname.startsWith('/assets/')
       ? IMMUTABLE

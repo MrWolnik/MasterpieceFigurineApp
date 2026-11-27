@@ -1,10 +1,11 @@
 // Prerenders every page to static HTML after `vite build` (PLAN Z4.2), so search engines and
 // link previews get the title, description, hreflang links and content without running JS.
-// Also writes sitemap.xml and robots.txt. Usage: node scripts/prerender.mjs (part of `npm run build`).
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+// Also writes sitemap.xml and robots.txt, and marks non-production deploys noindex. Usage: node scripts/prerender.mjs (part of `npm run build`).
+import { appendFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build } from 'vite';
+import { isProductionDeploy, NOINDEX_HEADERS } from './deploy-context.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -45,5 +46,12 @@ for (const path of paths) {
 
 writeFileSync(join(dist, 'sitemap.xml'), buildSitemap());
 writeFileSync(join(dist, 'robots.txt'), buildRobots());
+const headersFile = join(dist, '_headers'); // fresh from public/ on every `vite build`
+if (!isProductionDeploy() && !readFileSync(headersFile, 'utf8').includes(NOINDEX_HEADERS)) {
+  appendFileSync(headersFile, NOINDEX_HEADERS);
+  console.log(
+    `${String(process.env.CONTEXT)} deploy: every page is sent with X-Robots-Tag: noindex.`,
+  );
+}
 
 console.log(`Prerendered ${String(paths.length)} pages, sitemap.xml and robots.txt.`);
