@@ -95,3 +95,36 @@ test.describe('image zoom', () => {
     await expect(stage.getByRole('img')).toHaveAttribute('style', /scale\(2\.5\)/);
   });
 });
+
+test.describe('image zoom on a phone', () => {
+  test.use({ viewport: { width: 360, height: 740 } });
+
+  test('toolbar buttons fit the screen and do not overlap', async ({ page }) => {
+    const dialog = await openViewer(page);
+
+    const boxes = await dialog.locator('button, output').evaluateAll((els) =>
+      els.map((el) => {
+        // Measure the text itself, not its box: text can spill out of a box that fits.
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const box = el.getBoundingClientRect();
+        const text = range.getBoundingClientRect();
+        return {
+          left: Math.min(box.left, text.left),
+          right: Math.max(box.right, text.right),
+          top: Math.min(box.top, text.top),
+          bottom: Math.max(box.bottom, text.bottom),
+        };
+      }),
+    );
+    for (const [i, a] of boxes.entries()) {
+      expect(a.left).toBeGreaterThanOrEqual(0);
+      expect(a.right).toBeLessThanOrEqual(360);
+      for (const b of boxes.slice(i + 1)) {
+        const overlap =
+          a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+        expect(overlap).toBe(false);
+      }
+    }
+  });
+});

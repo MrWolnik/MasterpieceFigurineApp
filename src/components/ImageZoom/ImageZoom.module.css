@@ -76,6 +76,7 @@
   color: var(--color-text);
   font: inherit;
   font-size: var(--text-lg);
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -95,9 +96,45 @@
 
 .level {
   min-width: 9rem;
+  white-space: nowrap;
   color: var(--color-text-muted);
   font-size: var(--text-sm);
   text-align: center;
+}
+
+/* Phones: two rows so nothing overlaps — "fit" and close on top, zoom controls below. */
+@media (max-width: 40rem) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    grid-template-areas:
+      'fit fit close'
+      'out level in';
+    gap: var(--space-2);
+  }
+
+  .fit {
+    grid-area: fit;
+    justify-self: start;
+  }
+
+  .close {
+    grid-area: close;
+    margin-left: 0;
+  }
+
+  .zoomOut {
+    grid-area: out;
+  }
+
+  .level {
+    grid-area: level;
+    min-width: 0;
+  }
+
+  .zoomIn {
+    grid-area: in;
+  }
 }
 
 .stage {
