@@ -28,6 +28,9 @@ export default defineConfig({
     baseURL: previewURL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    // Scroll reveals (Z4.1) would leave content half-faded in screenshots and axe scans;
+    // e2e/motion.spec.ts turns motion back on to test the animations themselves.
+    reducedMotion: 'reduce',
   },
   projects: [
     ...(
