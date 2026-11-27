@@ -1,0 +1,24 @@
+/*
+ * Scroll reveal (see src/lib/useReveal.ts). Only when the user allows motion: with
+ * `prefers-reduced-motion: reduce` nothing is ever hidden.
+ *
+ * A CSS animation (not a transition) so it never overrides an element's own transitions,
+ * and `backwards` fill so the animation leaves no styles behind once it has run (hover
+ * transforms keep working).
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .hidden {
+    opacity: 0;
+  }
+
+  .revealed {
+    animation: reveal var(--duration-slow) var(--ease-out) var(--reveal-delay, 0ms) backwards;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+}

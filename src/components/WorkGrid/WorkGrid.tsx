@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import type { Work } from '../../lib/works';
-import { WorkCard } from '../WorkCard/WorkCard';
 import styles from './WorkGrid.module.css';
+import { WorkGridItem } from './WorkGridItem';
 
 /** Tiles above the fold on most screens; their covers load eagerly for a faster LCP. */
 const EAGER_COUNT = 2;
@@ -22,9 +22,13 @@ export function WorkGrid({ works, headingLevel = 2 }: WorkGridProps) {
   return (
     <ul className={styles.grid}>
       {works.map((work, index) => (
-        <li key={work.slug}>
-          <WorkCard work={work} eager={index < EAGER_COUNT} headingLevel={headingLevel} />
-        </li>
+        <WorkGridItem
+          key={work.slug}
+          work={work}
+          index={index}
+          eager={index < EAGER_COUNT}
+          headingLevel={headingLevel}
+        />
       ))}
     </ul>
   );

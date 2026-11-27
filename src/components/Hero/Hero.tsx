@@ -3,8 +3,12 @@ import { Link } from 'react-router';
 import { site } from '../../config/site';
 import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
+import { useReveal } from '../../lib/useReveal';
 import { ChevronDownIcon } from '../icons/ChevronDownIcon';
 import styles from './Hero.module.css';
+
+/** Delay between the Hero text lines as they come in. */
+const STAGGER_MS = 100;
 
 interface HeroProps {
   /** Id of the section the scroll indicator jumps to. */
@@ -15,6 +19,11 @@ interface HeroProps {
 export function Hero({ nextSectionId }: HeroProps) {
   const { t } = useTranslation();
   const language = useLanguage();
+  // The text comes in line by line; the portrait stays put, as it is the page's LCP image.
+  const eyebrow = useReveal<HTMLParagraphElement>({ className: styles.eyebrow });
+  const title = useReveal<HTMLHeadingElement>({ className: styles.title, delay: STAGGER_MS });
+  const lead = useReveal<HTMLParagraphElement>({ className: styles.lead, delay: 2 * STAGGER_MS });
+  const cta = useReveal<HTMLAnchorElement>({ className: styles.cta, delay: 3 * STAGGER_MS });
 
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
@@ -23,12 +32,12 @@ export function Hero({ nextSectionId }: HeroProps) {
         <img src={site.portrait} alt={t('home.hero.portraitAlt')} fetchPriority="high" />
       </div>
       <div className={styles.text}>
-        <p className={styles.eyebrow}>{t('app.tagline')}</p>
-        <h1 id="hero-title" className={styles.title}>
+        <p {...eyebrow}>{t('app.tagline')}</p>
+        <h1 id="hero-title" {...title}>
           {site.artistName}
         </h1>
-        <p className={styles.lead}>{t('home.hero.lead')}</p>
-        <Link className={styles.cta} to={pathFor('contact', language)}>
+        <p {...lead}>{t('home.hero.lead')}</p>
+        <Link {...cta} to={pathFor('contact', language)}>
           {t('home.hero.cta')}
         </Link>
       </div>
