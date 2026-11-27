@@ -13,7 +13,7 @@ import { useAutoRotate } from './useAutoRotate';
 import { useFramePreloader } from './useFramePreloader';
 import { RotateIcon } from '../icons/RotateIcon';
 
-export interface TurntableProps {
+interface TurntableProps {
   /** Work slug; frames live in `/works/<slug>/frames/`. */
   slug: string;
   /** Number of frames in a full turn. */

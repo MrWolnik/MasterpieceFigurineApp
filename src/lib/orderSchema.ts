@@ -1,13 +1,12 @@
 import { z } from 'zod';
-import { WORK_KINDS, type WorkKind } from './works';
+import { MAX_FILE_COUNT } from './acceptFiles';
+import type { WorkKind } from './works';
 
-/** Order types match the work kinds, so "I want a similar one" can pass `?kind=` straight on. */
-export const ORDER_KINDS: readonly WorkKind[] = WORK_KINDS;
+// Order types are the work kinds, so "I want a similar one" can pass `?kind=` straight on.
 export const TECHNIQUES = ['oil', 'acrylic', 'watercolor', 'any'] as const;
 export type Technique = (typeof TECHNIQUES)[number];
 
 export const MIN_DESCRIPTION = 20;
-export const MAX_FILES = 1;
 
 /** Error messages are keys under `form.errors` in the locale files. */
 export const ORDER_ERRORS = [
@@ -64,7 +63,7 @@ export function createOrderSchema(today: Date = new Date()) {
         .regex(ISO_DATE, 'deadlineInvalid')
         .refine((value) => value >= todayIso, 'deadlinePast'),
     ),
-    files: z.array(z.instanceof(File)).max(MAX_FILES, 'tooManyFiles'),
+    files: z.array(z.instanceof(File)).max(MAX_FILE_COUNT, 'tooManyFiles'),
     consent: z.literal(true, 'consent'),
   };
 
@@ -86,8 +85,7 @@ export function createOrderSchema(today: Date = new Date()) {
     });
 }
 
-export type OrderSchema = ReturnType<typeof createOrderSchema>;
-export type Order = z.output<OrderSchema>;
+export type Order = z.output<ReturnType<typeof createOrderSchema>>;
 
 /** Every field the form can hold; painting-only ones stay empty for a figurine. */
 export interface OrderFormValues {

@@ -12,7 +12,7 @@
 
 .kind,
 .tag {
-  min-height: 2.75rem; /* 44px touch target */
+  min-height: var(--touch-target); /* 44px touch target */
   padding: 0 var(--space-4);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
@@ -42,7 +42,7 @@
 /* Keep a 44px tap area on touch screens even for the smaller tag buttons. */
 @media (pointer: coarse) {
   .tag {
-    min-height: 2.75rem;
+    min-height: var(--touch-target);
   }
 }
 

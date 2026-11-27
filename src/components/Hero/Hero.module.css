@@ -66,20 +66,8 @@
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
+  composes: btn-primary from global;
   margin-top: var(--space-2);
-  padding: 0 var(--space-6);
-  border-radius: var(--radius-md);
-  background: var(--color-accent);
-  color: var(--color-on-accent);
-  font-weight: var(--weight-semibold);
-  text-decoration: none;
-}
-
-.cta:hover {
-  background: var(--color-accent-hover);
 }
 
 .scroll {
@@ -88,8 +76,8 @@
   left: 50%;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--touch-target);
+  height: var(--touch-target);
   translate: -50% 0;
   border-radius: 50%;
   color: var(--color-accent);

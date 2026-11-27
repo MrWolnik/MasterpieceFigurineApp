@@ -70,6 +70,9 @@
   /* Shape — minimal style, small radii */
   --radius-sm: 2px;
   --radius-md: 4px;
+
+  /* Minimum size of anything tappable (WCAG 2.5.5: 44px). */
+  --touch-target: 2.75rem;
   --radius-lg: 8px;
 
   /* Elevation */
@@ -88,8 +91,8 @@
 
   /* Stacking */
   --z-header: 100;
-  /* Sticky header: 2.75rem controls + vertical padding (--space-3 × 2) + 1px border. */
-  --header-height: calc(2.75rem + 2 * var(--space-3) + 1px);
+  /* Sticky header: touch-target controls + vertical padding (--space-3 × 2) + 1px border. */
+  --header-height: calc(var(--touch-target) + 2 * var(--space-3) + 1px);
   --z-overlay: 1000;
 }
 
