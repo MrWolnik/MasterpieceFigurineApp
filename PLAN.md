@@ -339,7 +339,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 - [x] **Z4.2 SEO.** Prerendering wszystkich tras, tytuły i opisy stron w obu językach, `hreflang`, sitemap, robots.txt, obrazki OG, dane strukturalne `Person`.
       _Testy:_ e2e sprawdzający, że zbudowany HTML każdej trasy zawiera `<title>`, opis i `hreflang` jeszcze przed uruchomieniem JS.
       _Uwaga (przegląd Etapu 0):_ prerendering musi ustawić `<html lang>` osobno dla każdej trasy (teraz robi to `Layout` w przeglądarce, a `index.html` ma na sztywno `pl`). Rok w stopce (`new Date().getFullYear()`) brać z czasu budowania, żeby HTML zbudowany w grudniu nie dawał błędu hydracji w styczniu.
-- [ ] **Z4.3 Wydajność.** WebP/AVIF z `srcset`, dzielenie kodu na trasy (code splitting), preload fontów. Lighthouse CI w GitHub Actions z progiem ≥ 90.
+- [x] **Z4.3 Wydajność.** WebP/AVIF z `srcset`, dzielenie kodu na trasy (code splitting), preload fontów. Lighthouse CI w GitHub Actions z progiem ≥ 90.
 - [ ] **Z4.4 Dostępność.** Skan axe na każdej podstronie w obu językach jako stały test e2e, fokus widoczny, teksty alternatywne.
 - [ ] **Z4.5 Porządki w kodzie (z przeglądu po Etapie 3).**
   - Wspólny kontener strony: sześć plików CSS stron powtarza ten sam `.page` (max-width, marginesy, padding, gap). Do wyboru klasa narzędziowa w `global.css` albo komponent `<PageShell>`.
@@ -396,3 +396,8 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Prerendering własnym skryptem (`scripts/prerender.mjs` + `src/entry-server.tsx`, API statyczne React Routera), bo `vite-react-ssg` wymaga `react-router-dom` 6; strony jako `<ścieżka>.html` |
 | 2026-11-27 | `hreflang="x-default"` wskazuje na wersję polską (`/pl/...`); do ewentualnej zmiany później |
 | 2026-11-27 | Formularz zamówienia zablokowany do czasu hydracji; prefill z `?kind=`/`?ref=` stosowany po hydracji (statyczny HTML nie zna parametrów adresu) |
+| 2026-11-27 | `sharp` (konwersja obrazków na AVIF/WebP przy budowaniu) i `@lhci/cli` (Lighthouse CI) jako devDependencies |
+| 2026-11-27 | Walidacja JSON-ów prac przy budowaniu (wtyczka Vite `virtual:works`), zod tylko w formularzu |
+| 2026-11-27 | Animacje Z4.1 tylko dla treści spoza ekranu; treść widoczna przy ładowaniu bez animacji (LCP) |
+| 2026-11-27 | JS prerenderowanych stron ładowany po pierwszym malowaniu (LCP 2,3 s zamiast 3,9 s na dławionym telefonie) |
+| 2026-11-27 | Lighthouse CI z prawdziwym dławieniem (`devtools`): symulacja zawyżała LCP obrazków w `<picture>` o ~3,5 s |
