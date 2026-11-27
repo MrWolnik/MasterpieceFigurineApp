@@ -11,6 +11,11 @@
   margin: 0;
 }
 
+/* Only there to disable every control until hydration; its children stay the form's grid items. */
+.controls {
+  display: contents;
+}
+
 .row {
   display: grid;
   gap: var(--space-6);

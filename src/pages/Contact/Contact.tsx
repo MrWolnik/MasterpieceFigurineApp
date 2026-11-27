@@ -13,6 +13,7 @@ export function Contact() {
   const [params] = useSearchParams();
   // A new ?kind= or ?ref= (e.g. the header's plain "Contact" link after "I want a similar one")
   // must give a fresh, re-prefilled form; the form reads its prefill only when it mounts.
+  // (Not on hydration: the prerendered form is kept and OrderForm fills the prefill in.)
   const prefillKey = `${params.get('kind') ?? ''}|${params.get('ref') ?? ''}`;
   const header = useReveal<HTMLDivElement>({ className: styles.header });
   const side = useReveal<HTMLDivElement>({ className: styles.side, delay: 100 });
