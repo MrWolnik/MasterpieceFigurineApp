@@ -2,11 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { emptyOrder, type OrderFormValues } from '../../lib/orderSchema';
 import { useLanguage } from '../../lib/useLanguage';
-import { getBySlug, WORK_KINDS, type WorkKind } from '../../lib/works';
-
-function isWorkKind(value: string | null): value is WorkKind {
-  return (WORK_KINDS as readonly (string | null)[]).includes(value);
-}
+import { getBySlug, isWorkKind } from '../../lib/works';
 
 /**
  * Initial form values from the URL: `?kind=painting` presets the order type and

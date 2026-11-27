@@ -1,8 +1,13 @@
 import { z } from 'zod';
-import { workSchema, type Figurine, type Work, type WorkKind } from './works.schema';
+import { WORK_KINDS, workSchema, type Figurine, type Work, type WorkKind } from './works.schema';
 
 export { WORK_KINDS } from './works.schema';
 export type { Figurine, Painting, Work, WorkKind } from './works.schema';
+
+/** Narrows a URL value (e.g. `?kind=`) to a work kind. */
+export function isWorkKind(value: unknown): value is WorkKind {
+  return (WORK_KINDS as readonly unknown[]).includes(value);
+}
 
 export interface WorkFilter {
   kind?: WorkKind;
@@ -73,7 +78,7 @@ export function getWorks(filter: WorkFilter = {}): Work[] {
 }
 
 /** Works marked `featured`, sorted by `order`. */
-export function getFeatured(): Work[] {
+function getFeatured(): Work[] {
   return allWorks.filter((work) => work.featured);
 }
 

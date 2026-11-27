@@ -1,14 +1,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo, useRef, useState } from 'react';
-import { Controller, useForm, useWatch, type Resolver } from 'react-hook-form';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Controller,
+  useForm,
+  useWatch,
+  type Resolver,
+  type UseFormGetValues,
+  type UseFormSetValue,
+} from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
 import { pathFor } from '../../lib/routes';
 import { HONEYPOT_FIELD } from '../../lib/submitOrder';
 import { useLanguage } from '../../lib/useLanguage';
+import { WORK_KINDS } from '../../lib/works';
 import { Dropzone } from '../Dropzone/Dropzone';
-import { FieldError, FormField } from './FormField';
+import { FieldError } from './FieldError';
+import { FormField } from './FormField';
 import { OrderSuccess } from './OrderSuccess';
 import styles from './OrderForm.module.css';
 import { PaintingFields } from './PaintingFields';
@@ -16,6 +25,25 @@ import { useOrderPrefill } from './useOrderPrefill';
 
 interface OrderFormProps {
   onSubmit: (order: Order) => Promise<void>;
+}
+
+/**
+ * When the language changes, swaps the prefilled description ("I want a similar one to: …") for
+ * the new language's text, unless the user has already edited it.
+ */
+function useTranslatedPrefill(
+  prefill: string,
+  getValues: UseFormGetValues<OrderFormValues>,
+  setValue: UseFormSetValue<OrderFormValues>,
+) {
+  const previous = useRef(prefill);
+
+  useEffect(() => {
+    if (previous.current !== prefill && getValues('description') === previous.current) {
+      setValue('description', prefill);
+    }
+    previous.current = prefill;
+  }, [prefill, getValues, setValue]);
 }
 
 /** The order request form; `?kind=` and `?ref=` in the URL preset it. */
@@ -29,6 +57,8 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     handleSubmit,
     resetField,
     reset,
+    getValues,
+    setValue,
     control,
     formState: { errors, isSubmitting },
   } = useForm<OrderFormValues, unknown, Order>({
@@ -38,6 +68,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     defaultValues,
   });
   const kind = useWatch({ control, name: 'kind' });
+  useTranslatedPrefill(defaultValues.description, getValues, setValue);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<'idle' | 'sent' | 'failed'>('idle');
 
@@ -93,7 +124,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
 
       <fieldset className={styles.kinds}>
         <legend className={styles.label}>{t('form.kind.legend')}</legend>
-        {(['figurine', 'painting'] as const).map((value) => (
+        {WORK_KINDS.map((value) => (
           <label key={value} className={styles.kind}>
             <input
               type="radio"

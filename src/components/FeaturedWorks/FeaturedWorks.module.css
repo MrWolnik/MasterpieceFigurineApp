@@ -51,18 +51,5 @@
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0 var(--space-6);
-  border: 1px solid var(--color-accent);
-  border-radius: var(--radius-md);
-  color: var(--color-accent);
-  font-weight: var(--weight-semibold);
-  text-decoration: none;
-}
-
-.cta:hover {
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+  composes: btn-outline from global;
 }

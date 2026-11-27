@@ -84,4 +84,22 @@ describe('Dropzone', () => {
 
     expect(screen.getByText('dropped.webp')).toBeInTheDocument();
   });
+
+  it('stays highlighted while dragging over its own texts', () => {
+    setup();
+    const text = screen.getByText('Przeciągnij i upuść zdjęcie tutaj');
+    const area = text.closest('label');
+    if (!area) throw new Error('Missing drop area');
+
+    // jsdom has no DragEvent, so a MouseEvent carries the `relatedTarget`.
+    const dragLeave = (to: Element) =>
+      fireEvent(area, new MouseEvent('dragleave', { bubbles: true, relatedTarget: to }));
+
+    fireEvent.dragOver(area);
+    dragLeave(text);
+    expect(area.className).toMatch(/dragging/);
+
+    dragLeave(document.body);
+    expect(area.className).not.toMatch(/dragging/);
+  });
 });

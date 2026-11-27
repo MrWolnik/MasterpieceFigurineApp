@@ -1,10 +1,6 @@
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import { getTags, WORK_KINDS, type WorkFilter, type WorkKind } from './works';
-
-function isWorkKind(value: string | null): value is WorkKind {
-  return WORK_KINDS.includes(value as WorkKind);
-}
+import { getTags, isWorkKind, type WorkFilter, type WorkKind } from './works';
 
 /** `tag` if works of `kind` use it, otherwise no tag filter. */
 function tagIfUsed(kind: WorkKind | undefined, tag: string | null | undefined): string | undefined {

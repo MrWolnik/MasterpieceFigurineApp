@@ -54,8 +54,9 @@ export function Dropzone({ label, hint, files, onChange, name }: DropzoneProps) 
           event.preventDefault();
           setDragging(true);
         }}
-        onDragLeave={() => {
-          setDragging(false);
+        onDragLeave={(event) => {
+          // Moving over the texts inside the area also fires dragleave; ignore it.
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDragging(false);
         }}
         onDrop={onDrop}
       >

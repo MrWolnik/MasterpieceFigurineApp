@@ -24,7 +24,7 @@ export function pathFor(key: RouteKey, lang: Language, params: RouteParams = {})
   return path ? `/${lang}/${generatePath(path, params)}` : `/${lang}`;
 }
 
-export interface ResolvedRoute {
+interface ResolvedRoute {
   lang: Language;
   key: RouteKey;
   params: RouteParams;
