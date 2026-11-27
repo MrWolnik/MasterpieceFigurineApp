@@ -1,4 +1,4 @@
-import { expect, test, type Page, type Request } from '@playwright/test';
+import { expect, test, type Page, type Request } from './fixtures';
 
 /** Intercepts the Netlify POST to `/` and returns the captured request once it is sent. */
 function interceptNetlify(page: Page): Promise<Request> {

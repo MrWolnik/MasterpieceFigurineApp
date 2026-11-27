@@ -45,6 +45,8 @@ export class FakeIntersectionObserver {
   }
 
   private notify(isIntersecting: boolean) {
+    // Like the browser: a disconnected observer (no observed elements) reports nothing.
+    if (this.elements.size === 0) return;
     const entries = [...this.elements].map(
       (target) => ({ target, isIntersecting }) as IntersectionObserverEntry,
     );

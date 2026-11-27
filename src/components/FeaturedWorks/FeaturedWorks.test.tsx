@@ -29,7 +29,7 @@ describe('FeaturedWorks', () => {
     expect(screen.queryByRole('slider')).not.toBeInTheDocument();
     expect(container.querySelector('img')).toHaveAttribute(
       'src',
-      '/works/krasnoludzki-kowal/cover.svg',
+      '/img/works/krasnoludzki-kowal/cover-800.webp',
     );
   });
 

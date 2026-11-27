@@ -34,6 +34,8 @@ npm run dev
 | `npm run test:coverage`    | Run Vitest with a coverage report (`coverage/`)                               |
 | `npm run test:e2e`         | Build, serve and run Playwright e2e tests (Chromium, Firefox, WebKit, iPhone) |
 | `npm run test:e2e:install` | Download Playwright browsers and system dependencies                          |
+| `npm run images`           | Generate AVIF/WebP image variants into `public/img` (runs before dev/build)   |
+| `npm run lighthouse`       | Lighthouse CI on the built site (score ≥ 0.9 in every category)               |
 
 ## Design tokens
 
@@ -62,6 +64,11 @@ them all. The styleguide exists only in development and is left out of productio
 4. `npm run build`
 5. `npm run test:e2e` (Playwright against the built site)
 
+A second job, **Lighthouse**, builds the site and runs `npm run lighthouse` in parallel: the home,
+portfolio, a figurine and the contact page must score at least 0.9 in Performance,
+Accessibility, Best Practices and SEO (throttled phone, median of 3 runs). Its reports are
+uploaded as the `lighthouse-reports` artifact.
+
 npm packages and Playwright browsers are cached between runs. When a run fails, the Playwright
 HTML report and traces are uploaded as the `playwright-report` artifact (kept 14 days): open the
 failed run on GitHub → **Summary** → **Artifacts**, download it and run
@@ -87,9 +94,27 @@ With GitHub Pro (or a public repository):
    - **Block force pushes**
    - **Require a pull request before merging**
    - **Require status checks to pass** → **Add checks** → choose
-     `Lint, typecheck, test, build, e2e` (it appears after CI has run at least once), and tick
+     `Lint, typecheck, test, build, e2e` and `Lighthouse` (they appear after CI has run at least
+     once), and tick
      **Require branches to be up to date before merging**.
 5. **Create**.
+
+## Performance
+
+- **Images.** Put the original photo in `public/` (e.g. `public/works/<slug>/cover.jpg`) and
+  reference it in the work's JSON. `npm run images` (run automatically before `dev` and `build`)
+  writes AVIF and WebP copies 480–1600 px wide into `public/img/` (git-ignored), only for new or
+  changed files; pages pick the right one with `srcset`. Turntable frames get one 800 px WebP;
+  `@2x` files are left as they are for the zoom viewer.
+- **Code splitting.** Every page except home is its own chunk (`src/router.tsx`), so e.g. the
+  order form and its validation load only on the contact page. Work files are validated at build
+  time (`scripts/vite-plugin-works.ts`), keeping zod out of the other pages.
+- **Loading order.** A prerendered page links its own stylesheet and preloads its fonts (Latin,
+  plus Latin Extended in Polish), and fetches its JS only after the first paint: text and images
+  come first, interactivity a moment later.
+- **Lighthouse.** `npm run build && npm run lighthouse` audits the build locally (needs Google
+  Chrome) through `scripts/serve-dist.mjs`, which serves `dist` the way Netlify does (compressed,
+  clean URLs). `public/_headers` lets browsers cache the hashed files in `/assets` for a year.
 
 ## Prerendering and SEO
 

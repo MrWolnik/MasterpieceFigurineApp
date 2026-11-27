@@ -43,6 +43,8 @@ export function WorkMedia({ work, title }: WorkMediaProps) {
               <ImageZoom
                 src={src}
                 hiResSrc={src}
+                // Gallery thumbnails, at least 9rem wide (WorkDetails.module.css).
+                sizes="(min-width: 60rem) 15vw, 33vw"
                 alt={t('pages.work.photo', { title, n: i + 1 })}
               />
             </li>

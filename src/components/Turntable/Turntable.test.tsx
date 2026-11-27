@@ -51,7 +51,7 @@ afterEach(() => {
 describe('Turntable', () => {
   it('shows the first frame right away', () => {
     renderTurntable();
-    expect(frameSrc()).toBe('/works/demo/frames/001.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/001-800.webp');
     expect(slider()).toHaveAttribute('aria-valuenow', '0');
     expect(slider()).toHaveAttribute('aria-valuetext', 'Angle 0°');
   });
@@ -71,15 +71,15 @@ describe('Turntable', () => {
     slider().focus();
 
     await user.keyboard('{ArrowRight}');
-    expect(frameSrc()).toBe('/works/demo/frames/002.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/002-800.webp');
     expect(slider()).toHaveAttribute('aria-valuenow', '10');
 
     await user.keyboard('{ArrowLeft}{ArrowLeft}');
-    expect(frameSrc()).toBe('/works/demo/frames/036.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/036-800.webp');
     expect(slider()).toHaveAttribute('aria-valuetext', 'Angle 350°');
 
     await user.keyboard('{Home}');
-    expect(frameSrc()).toBe('/works/demo/frames/001.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/001-800.webp');
   });
 
   it('dragging changes the frame', () => {
@@ -89,14 +89,14 @@ describe('Turntable', () => {
 
     fireEvent.pointerDown(stage, { pointerId: 1, button: 0, clientX: 100 });
     fireEvent.pointerMove(stage, { pointerId: 1, clientX: 130 });
-    expect(frameSrc()).toBe('/works/demo/frames/004.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/004-800.webp');
 
     fireEvent.pointerMove(stage, { pointerId: 1, clientX: 90 });
-    expect(frameSrc()).toBe('/works/demo/frames/036.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/036-800.webp');
 
     fireEvent.pointerUp(stage, { pointerId: 1 });
     fireEvent.pointerMove(stage, { pointerId: 1, clientX: 300 });
-    expect(frameSrc()).toBe('/works/demo/frames/036.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/036-800.webp');
   });
 
   it('auto-rotates once loaded and stops after the user interacts', async () => {
@@ -109,13 +109,13 @@ describe('Turntable', () => {
     act(() => {
       vi.advanceTimersByTime(AUTO_ROTATE_INTERVAL_MS * 3);
     });
-    expect(frameSrc()).toBe('/works/demo/frames/004.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/004-800.webp');
 
     fireEvent.pointerDown(slider(), { pointerId: 1, button: 0, clientX: 0 });
     act(() => {
       vi.advanceTimersByTime(AUTO_ROTATE_INTERVAL_MS * 5);
     });
-    expect(frameSrc()).toBe('/works/demo/frames/004.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/004-800.webp');
   });
 
   it('does not auto-rotate with prefers-reduced-motion', async () => {
@@ -129,7 +129,7 @@ describe('Turntable', () => {
     act(() => {
       vi.advanceTimersByTime(AUTO_ROTATE_INTERVAL_MS * 5);
     });
-    expect(frameSrc()).toBe('/works/demo/frames/001.svg');
+    expect(frameSrc()).toBe('/img/works/demo/frames/001-800.webp');
   });
 
   it('stops auto-rotating when reduced motion is switched on while open', async () => {

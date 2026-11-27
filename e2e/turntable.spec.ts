@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 // Runs against the dev server: until Z1.7 the turntable is only mounted on /styleguide.
 
@@ -25,7 +25,7 @@ test.describe('turntable (styleguide demo)', () => {
     await expect
       .poll(async () => Math.abs(Number(await slider.getAttribute('aria-valuenow')) - 90))
       .toBeLessThanOrEqual(10);
-    await expect(slider.locator('img')).toHaveAttribute('src', /frames\/0\d\d\.svg$/);
+    await expect(slider.locator('img')).toHaveAttribute('src', /frames\/0\d\d-800\.webp$/);
   });
 
   test('arrow keys rotate the figurine', async ({ page }) => {
@@ -37,6 +37,6 @@ test.describe('turntable (styleguide demo)', () => {
     await page.keyboard.press('ArrowRight');
 
     await expect(slider).toHaveAttribute('aria-valuenow', '10');
-    await expect(slider.locator('img')).toHaveAttribute('src', /frames\/002\.svg$/);
+    await expect(slider.locator('img')).toHaveAttribute('src', /frames\/002-800\.webp$/);
   });
 });

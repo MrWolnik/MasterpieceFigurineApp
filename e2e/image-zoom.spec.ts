@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 // Runs on the real painting page (production build), so it covers what visitors get.
 const PAGE = '/pl/portfolio/mgla-nad-bagnem';

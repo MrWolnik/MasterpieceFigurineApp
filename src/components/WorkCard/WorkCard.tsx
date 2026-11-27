@@ -6,6 +6,11 @@ import { useTagLabel } from '../../lib/useTagLabel';
 import type { Work } from '../../lib/works';
 import styles from './WorkCard.module.css';
 import { WorkKindIcon } from './WorkKindIcon';
+import { ResponsiveImage } from '../ResponsiveImage/ResponsiveImage';
+
+/** Tile width in the grid (WorkGrid.module.css: 1–4 columns). */
+const TILE_SIZES =
+  '(min-width: 1200px) 25vw, (min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw';
 
 interface WorkCardProps {
   work: Work;
@@ -27,12 +32,12 @@ export function WorkCard({ work, eager = false, headingLevel = 2 }: WorkCardProp
     <article className={styles.card}>
       <Link className={styles.link} to={pathFor('work', language, { slug: work.slug })}>
         <div className={styles.media}>
-          <img
+          <ResponsiveImage
             className={styles.cover}
             src={work.cover}
             alt=""
+            sizes={TILE_SIZES}
             loading={eager ? 'eager' : 'lazy'}
-            decoding="async"
             style={{ objectPosition: work.coverFocus }}
           />
           <span className={styles.badges}>

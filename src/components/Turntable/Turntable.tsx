@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './Turntable.module.css';
+import { FRAME_WIDTH, variantUrl } from '../../lib/images';
 import { frameAngle, frameFromDrag, framePath, wrapFrame } from './turntableMath';
 import { useAutoRotate } from './useAutoRotate';
 import { useFramePreloader } from './useFramePreloader';
@@ -48,7 +49,11 @@ export function Turntable({ slug, frames, format, title, autoRotate = true }: Tu
   const interactedRef = useRef(false);
 
   const urls = useMemo(
-    () => Array.from({ length: frames }, (_, i) => framePath(slug, i, format)),
+    // The optimised WebP of each frame (scripts/optimize-images.mjs), whatever the source format.
+    () =>
+      Array.from({ length: frames }, (_, i) =>
+        variantUrl(framePath(slug, i, format), FRAME_WIDTH, 'webp'),
+      ),
     [slug, frames, format],
   );
   const loaded = useFramePreloader(urls);

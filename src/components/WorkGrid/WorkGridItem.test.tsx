@@ -15,9 +15,15 @@ const tiles = () =>
   });
 
 describe('WorkGridItem', () => {
-  it('fades each tile in when it scrolls into view', () => {
+  it('hides off-screen tiles after load and fades each in when it scrolls into view', () => {
     const Observer = stubIntersectionObserver();
     renderWithProviders(<WorkGrid works={getWorks()} />);
+    // At load every tile fades in; the ones that turn out to be off screen are then hidden.
+    expect(tiles().every((tile) => tile.classList.contains('revealed'))).toBe(true);
+
+    act(() => {
+      for (const observer of Observer.instances) observer.leave();
+    });
     expect(tiles().every((tile) => tile.classList.contains('hidden'))).toBe(true);
 
     act(() => {

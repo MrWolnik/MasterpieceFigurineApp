@@ -5,6 +5,7 @@ import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
 import { useReveal } from '../../lib/useReveal';
 import { ChevronDownIcon } from '../icons/ChevronDownIcon';
+import { ResponsiveImage } from '../ResponsiveImage/ResponsiveImage';
 import styles from './Hero.module.css';
 
 /** Delay between the Hero text lines as they come in. */
@@ -29,7 +30,14 @@ export function Hero({ nextSectionId }: HeroProps) {
     <section className={styles.hero} aria-labelledby="hero-title">
       <div className={styles.photo}>
         {/* The first thing on the page: load it right away. */}
-        <img src={site.portrait} alt={t('home.hero.portraitAlt')} fetchPriority="high" />
+        <ResponsiveImage
+          src={site.portrait}
+          alt={t('home.hero.portraitAlt')}
+          // The left column of 5/11 on desktop (Hero.module.css), full width on phones.
+          sizes="(min-width: 56.25rem) 45vw, 100vw"
+          loading="eager"
+          fetchPriority="high"
+        />
       </div>
       <div className={styles.text}>
         <p {...eyebrow}>{t('app.tagline')}</p>

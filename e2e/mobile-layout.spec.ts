@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 // A narrow phone: nothing on these pages may make the page scroll sideways.
 test.use({ viewport: { width: 360, height: 740 } });
