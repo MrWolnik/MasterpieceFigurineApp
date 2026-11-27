@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { createAppRoutes } from './router';
+import { createAppRoutes, lazyPages, pageModule } from './router';
 import { renderRoutes } from './test/test-utils';
 
 function renderApp(route: string) {
@@ -109,6 +109,13 @@ describe('app routes', () => {
     expect(document.documentElement.lang).toBe('pl');
   });
 
+  it('marks <html data-ready> once the app is interactive', async () => {
+    delete document.documentElement.dataset.ready;
+    renderApp('/pl/kontakt');
+    await screen.findByRole('heading', { level: 1, name: 'Kontakt' });
+    expect(document.documentElement).toHaveAttribute('data-ready');
+  });
+
   it('moves focus to the main content after navigating, but not on the first load', async () => {
     const { user } = renderApp('/pl');
     await screen.findByRole('heading', { level: 1, name: 'Julia' });
@@ -130,5 +137,21 @@ describe('app routes', () => {
 
     await screen.findByRole('heading', { level: 1, name: 'Contact' });
     expect(screen.getByRole('main')).toHaveFocus();
+  });
+});
+
+describe('lazy pages', () => {
+  it('name source files that exist, as the build manifest needs them', () => {
+    const sources = Object.keys(import.meta.glob('/src/pages/**/*.tsx'));
+    for (const page of lazyPages) expect(sources, page.module).toContain(`/${page.module}`);
+  });
+
+  it('maps a path to its page module, and home or unknown paths to none', () => {
+    expect(pageModule('/en/contact')).toBe('src/pages/Contact/Contact.tsx');
+    expect(pageModule('/pl/portfolio/nocny-wartownik')).toBe(
+      'src/pages/WorkDetails/WorkDetails.tsx',
+    );
+    expect(pageModule('/pl')).toBeUndefined();
+    expect(pageModule('/nowhere')).toBeUndefined();
   });
 });

@@ -1,7 +1,7 @@
 // Prerenders every page to static HTML after `vite build` (PLAN Z4.2), so search engines and
 // link previews get the title, description, hreflang links and content without running JS.
 // Also writes sitemap.xml and robots.txt. Usage: node scripts/prerender.mjs (part of `npm run build`).
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build } from 'vite';
@@ -19,6 +19,7 @@ await build({
     outDir: ssrOutDir,
     emptyOutDir: true,
     copyPublicDir: false,
+    manifest: false,
   },
 });
 
@@ -28,6 +29,10 @@ const { renderPage, prerenderPaths, buildSitemap, buildRobots } = await import(
 
 // dist/index.html stays the bare shell for `/` (language redirect) and unknown paths (404).
 const template = readFileSync(join(dist, 'index.html'), 'utf8');
+const buildAssets = {
+  manifest: JSON.parse(readFileSync(join(dist, '.vite/manifest.json'), 'utf8')),
+  assetFiles: readdirSync(join(dist, 'assets')),
+};
 const paths = prerenderPaths();
 
 // `/pl/portfolio` → `pl/portfolio.html`: Netlify and `vite preview` serve it at the clean URL,
@@ -35,7 +40,7 @@ const paths = prerenderPaths();
 for (const path of paths) {
   const file = join(dist, `${path}.html`);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, await renderPage(path, template));
+  writeFileSync(file, await renderPage(path, template, buildAssets));
 }
 
 writeFileSync(join(dist, 'sitemap.xml'), buildSitemap());

@@ -34,6 +34,36 @@ describe('renderPage', () => {
     expect(html).toContain('[at]');
   });
 
+  it("links the page's own chunks and preloads the fonts of its language", async () => {
+    const build = {
+      manifest: {
+        'index.html': { file: 'assets/index.js', isEntry: true },
+        'src/pages/Contact/Contact.tsx': { file: 'assets/Contact.js', css: ['assets/Contact.css'] },
+      },
+      assetFiles: [
+        'cinzel-latin-wght-normal-A.woff2',
+        'inter-latin-wght-normal-B.woff2',
+        'cinzel-latin-ext-wght-normal-C.woff2',
+        'inter-latin-ext-wght-normal-D.woff2',
+      ],
+    };
+    const builtTemplate = template.replace(
+      '</head>',
+      '<script type="module" crossorigin src="/assets/index.js"></script></head>',
+    );
+    const html = await renderPage('/pl/kontakt', builtTemplate, build);
+    expect(html).toContain('<link rel="stylesheet" crossorigin href="/assets/Contact.css">');
+    expect(html).toContain('href="/assets/inter-latin-ext-wght-normal-D.woff2"');
+    // The JS (entry and page chunk) is fetched by the inline loader after the first paint.
+    expect(html).not.toContain('src="/assets/index.js"');
+    expect(html).toMatch(/for \(const href of \["\/assets\/Contact\.js"\]\)/);
+    expect(html).toContain('import("/assets/index.js")');
+
+    const english = await renderPage('/en', builtTemplate, build);
+    expect(english).not.toContain('latin-ext');
+    expect(english).toMatch(/for \(const href of \[\]\)/);
+  });
+
   it('refuses a path that redirects instead of rendering a page', async () => {
     await expect(renderPage('/en/kontakt', template)).rejects.toThrow(/redirect/);
   });

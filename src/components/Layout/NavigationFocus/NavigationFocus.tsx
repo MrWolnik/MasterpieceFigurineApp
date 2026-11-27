@@ -12,6 +12,12 @@ export function NavigationFocus() {
   const { pathname } = useLocation();
   const previousPathname = useRef(pathname);
 
+  // Marks the page as interactive (this is the root of every route). Prerendered pages show
+  // before their JS has even loaded (htmlTemplate.ts `deferScripts`); e2e tests wait for this.
+  useEffect(() => {
+    document.documentElement.dataset.ready = '';
+  }, []);
+
   useEffect(() => {
     if (previousPathname.current === pathname) {
       return;
