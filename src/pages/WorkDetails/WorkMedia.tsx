@@ -10,7 +10,10 @@ interface WorkMediaProps {
   title: string;
 }
 
-/** Painting: zoomable image. Figurine: 360° turntable when it has frames, else a photo gallery. */
+/**
+ * Painting: zoomable image. Figurine: 360° turntable when it has frames, otherwise its cover as a
+ * zoomable image like a painting. Extra photos of a figurine follow as a gallery.
+ */
 export function WorkMedia({ work, title }: WorkMediaProps) {
   const { t } = useTranslation();
 
@@ -22,13 +25,14 @@ export function WorkMedia({ work, title }: WorkMediaProps) {
     );
   }
 
-  // With a turntable the cover is just one of its frames, so the gallery shows only the details.
-  const gallery = work.frames ? work.images : [work.cover, ...work.images];
+  const gallery = work.images;
 
   return (
     <div className={styles.media}>
-      {work.frames && (
+      {work.frames ? (
         <Turntable slug={work.slug} frames={work.frames} format={work.framesFormat} title={title} />
+      ) : (
+        <ImageZoom src={work.cover} hiResSrc={work.cover} alt={title} />
       )}
       {gallery.length > 0 && (
         <ul className={styles.gallery} aria-label={t('pages.work.gallery')}>

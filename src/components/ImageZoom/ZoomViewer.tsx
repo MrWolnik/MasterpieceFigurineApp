@@ -74,7 +74,7 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
       <div className={styles.toolbar}>
         <button
           type="button"
-          className={styles.tool}
+          className={[styles.tool, styles.zoomOut].join(' ')}
           aria-label={t('imageZoom.zoomOut')}
           disabled={state.scale <= MIN_SCALE}
           onClick={zoomOut}
@@ -86,7 +86,7 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
         </output>
         <button
           type="button"
-          className={styles.tool}
+          className={[styles.tool, styles.zoomIn].join(' ')}
           aria-label={t('imageZoom.zoomIn')}
           disabled={state.scale >= MAX_SCALE}
           onClick={zoomIn}
@@ -95,7 +95,7 @@ export function ZoomViewer({ src, hiResSrc, alt, onClose }: ZoomViewerProps) {
         </button>
         <button
           type="button"
-          className={styles.tool}
+          className={[styles.tool, styles.fit].join(' ')}
           disabled={state.scale === MIN_SCALE}
           onClick={reset}
         >
