@@ -404,3 +404,5 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Lighthouse CI z prawdziwym dławieniem (`devtools`): symulacja zawyżała LCP obrazków w `<picture>` o ~3,5 s |
 | 2026-11-27 | E-mail na stronie zastępczy `example@example.com`; ikony social media widoczne i prowadzą na strony główne serwisów do czasu podania profili; strony główne nie trafiają do `sameAs` w danych strukturalnych |
 | 2026-11-27 | Prawdziwy status 404 dla nieznanych adresów (zamiast 200, „soft 404”) robimy po pierwszej publikacji |
+| 2026-11-27 | Ustawienia budowania Netlify w `netlify.toml` (w repo, przez review); w panelu tylko `VITE_SITE_URL` i powiadomienia formularza |
+| 2026-11-27 | Podstawowe nagłówki bezpieczeństwa w `public/_headers` (bez pełnej CSP na razie); podglądy PR z `X-Robots-Tag: noindex` |

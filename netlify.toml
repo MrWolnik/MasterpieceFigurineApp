@@ -1,0 +1,7 @@
+# Netlify build settings (PLAN Z5.1). Kept in the repo so changes go through review; the
+# Netlify panel only holds what must not be in code (VITE_SITE_URL, form notifications).
+# Node comes from .nvmrc. Response headers live in public/_headers, redirects in
+# public/_redirects (scripts/serve-dist.mjs mirrors both for Lighthouse CI).
+[build]
+  command = "npm run build"
+  publish = "dist"

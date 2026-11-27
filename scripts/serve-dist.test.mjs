@@ -1,9 +1,10 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { brotliDecompressSync, gunzipSync } from 'node:zlib';
 import { afterAll, describe, expect, it } from 'vitest';
-import { resolveFile, respond } from './serve-dist.mjs';
+import { resolveFile, respond, SECURITY_HEADERS } from './serve-dist.mjs';
 
 const dist = mkdtempSync(join(tmpdir(), 'dist-'));
 mkdirSync(join(dist, 'pl/portfolio'), { recursive: true });
@@ -58,5 +59,53 @@ describe('respond', () => {
   it('caches hashed assets for a year and pages not at all', () => {
     expect(respond(js, '/assets/app-1.js').headers['Cache-Control']).toContain('immutable');
     expect(respond(join(dist, 'pl.html'), '/pl').headers['Cache-Control']).toContain('max-age=0');
+  });
+});
+
+const repo = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+/** public/_headers as { path: { header: value } } (Netlify's format: path, indented headers). */
+function parseHeadersFile(text) {
+  const rules = {};
+  let current;
+  for (const line of text.split('\n')) {
+    if (line.trim() === '' || line.trimStart().startsWith('#')) continue;
+    if (/^\S/.test(line)) {
+      current = rules[line.trim()] = {};
+    } else if (current) {
+      const colon = line.indexOf(':');
+      current[line.slice(0, colon).trim()] = line.slice(colon + 1).trim();
+    }
+  }
+  return rules;
+}
+
+describe('security headers', () => {
+  const netlify = parseHeadersFile(readFileSync(join(repo, 'public/_headers'), 'utf8'));
+
+  it('are the same in public/_headers (Netlify) and in this server', () => {
+    expect(netlify['/*']).toEqual(SECURITY_HEADERS);
+  });
+
+  it('come with every response', () => {
+    expect(respond(join(dist, 'pl.html'), '/pl').headers).toMatchObject(SECURITY_HEADERS);
+    expect(respond(join(dist, 'assets/a.avif'), '/assets/a.avif').headers).toMatchObject(
+      SECURITY_HEADERS,
+    );
+  });
+
+  it('keep the long caching of hashed assets in public/_headers', () => {
+    expect(netlify['/assets/*']).toEqual({
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    });
+  });
+});
+
+describe('netlify.toml', () => {
+  const toml = readFileSync(join(repo, 'netlify.toml'), 'utf8');
+
+  it('builds with the npm script and publishes the folder Vite and the prerender write', () => {
+    expect(toml).toMatch(/^\s*command = "npm run build"$/m);
+    expect(toml).toMatch(/^\s*publish = "dist"$/m);
   });
 });
