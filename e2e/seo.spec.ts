@@ -1,12 +1,5 @@
-import { expect, test, type APIRequestContext } from './fixtures';
-
-/** Paths of every page listed in the built sitemap.xml (the site's own list of pages). */
-async function sitemapPaths(request: APIRequestContext): Promise<string[]> {
-  const response = await request.get('/sitemap.xml');
-  expect(response.ok()).toBe(true);
-  const xml = await response.text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1] ?? '').pathname);
-}
+import { expect, test } from './fixtures';
+import { sitemapPaths } from './helpers.js';
 
 /** The value of `attribute` on the first tag in `html` that matches `selector` (a regex source). */
 function attribute(html: string, selector: string, name: string): string | undefined {

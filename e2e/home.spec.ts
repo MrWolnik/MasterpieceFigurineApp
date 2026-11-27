@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { expectNoA11yViolations, urlOf } from './helpers.js';
+import { urlOf } from './helpers.js';
 
 test.describe('home page', () => {
   test('shows the hero with Julia and the site title', async ({ page }) => {
@@ -73,12 +73,6 @@ test.describe('home page', () => {
 
     await expect(page).toHaveURL(urlOf('/en/portfolio'));
     await expect(page.getByRole('heading', { level: 1, name: 'Portfolio' })).toBeVisible();
-  });
-
-  test('has no detectable accessibility violations', async ({ page }) => {
-    await page.goto('/pl');
-
-    await expectNoA11yViolations(page);
   });
 });
 
