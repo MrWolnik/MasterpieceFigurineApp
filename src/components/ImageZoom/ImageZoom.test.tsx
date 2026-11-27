@@ -37,7 +37,7 @@ describe('ImageZoom', () => {
     renderZoom();
     expect(screen.getByRole('img', { name: 'Mist over the Marsh' })).toHaveAttribute(
       'src',
-      '/works/a/full.svg',
+      '/img/works/a/full-800.webp',
     );
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(requested).toEqual([]);

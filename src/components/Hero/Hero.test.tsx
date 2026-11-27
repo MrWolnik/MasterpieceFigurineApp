@@ -10,7 +10,7 @@ describe('Hero', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Julia' })).toBeInTheDocument();
     expect(
       screen.getByRole('img', { name: 'Julia przy swoim stanowisku malarskim' }),
-    ).toHaveAttribute('src', '/julia.svg');
+    ).toHaveAttribute('src', '/img/julia-800.webp');
     expect(screen.getByText(/Każde zlecenie wyceniam indywidualnie/)).toBeInTheDocument();
   });
 

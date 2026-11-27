@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ResponsiveImage } from '../ResponsiveImage/ResponsiveImage';
 import styles from './ImageZoom.module.css';
 import { ZoomViewer } from './ZoomViewer';
 import { ZoomIcon } from '../icons/ZoomIcon';
@@ -10,13 +11,18 @@ export interface ImageZoomProps {
   /** High-resolution image, loaded only once the viewer is opened. */
   hiResSrc: string;
   alt: string;
+  /** Shown width of the preview (`sizes`), so the browser picks the right file. */
+  sizes?: string;
 }
+
+/** The media column of the work page (WorkDetails.module.css: 3/5 from 60rem). */
+const DEFAULT_SIZES = '(min-width: 60rem) 60vw, 100vw';
 
 /**
  * Shows a whole, uncropped image; clicking it opens a full-screen viewer (native modal
  * `<dialog>`: focus trap, Esc and backdrop for free) with wheel, pinch, button and keyboard zoom.
  */
-export function ImageZoom({ src, hiResSrc, alt }: ImageZoomProps) {
+export function ImageZoom({ src, hiResSrc, alt, sizes = DEFAULT_SIZES }: ImageZoomProps) {
   const { t } = useTranslation();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +57,13 @@ export function ImageZoom({ src, hiResSrc, alt }: ImageZoomProps) {
           setOpen(true);
         }}
       >
-        <img className={styles.preview} src={src} alt={alt} />
+        <ResponsiveImage
+          className={styles.preview}
+          src={src}
+          alt={alt}
+          sizes={sizes}
+          loading="eager"
+        />
         <span className={styles.zoomBadge} aria-hidden="true">
           <ZoomIcon />
         </span>

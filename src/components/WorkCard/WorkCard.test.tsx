@@ -49,7 +49,7 @@ describe('WorkCard', () => {
   it('crops the cover using coverFocus and loads it lazily by default', () => {
     const { container } = renderWithProviders(<WorkCard work={work('portret-rycerki')} />);
     const cover = container.querySelector('img');
-    expect(cover).toHaveAttribute('src', '/works/portret-rycerki/cover.svg');
+    expect(cover).toHaveAttribute('src', '/img/works/portret-rycerki/cover-800.webp');
     expect(cover).toHaveAttribute('loading', 'lazy');
     expect(cover).toHaveStyle({ objectPosition: '50% 25%' });
   });

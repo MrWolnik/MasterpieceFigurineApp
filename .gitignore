@@ -33,3 +33,9 @@ Thumbs.db
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Generated image variants (scripts/optimize-images.mjs)
+public/img
+
+# Lighthouse CI reports
+.lighthouseci

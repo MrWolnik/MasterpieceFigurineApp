@@ -85,12 +85,16 @@ p {
 }
 
 img,
-picture,
 video,
 canvas,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/* <picture> only chooses the file (ResponsiveImage); the <img> inside is styled and laid out. */
+picture {
+  display: contents;
 }
 
 input,

@@ -4,6 +4,7 @@ import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
 import { useReveal } from '../../lib/useReveal';
 import type { Figurine } from '../../lib/works';
+import { ResponsiveImage } from '../ResponsiveImage/ResponsiveImage';
 import { Turntable } from '../Turntable/Turntable';
 import styles from './FeaturedWorks.module.css';
 
@@ -35,7 +36,13 @@ export function FeaturedWorks({ works }: FeaturedWorksProps) {
                     autoRotate
                   />
                 ) : (
-                  <img className={styles.cover} src={work.cover} alt="" loading="lazy" />
+                  <ResponsiveImage
+                    className={styles.cover}
+                    src={work.cover}
+                    alt=""
+                    // At most 22rem wide (FeaturedWorks.module.css).
+                    sizes="(min-width: 25rem) 22rem, 100vw"
+                  />
                 )}
               </div>
               <h3 className={styles.title}>
