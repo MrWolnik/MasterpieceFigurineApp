@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { ImageZoom } from '../../components/ImageZoom/ImageZoom';
 import { Turntable } from '../../components/Turntable/Turntable';
+import { useReveal } from '../../lib/useReveal';
 import type { Work } from '../../lib/works';
 import styles from './WorkDetails.module.css';
 
@@ -16,10 +17,11 @@ interface WorkMediaProps {
  */
 export function WorkMedia({ work, title }: WorkMediaProps) {
   const { t } = useTranslation();
+  const reveal = useReveal<HTMLDivElement>({ className: styles.media });
 
   if (work.kind === 'painting') {
     return (
-      <div className={styles.media}>
+      <div {...reveal}>
         <ImageZoom src={work.image} hiResSrc={work.imageHiRes} alt={title} />
       </div>
     );
@@ -28,7 +30,7 @@ export function WorkMedia({ work, title }: WorkMediaProps) {
   const gallery = work.images;
 
   return (
-    <div className={styles.media}>
+    <div {...reveal}>
       {work.frames ? (
         <Turntable slug={work.slug} frames={work.frames} format={work.framesFormat} title={title} />
       ) : (

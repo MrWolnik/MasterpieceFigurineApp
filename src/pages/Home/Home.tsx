@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FeaturedWorks } from '../../components/FeaturedWorks/FeaturedWorks';
 import { Hero } from '../../components/Hero/Hero';
+import { useReveal } from '../../lib/useReveal';
 import { getFeaturedFigurines } from '../../lib/works';
 import styles from './Home.module.css';
 
@@ -11,6 +12,7 @@ export const SNAP_CLASS = 'home-snap';
 
 export function Home() {
   const { t } = useTranslation();
+  const featuredTitle = useReveal<HTMLHeadingElement>({ className: styles.featuredTitle });
 
   // The page scrolls on <html>, so snapping must be set there, and only while Home is shown.
   useEffect(() => {
@@ -24,7 +26,7 @@ export function Home() {
     <div className={styles.home}>
       <Hero nextSectionId={FEATURED_ID} />
       <section id={FEATURED_ID} className={styles.featured} aria-labelledby="featured-title">
-        <h2 id="featured-title" className={styles.featuredTitle}>
+        <h2 id="featured-title" {...featuredTitle}>
           {t('home.featured.title')}
         </h2>
         <FeaturedWorks works={getFeaturedFigurines()} />

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
+import { useReveal } from '../../lib/useReveal';
 import type { Figurine } from '../../lib/works';
 import { Turntable } from '../Turntable/Turntable';
 import styles from './FeaturedWorks.module.css';
@@ -14,10 +15,12 @@ interface FeaturedWorksProps {
 export function FeaturedWorks({ works }: FeaturedWorksProps) {
   const { t } = useTranslation();
   const language = useLanguage();
+  const list = useReveal<HTMLUListElement>({ className: styles.list });
+  const cta = useReveal<HTMLAnchorElement>({ className: styles.cta, delay: 150 });
 
   return (
     <div className={styles.featured}>
-      <ul className={styles.list}>
+      <ul {...list}>
         {works.map((work) => {
           const title = work.title[language];
           return (
@@ -42,7 +45,7 @@ export function FeaturedWorks({ works }: FeaturedWorksProps) {
           );
         })}
       </ul>
-      <Link className={styles.cta} to={pathFor('portfolio', language)}>
+      <Link {...cta} to={pathFor('portfolio', language)}>
         {t('home.featured.cta')}
       </Link>
     </div>

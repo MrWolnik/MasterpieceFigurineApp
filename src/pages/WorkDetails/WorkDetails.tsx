@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
+import { useReveal } from '../../lib/useReveal';
 import { useTagLabel } from '../../lib/useTagLabel';
 import { filtersToParams } from '../../lib/usePortfolioFilters';
 import { getBySlug, getNeighbours } from '../../lib/works';
@@ -16,6 +17,7 @@ export function WorkDetails() {
   const { t } = useTranslation();
   const language = useLanguage();
   const tagLabel = useTagLabel();
+  const info = useReveal<HTMLDivElement>({ className: styles.info, delay: 150 });
   const { slug = '' } = useParams();
   const work = getBySlug(slug);
 
@@ -34,7 +36,7 @@ export function WorkDetails() {
       <div className={styles.layout}>
         {/* Keyed by slug: "Next" reuses this page, and the turntable/zoom must start fresh. */}
         <WorkMedia key={work.slug} work={work} title={title} />
-        <div className={styles.info}>
+        <div {...info}>
           <h1 className={styles.title}>{title}</h1>
           <WorkMeta work={work} />
           <p className={styles.description}>{work.description[language]}</p>
