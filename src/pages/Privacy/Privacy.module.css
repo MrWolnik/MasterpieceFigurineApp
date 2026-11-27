@@ -1,9 +1,6 @@
 .page {
-  max-width: 48rem;
-  margin-inline: auto;
-  padding: var(--space-12) var(--container-padding);
-  display: grid;
-  gap: var(--space-6);
+  --page-max: 48rem;
+  --page-gap: var(--space-6);
   line-height: var(--leading-normal);
 }
 

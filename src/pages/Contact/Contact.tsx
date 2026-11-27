@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router';
 import { About } from '../../components/About/About';
 import { ContactDetails } from '../../components/ContactDetails/ContactDetails';
 import { OrderForm } from '../../components/OrderForm/OrderForm';
+import { PageShell } from '../../components/PageShell/PageShell';
 import { submitOrder } from '../../lib/submitOrder';
 import { useReveal } from '../../lib/useReveal';
 import styles from './Contact.module.css';
@@ -20,7 +21,7 @@ export function Contact() {
   const form = useReveal<HTMLDivElement>({ delay: 200 });
 
   return (
-    <div className={styles.page}>
+    <PageShell>
       <div {...header}>
         <h1>{t('pages.contact.title')}</h1>
         <p className={styles.intro}>{t('pages.contact.intro')}</p>
@@ -36,6 +37,6 @@ export function Contact() {
           <OrderForm key={prefillKey} onSubmit={submitOrder} />
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 }

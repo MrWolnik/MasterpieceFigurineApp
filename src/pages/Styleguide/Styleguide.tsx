@@ -1,5 +1,6 @@
 import { I18nextProvider } from 'react-i18next';
 import { ImageZoom } from '../../components/ImageZoom/ImageZoom';
+import { PageShell } from '../../components/PageShell/PageShell';
 import { Turntable } from '../../components/Turntable/Turntable';
 import { createI18n } from '../../lib/i18n';
 import styles from './Styleguide.module.css';
@@ -27,7 +28,7 @@ const POLISH_SAMPLE = 'Zażółć gęślą jaźń — ĄĆĘŁŃÓŚŹŻ ąćę�
 
 export function Styleguide() {
   return (
-    <main className={styles.page}>
+    <PageShell as="main" className={styles.page}>
       <header className={styles.header}>
         <h1>Styleguide</h1>
         <p className={styles.muted}>Design tokens from src/styles/tokens.css. Dev only.</p>
@@ -119,6 +120,6 @@ export function Styleguide() {
           </I18nextProvider>
         </div>
       </section>
-    </main>
+    </PageShell>
   );
 }

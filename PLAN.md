@@ -341,7 +341,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
       _Uwaga (przegląd Etapu 0):_ prerendering musi ustawić `<html lang>` osobno dla każdej trasy (teraz robi to `Layout` w przeglądarce, a `index.html` ma na sztywno `pl`). Rok w stopce (`new Date().getFullYear()`) brać z czasu budowania, żeby HTML zbudowany w grudniu nie dawał błędu hydracji w styczniu.
 - [x] **Z4.3 Wydajność.** WebP/AVIF z `srcset`, dzielenie kodu na trasy (code splitting), preload fontów. Lighthouse CI w GitHub Actions z progiem ≥ 90.
 - [x] **Z4.4 Dostępność.** Skan axe na każdej podstronie w obu językach jako stały test e2e, fokus widoczny, teksty alternatywne.
-- [ ] **Z4.5 Porządki w kodzie (z przeglądu po Etapie 3).**
+- [x] **Z4.5 Porządki w kodzie (z przeglądu po Etapie 3).**
   - Wspólny kontener strony: sześć plików CSS stron powtarza ten sam `.page` (max-width, marginesy, padding, gap). Do wyboru klasa narzędziowa w `global.css` albo komponent `<PageShell>`.
   - Rozbić `OrderForm.tsx` (~250 linii): wydzielić `ConsentField` (ręcznie składane id błędu, dubluje `FormField`) i `KindField` (wybór rodzaju z czyszczeniem pól obrazu), tak jak `PaintingFields`.
 
