@@ -398,6 +398,6 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Formularz zamówienia zablokowany do czasu hydracji; prefill z `?kind=`/`?ref=` stosowany po hydracji (statyczny HTML nie zna parametrów adresu) |
 | 2026-11-27 | `sharp` (konwersja obrazków na AVIF/WebP przy budowaniu) i `@lhci/cli` (Lighthouse CI) jako devDependencies |
 | 2026-11-27 | Walidacja JSON-ów prac przy budowaniu (wtyczka Vite `virtual:works`), zod tylko w formularzu |
-| 2026-11-27 | Animacje Z4.1 tylko dla treści spoza ekranu; treść widoczna przy ładowaniu bez animacji (LCP) |
+| 2026-11-27 | Animacje przy ładowaniu strony zostają (ważne dla odbioru strony, nawet kosztem wydajności); zanikanie startuje od `opacity: 0.01`, więc nie opóźnia LCP |
 | 2026-11-27 | JS prerenderowanych stron ładowany po pierwszym malowaniu (LCP 2,3 s zamiast 3,9 s na dławionym telefonie) |
 | 2026-11-27 | Lighthouse CI z prawdziwym dławieniem (`devtools`): symulacja zawyżała LCP obrazków w `<picture>` o ~3,5 s |
