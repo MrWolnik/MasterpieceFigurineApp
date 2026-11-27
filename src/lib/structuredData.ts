@@ -16,6 +16,18 @@ export interface PersonJsonLd {
 }
 
 /**
+ * Whether `url` points at a profile, not just a network's home page (`https://www.instagram.com/`,
+ * the placeholder before launch). `sameAs` claims the page is Julia, so a home page must not go in.
+ */
+export function isProfileUrl(url: string): boolean {
+  try {
+    return new URL(url).pathname.replace(/\/+$/, '') !== '';
+  } catch {
+    return false; // empty or malformed
+  }
+}
+
+/**
  * Structured data about Julia for search engines. The e-mail address is left out on purpose:
  * the site hides it from bots that read static HTML (see ProtectedEmail).
  */
@@ -24,7 +36,7 @@ export function personJsonLd(
   socials: readonly { url: string }[] = site.socials,
 ): PersonJsonLd {
   const { t } = i18nFor(lang);
-  const sameAs = socials.map((social) => social.url).filter((url) => url !== '');
+  const sameAs = socials.map((social) => social.url).filter(isProfileUrl);
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',

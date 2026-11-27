@@ -143,13 +143,17 @@ test.describe('footer', () => {
     await expect(page).toHaveURL(urlOf('/en/privacy'));
   });
 
-  test('hides social icons without links in production', async ({ page }) => {
+  test('links every social network from the footer, opening in a new tab', async ({ page }) => {
     await page.goto('/pl');
 
-    // site.ts has no social links yet and this suite runs against the production build.
-    await expect(
-      page.getByRole('contentinfo').getByRole('list', { name: 'Media społecznościowe' }),
-    ).toHaveCount(0);
+    const list = page.getByRole('contentinfo').getByRole('list', { name: 'Media społecznościowe' });
+    const links = list.getByRole('link');
+    await expect(links).toHaveCount(4);
+    for (const network of ['Instagram', 'Facebook', 'TikTok', 'YouTube']) {
+      const link = list.getByRole('link', { name: `${network} (otwiera się w nowej karcie)` });
+      await expect(link).toHaveAttribute('href', /^https:\/\//);
+      await expect(link).toHaveAttribute('target', '_blank');
+    }
   });
 });
 

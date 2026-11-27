@@ -8,14 +8,15 @@ export const site = {
   /** Photo of Julia on the home page; replace the placeholder with a real, dark-toned photo. */
   portrait: '/julia.svg',
   url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurinej.netlify.app',
-  contactEmail: 'dwolnik12310@gmail.com', // test address; the final one is set before launch
+  contactEmail: 'example@example.com', // placeholder; Julia's address is set before launch
   socials: [
     // Empty `url` = the icon is hidden. Paste a link to make it appear.
     // Icon order follows this array. A new network needs one entry and one icon in Layout/icons.
-    { id: 'instagram', label: 'Instagram', url: '' },
-    { id: 'facebook', label: 'Facebook', url: '' },
-    { id: 'tiktok', label: 'TikTok', url: '' },
-    { id: 'youtube', label: 'YouTube', url: '' },
+    // For now the links lead to each network's home page; swap in Julia's profiles before launch.
+    { id: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/' },
+    { id: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/' },
+    { id: 'tiktok', label: 'TikTok', url: 'https://www.tiktok.com/' },
+    { id: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/' },
   ],
 } as const;
 
