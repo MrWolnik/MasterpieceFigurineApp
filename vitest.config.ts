@@ -10,7 +10,7 @@ export default mergeConfig(
       // Undo vi.spyOn / vi.stubGlobal after every test, so no test file has to remember it.
       restoreMocks: true,
       unstubGlobals: true,
-      include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.mjs'],
+      include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.{ts,mjs}'],
       css: { modules: { classNameStrategy: 'non-scoped' } },
       coverage: {
         provider: 'v8',

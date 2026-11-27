@@ -9,11 +9,11 @@ import {
   getNeighbours,
   getTags,
   getWorks,
-  parseWorks,
-  sortWorks,
   WORK_KINDS,
   type Work,
 } from './works';
+import { parseWorks, sortWorks } from './parseWorks';
+import { workSchema } from './works.schema';
 
 const text = { pl: 'Tekst', en: 'Text' };
 
@@ -150,6 +150,8 @@ describe('query helpers', () => {
 
 it('lists every work kind once', () => {
   expect(WORK_KINDS).toEqual(['figurine', 'painting']);
+  // The browser-side constant must list exactly the kinds the schema accepts.
+  expect(workSchema.options.map((option) => option.shape.kind.value)).toEqual([...WORK_KINDS]);
 });
 
 describe('sample content', () => {
