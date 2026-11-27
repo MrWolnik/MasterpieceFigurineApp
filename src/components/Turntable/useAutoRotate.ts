@@ -7,7 +7,8 @@ export const AUTO_ROTATE_INTERVAL_MS = 80;
 /** Whether `ref` is on screen and the tab is visible; true where IntersectionObserver is missing. */
 function useIsVisible(ref: RefObject<HTMLElement | null>): boolean {
   const [onScreen, setOnScreen] = useState(true);
-  const [tabVisible, setTabVisible] = useState(() => document.visibilityState !== 'hidden');
+  // Assumed visible on the first render (no `document` while prerendering); the effect checks.
+  const [tabVisible, setTabVisible] = useState(true);
 
   useEffect(() => {
     const element = ref.current;
@@ -25,6 +26,7 @@ function useIsVisible(ref: RefObject<HTMLElement | null>): boolean {
     const update = () => {
       setTabVisible(document.visibilityState !== 'hidden');
     };
+    update();
     document.addEventListener('visibilitychange', update);
     return () => {
       document.removeEventListener('visibilitychange', update);

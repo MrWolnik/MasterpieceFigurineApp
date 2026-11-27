@@ -31,7 +31,8 @@ export function Footer() {
           </Link>
           <p className={styles.copyright}>
             {t('layout.footer.copyright', {
-              year: new Date().getFullYear(),
+              // From build time, so prerendered HTML matches the browser's render all year.
+              year: __BUILD_YEAR__,
               brand: site.brand,
             })}
           </p>

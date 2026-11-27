@@ -1,6 +1,4 @@
-import { useSyncExternalStore } from 'react';
-
-const noSubscription = () => () => undefined;
+import { useHydrated } from '../../lib/useHydrated';
 
 interface ProtectedEmailProps {
   address: string;
@@ -15,11 +13,7 @@ interface ProtectedEmailProps {
  */
 export function ProtectedEmail({ address, label, className }: ProtectedEmailProps) {
   // `false` while rendering static HTML (prerender/SSR), `true` in the browser.
-  const ready = useSyncExternalStore(
-    noSubscription,
-    () => true,
-    () => false,
-  );
+  const ready = useHydrated();
   const [user = '', domain = ''] = address.split('@');
 
   if (!ready) {

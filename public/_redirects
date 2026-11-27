@@ -1,2 +1,3 @@
-# SPA fallback: every path is served by index.html, React Router handles it.
+# SPA fallback for paths without a prerendered page (`/`, unknown URLs): index.html, and React
+# Router handles them. Netlify serves existing files (e.g. pl/kontakt.html) before this rule.
 /*    /index.html    200

@@ -22,12 +22,10 @@ describe('Footer', () => {
     );
   });
 
-  it('shows the copyright with the current year and brand', () => {
+  it('shows the copyright with the build year and brand', () => {
     renderWithProviders(<Footer />);
 
-    expect(
-      screen.getByText(`© ${String(new Date().getFullYear())} ${site.brand}`),
-    ).toBeInTheDocument();
+    expect(screen.getByText(`© ${String(__BUILD_YEAR__)} ${site.brand}`)).toBeInTheDocument();
   });
 
   it('lists social media in the order of the config', () => {
