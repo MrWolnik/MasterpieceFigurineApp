@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
+import { PageShell } from '../../components/PageShell/PageShell';
 import { pathFor } from '../../lib/routes';
 import { useLanguage } from '../../lib/useLanguage';
 import { useReveal } from '../../lib/useReveal';
@@ -29,7 +30,7 @@ export function WorkDetails() {
   const orderParams = new URLSearchParams({ kind: work.kind, ref: work.slug });
 
   return (
-    <article className={styles.page}>
+    <PageShell as="article" className={styles.page}>
       <Link className={styles.back} to={portfolio}>
         ← {t('pages.work.backToPortfolio')}
       </Link>
@@ -66,6 +67,6 @@ export function WorkDetails() {
         </div>
       </div>
       <WorkNav {...getNeighbours(work.slug)} />
-    </article>
+    </PageShell>
   );
 }

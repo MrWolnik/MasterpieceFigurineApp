@@ -152,3 +152,31 @@ test.describe('footer', () => {
     ).toHaveCount(0);
   });
 });
+
+// Every page sits in the shared PageShell container (PLAN Z4.5).
+test.describe('page container', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+  test.skip(({ isMobile }) => isMobile, 'Desktop layout only');
+
+  const pages = [
+    { path: '/pl/portfolio', maxWidth: 1200 }, // --container-max: 75rem
+    { path: '/en/portfolio/mgla-nad-bagnem', maxWidth: 1200 },
+    { path: '/pl/kontakt', maxWidth: 1200 },
+    { path: '/en/privacy', maxWidth: 768 }, // reading width: 48rem
+    { path: '/pl/nie-ma-takiej-strony', maxWidth: 1200 },
+  ];
+
+  for (const { path, maxWidth } of pages) {
+    test(`${path} is centred and at most ${String(maxWidth)} px wide`, async ({ page }) => {
+      await page.goto(path);
+      const shell = page.getByRole('main').locator('> *').first();
+      const box = await shell.boundingBox();
+      // clientWidth leaves out a classic scrollbar, which the viewport size includes.
+      const width = await page.evaluate(() => document.documentElement.clientWidth);
+      if (!box) throw new Error('no layout box');
+
+      expect(box.width).toBeCloseTo(maxWidth, 0);
+      expect(box.x).toBeCloseTo((width - box.width) / 2, 0);
+    });
+  }
+});

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { PageShell } from '../../components/PageShell/PageShell';
 import { PortfolioFilters } from '../../components/PortfolioFilters/PortfolioFilters';
 import { WorkGrid } from '../../components/WorkGrid/WorkGrid';
 import { usePortfolioFilters } from '../../lib/usePortfolioFilters';
@@ -11,7 +12,7 @@ export function Portfolio() {
   const works = getWorks({ kind, tag });
 
   return (
-    <div className={styles.page}>
+    <PageShell className={styles.page}>
       <header className={styles.intro}>
         <h1>{t('pages.portfolio.title')}</h1>
         <p className={styles.lead}>{t('pages.portfolio.intro')}</p>
@@ -30,6 +31,6 @@ export function Portfolio() {
         </p>
         <WorkGrid works={works} />
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { PageShell } from '../../components/PageShell/PageShell';
 import { ProtectedEmail } from '../../components/ProtectedEmail/ProtectedEmail';
 import { site } from '../../config/site';
 import styles from './Privacy.module.css';
@@ -14,7 +15,7 @@ export function Privacy() {
   const sections: PolicySection[] = t('pages.privacy.sections', { returnObjects: true });
 
   return (
-    <article className={styles.page}>
+    <PageShell as="article" className={styles.page}>
       <h1>{t('pages.privacy.title')}</h1>
       <p className={styles.draft}>{t('pages.privacy.draft')}</p>
       {sections.map((section) => (
@@ -33,6 +34,6 @@ export function Privacy() {
         />
       </p>
       <p className={styles.updated}>{t('pages.privacy.updated')}</p>
-    </article>
+    </PageShell>
   );
 }

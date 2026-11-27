@@ -1,0 +1,17 @@
+/*
+ * The common page container: centred, capped width, side padding and a vertical grid.
+ * Pages tune it through custom properties set on their own class (never by overriding these
+ * declarations, whose order against a page's CSS chunk is not guaranteed):
+ *   --page-max          max width            (default: --container-max)
+ *   --page-pad-top      space above          (default: --space-12)
+ *   --page-pad-bottom   space below          (default: --page-pad-top)
+ *   --page-gap          gap between blocks   (default: --space-8)
+ */
+.shell {
+  max-width: var(--page-max, var(--container-max));
+  margin-inline: auto;
+  padding: var(--page-pad-top, var(--space-12)) var(--container-padding)
+    var(--page-pad-bottom, var(--page-pad-top, var(--space-12)));
+  display: grid;
+  gap: var(--page-gap, var(--space-8));
+}
