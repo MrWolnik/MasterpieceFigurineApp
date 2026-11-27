@@ -336,7 +336,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 ### Etap 4 — Szlif
 
 - [x] **Z4.1 Animacje** (IntersectionObserver), z poszanowaniem `prefers-reduced-motion`.
-- [ ] **Z4.2 SEO.** Prerendering wszystkich tras, tytuły i opisy stron w obu językach, `hreflang`, sitemap, robots.txt, obrazki OG, dane strukturalne `Person`.
+- [x] **Z4.2 SEO.** Prerendering wszystkich tras, tytuły i opisy stron w obu językach, `hreflang`, sitemap, robots.txt, obrazki OG, dane strukturalne `Person`.
       _Testy:_ e2e sprawdzający, że zbudowany HTML każdej trasy zawiera `<title>`, opis i `hreflang` jeszcze przed uruchomieniem JS.
       _Uwaga (przegląd Etapu 0):_ prerendering musi ustawić `<html lang>` osobno dla każdej trasy (teraz robi to `Layout` w przeglądarce, a `index.html` ma na sztywno `pl`). Rok w stopce (`new Date().getFullYear()`) brać z czasu budowania, żeby HTML zbudowany w grudniu nie dawał błędu hydracji w styczniu.
 - [ ] **Z4.3 Wydajność.** WebP/AVIF z `srcset`, dzielenie kodu na trasy (code splitting), preload fontów. Lighthouse CI w GitHub Actions z progiem ≥ 90.
@@ -393,3 +393,6 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-26 | Header przyklejony (sticky); menu hamburger poniżej 900 px; skip link „Przejdź do treści” |
 | 2026-11-26 | `site.brand` = „MasterpieceFigurineJ” (zapis z pkt Z5.2), a nie „Masterpiece Figurine J” z przykładu w pkt 6 |
 | 2026-11-27 | Animacje przy przewijaniu (`useReveal`) jako animacja CSS, jednorazowo; zdjęcie w Hero bez animacji (LCP); testy e2e domyślnie z `reducedMotion: 'reduce'`, animacje sprawdza `e2e/motion.spec.ts` |
+| 2026-11-27 | Prerendering własnym skryptem (`scripts/prerender.mjs` + `src/entry-server.tsx`, API statyczne React Routera), bo `vite-react-ssg` wymaga `react-router-dom` 6; strony jako `<ścieżka>.html` |
+| 2026-11-27 | `hreflang="x-default"` wskazuje na wersję polską (`/pl/...`); do ewentualnej zmiany później |
+| 2026-11-27 | Formularz zamówienia zablokowany do czasu hydracji; prefill z `?kind=`/`?ref=` stosowany po hydracji (statyczny HTML nie zna parametrów adresu) |
