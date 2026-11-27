@@ -28,7 +28,10 @@ test.describe('with motion allowed', () => {
 
   test('the Hero text comes in on load', async ({ page }) => {
     await page.goto('/pl');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveCSS('opacity', '1');
+    const title = page.getByRole('heading', { level: 1 });
+    // The load animation is in the prerendered markup, so it plays without waiting for JS.
+    await expect(title).toHaveCSS('animation-name', /reveal/);
+    await expect(title).toHaveCSS('opacity', '1');
     await expect(page.getByRole('link', { name: 'Zamów malowanie' })).toHaveCSS('opacity', '1');
   });
 });

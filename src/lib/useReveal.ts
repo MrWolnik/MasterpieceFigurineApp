@@ -27,25 +27,25 @@ interface RevealOptions {
 }
 
 /**
- * - `static`: prerendered HTML and the first render, with no animation at all. Content on screen
- *   at load just appears: an opacity animation there would push back the Largest Contentful
- *   Paint (Chrome counts the element only once it has faded in).
+ * - `entering`: prerendered HTML and the first render. The element fades in from CSS alone, so
+ *   the page animates in on load even before its JS has arrived.
  * - `waiting`: after hydration, an element that turned out to be off screen is hidden...
- * - `revealed`: ...until it scrolls into view and fades in.
+ * - `revealed`: ...until it scrolls into view and fades in. An element on screen at load stays
+ *   `entering` (its load animation is not replayed).
  */
-type Phase = 'static' | 'waiting' | 'revealed';
+type Phase = 'entering' | 'waiting' | 'revealed';
 
 const PHASE_CLASS: Record<Phase, string | undefined> = {
-  static: undefined,
+  entering: styles.revealed,
   waiting: styles.hidden,
   revealed: styles.revealed,
 };
 
 /**
- * Fades and lifts an element in the first time it scrolls into view (PLAN Z4.1). Elements on
- * screen at load, and every element with reduced motion or without IntersectionObserver, are
- * simply shown. The result is spread on the element; nothing in it is meant to be read during
- * render.
+ * Fades and lifts an element in (PLAN Z4.1): on page load when it is on screen, otherwise the
+ * first time it scrolls into view. With reduced motion, or without IntersectionObserver, the
+ * element is simply shown. The result is spread on the element; nothing in it is meant to be
+ * read during render.
  */
 export function useReveal<T extends HTMLElement>({
   className,
@@ -54,7 +54,7 @@ export function useReveal<T extends HTMLElement>({
   // A callback ref kept in state, so the observer follows the element if it is replaced.
   const [element, setElement] = useState<T | null>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [phase, setPhase] = useState<Phase>('static');
+  const [phase, setPhase] = useState<Phase>('entering');
   const supported = useSyncExternalStore(subscribeNever, hasIntersectionObserver, assumeSupported);
 
   useEffect(() => {

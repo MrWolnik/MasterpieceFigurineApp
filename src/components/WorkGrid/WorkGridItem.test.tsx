@@ -18,8 +18,8 @@ describe('WorkGridItem', () => {
   it('hides off-screen tiles after load and fades each in when it scrolls into view', () => {
     const Observer = stubIntersectionObserver();
     renderWithProviders(<WorkGrid works={getWorks()} />);
-    // At load nothing is animated: tiles on screen simply show.
-    expect(tiles().every((tile) => tile.className === '')).toBe(true);
+    // At load every tile fades in; the ones that turn out to be off screen are then hidden.
+    expect(tiles().every((tile) => tile.classList.contains('revealed'))).toBe(true);
 
     act(() => {
       for (const observer of Observer.instances) observer.leave();

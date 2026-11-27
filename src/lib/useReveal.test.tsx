@@ -12,17 +12,18 @@ function Probe({ delay }: { delay?: number }) {
 const probe = () => screen.getByTestId('probe');
 
 describe('useReveal', () => {
-  it('adds no animation to prerendered HTML, so content on screen at load just appears', () => {
-    expect(renderToString(<Probe />)).toMatch(/class="own"/);
+  it('fades in on load from CSS alone, already in the prerendered HTML', () => {
+    expect(renderToString(<Probe />)).toMatch(/class="own revealed"/);
   });
 
-  it('leaves an element that is on screen at load as it is', () => {
+  it('keeps an element that is on screen at load as it is, without a second fade', () => {
     const Observer = stubIntersectionObserver();
     render(<Probe />);
+    expect(probe()).toHaveClass('own', 'revealed');
     act(() => {
       Observer.instances[0]?.enter();
     });
-    expect(probe()).toHaveAttribute('class', 'own');
+    expect(probe()).toHaveClass('own', 'revealed');
     expect(Observer.instances[0]?.disconnected).toBe(true);
   });
 
