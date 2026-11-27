@@ -19,7 +19,7 @@ const baseFields = {
   order: z.number().int(),
 };
 
-export const figurineSchema = z.strictObject({
+const figurineSchema = z.strictObject({
   kind: z.literal('figurine'),
   ...baseFields,
   /** Number of 360° turntable frames; when absent, a plain gallery is shown. */
@@ -28,7 +28,7 @@ export const figurineSchema = z.strictObject({
   framesFormat: z.enum(['webp', 'svg']).default('webp'),
 });
 
-export const paintingSchema = z.strictObject({
+const paintingSchema = z.strictObject({
   kind: z.literal('painting'),
   ...baseFields,
   image: assetPath,

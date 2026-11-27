@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { isOrderError } from '../../lib/orderSchema';
+import { FieldError } from './FieldError';
 import styles from './OrderForm.module.css';
 
-export interface FieldAria {
+interface FieldAria {
   id: string;
   'aria-required'?: boolean;
   'aria-invalid': boolean;
@@ -48,14 +47,5 @@ export function FormField({ id, label, required, hint, error, children }: FormFi
       )}
       {error && <FieldError id={errorId} message={error} />}
     </div>
-  );
-}
-
-export function FieldError({ id, message }: { id?: string; message: string }) {
-  const { t } = useTranslation();
-  return (
-    <p id={id} className={styles.error}>
-      {isOrderError(message) ? t(`form.errors.${message}`) : message}
-    </p>
   );
 }

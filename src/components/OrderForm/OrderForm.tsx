@@ -14,8 +14,10 @@ import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/o
 import { pathFor } from '../../lib/routes';
 import { HONEYPOT_FIELD } from '../../lib/submitOrder';
 import { useLanguage } from '../../lib/useLanguage';
+import { WORK_KINDS } from '../../lib/works';
 import { Dropzone } from '../Dropzone/Dropzone';
-import { FieldError, FormField } from './FormField';
+import { FieldError } from './FieldError';
+import { FormField } from './FormField';
 import { OrderSuccess } from './OrderSuccess';
 import styles from './OrderForm.module.css';
 import { PaintingFields } from './PaintingFields';
@@ -122,7 +124,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
 
       <fieldset className={styles.kinds}>
         <legend className={styles.label}>{t('form.kind.legend')}</legend>
-        {(['figurine', 'painting'] as const).map((value) => (
+        {WORK_KINDS.map((value) => (
           <label key={value} className={styles.kind}>
             <input
               type="radio"

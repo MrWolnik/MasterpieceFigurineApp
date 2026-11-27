@@ -4,7 +4,7 @@ import {
   filterWorks,
   findNeighbours,
   getBySlug,
-  getFeatured,
+  isWorkKind,
   getFeaturedFigurines,
   getNeighbours,
   getTags,
@@ -183,9 +183,15 @@ describe('sample content', () => {
     expect(next?.slug).toBe('zloty-ogrod');
   });
 
+  it('narrows only known kinds', () => {
+    expect(isWorkKind('painting')).toBe(true);
+    expect(isWorkKind('sculpture')).toBe(false);
+    expect(isWorkKind(null)).toBe(false);
+  });
+
   it('has featured works and tags for each kind', () => {
-    expect(getFeatured().length).toBeGreaterThan(0);
-    expect(getFeatured().every((w) => w.featured)).toBe(true);
+    expect(getFeaturedFigurines().length).toBeGreaterThan(0);
+    expect(getFeaturedFigurines().every((w) => w.featured)).toBe(true);
     expect(getTags('painting')).toContain('olej');
     expect(getTags('figurine')).not.toContain('olej');
   });
