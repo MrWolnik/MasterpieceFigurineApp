@@ -290,5 +290,29 @@
       "again": "Wyślij kolejne zgłoszenie"
     },
     "failure": "Nie udało się wysłać zgłoszenia. Twoje dane zostały w formularzu – spróbuj ponownie za chwilę albo napisz e-mail."
+  },
+  "meta": {
+    "title": "{{page}} | {{brand}}",
+    "home": {
+      "title": "Julia – malowanie figurek i obrazy na zamówienie",
+      "description": "Ręcznie malowane figurki do gier bitewnych i RPG oraz obrazy na zamówienie. Zobacz portfolio Julii i wyślij zgłoszenie – wycena indywidualna."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Figurki do gier bitewnych i RPG oraz obrazy malowane przez Julię. Obróć wybrane figurki o 360° i powiększ detale obrazów."
+    },
+    "contact": {
+      "title": "Kontakt i zamówienia",
+      "description": "Zamów malowanie figurki albo obraz na zamówienie. Opisz pomysł w formularzu i dołącz zdjęcie – Julia odpowie z indywidualną wyceną."
+    },
+    "privacy": {
+      "title": "Polityka prywatności",
+      "description": "Jak MasterpieceFigurineJ przetwarza dane osobowe przesłane przez formularz zgłoszenia."
+    },
+    "notFound": {
+      "title": "Nie znaleziono strony"
+    },
+    "ogImageAlt": "MasterpieceFigurineJ – malowanie figurek i obrazy na zamówienie",
+    "jobTitle": "Malarka figurek i obrazów"
   }
 }

@@ -290,5 +290,29 @@
       "again": "Send another request"
     },
     "failure": "The request could not be sent. Your answers are still in the form – try again in a moment or send an e-mail."
+  },
+  "meta": {
+    "title": "{{page}} | {{brand}}",
+    "home": {
+      "title": "Julia – figurine painting and commissioned paintings",
+      "description": "Hand-painted miniatures for wargames and RPGs, and paintings on commission. Browse Julia's portfolio and send a request – every quote is individual."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Wargame and RPG miniatures and paintings by Julia. Turn selected figurines through 360° and zoom into the details of the paintings."
+    },
+    "contact": {
+      "title": "Contact and commissions",
+      "description": "Commission a painted figurine or a painting. Describe your idea in the form and attach a photo – Julia will reply with an individual quote."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "How MasterpieceFigurineJ processes the personal data sent through the order form."
+    },
+    "notFound": {
+      "title": "Page not found"
+    },
+    "ogImageAlt": "MasterpieceFigurineJ – figurine painting and commissioned paintings",
+    "jobTitle": "Miniature and fine art painter"
   }
 }
