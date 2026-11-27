@@ -1,4 +1,4 @@
-# MasterpieceFigurineJ
+# MasterpieceFigurine
 
 Portfolio and commission site for Julia, an artist who paints figurines and paintings.
 Bilingual (Polish default, English). See [`PLAN.md`](./PLAN.md) for the full plan and task list.

@@ -4,7 +4,7 @@ import { renderPage } from './entry-server';
 const template = `<!doctype html>
 <html lang="pl">
   <head>
-    <title>MasterpieceFigurineJ</title>
+    <title>MasterpieceFigurine</title>
   </head>
   <body>
     <div id="root"></div>
@@ -15,7 +15,7 @@ describe('renderPage', () => {
   it('renders a page with its content, language, head tags and hydration data', async () => {
     const html = await renderPage('/en/contact', template);
     expect(html).toContain('<html lang="en">');
-    expect(html).toContain('<title>Contact and commissions | MasterpieceFigurineJ</title>');
+    expect(html).toContain('<title>Contact and commissions | MasterpieceFigurine</title>');
     expect(html).toMatch(/<link rel="alternate" hreflang="pl" href="[^"]+\/pl\/kontakt"/);
     expect(html).toMatch(/<h1[^>]*>Contact<\/h1>/);
     expect(html).toContain('window.__staticRouterHydrationData');

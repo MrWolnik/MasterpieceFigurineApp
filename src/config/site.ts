@@ -4,7 +4,7 @@
  */
 export const site = {
   artistName: 'Julia',
-  brand: 'MasterpieceFigurineJ',
+  brand: 'MasterpieceFigurine',
   /** Photo of Julia on the home page; replace the placeholder with a real, dark-toned photo. */
   portrait: '/julia.svg',
   url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurine.netlify.app',

@@ -2,7 +2,7 @@
 
 > Wersja 0.6. Ten plan służy jako instrukcja dla Claude Code.
 > Zadania wykonujemy po kolei. Każde zadanie kończy się działającą stroną, zielonymi testami i commitem.
-> Artystka: **Julia**. Marka i domena: **MasterpieceFigurineJ.com**.
+> Artystka: **Julia**. Marka i domena: **MasterpieceFigurine.com**.
 
 ---
 
@@ -212,7 +212,7 @@ Jedno miejsce na dane, które Julia będzie zmieniać. Edycja to zmiana jednej l
 ```ts
 export const site = {
   artistName: 'Julia',
-  brand: 'Masterpiece Figurine J',
+  brand: 'MasterpieceFigurine',
   url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurine.netlify.app',
   contactEmail: 'example@example.com', // e-mail zastępczy; docelowy podamy przed startem
   socials: [
@@ -349,7 +349,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 ### Etap 5 — Publikacja
 
 - [ ] **Z5.1 Hosting.** Netlify połączone z GitHubem, wdrożenie `main` i podglądy pull requestów. Powiadomienia formularza idą na `dwolnik12310@gmail.com` (ustawiane w panelu Netlify: Forms → Form notifications). Zmienna `VITE_SITE_URL` jest ustawiona w panelu.
-- [ ] **Z5.2 Domena.** Na etap testów używamy darmowej subdomeny Netlify **`masterpiecefigurine.netlify.app`** (nazwa do ustawienia w Site settings). Docelowa domena to **`masterpiecefigurinej.com`**. W adresach używamy małych liter, a w logo i tekstach zapisu „MasterpieceFigurineJ”. Własną domenę podpinamy później: podpięcie, HTTPS i przekierowanie z `www`. Wszystkie adresy (sitemap, OG, `hreflang`) bierzemy ze zmiennej `SITE_URL`, więc zmiana domeny nie wymaga zmian w kodzie.
+- [ ] **Z5.2 Domena.** Na etap testów używamy darmowej subdomeny Netlify **`masterpiecefigurine.netlify.app`** (nazwa do ustawienia w Site settings). Docelowa domena to **`masterpiecefigurine.com`**. W adresach używamy małych liter, a w logo i tekstach zapisu „MasterpieceFigurine”. Własną domenę podpinamy później: podpięcie, HTTPS i przekierowanie z `www`. Wszystkie adresy (sitemap, OG, `hreflang`) bierzemy ze zmiennej `SITE_URL`, więc zmiana domeny nie wymaga zmian w kodzie.
 - [ ] **Z5.3 Test dymny po wdrożeniu.** Playwright uruchamiany na produkcyjnym adresie: strony się ładują, formularz jest widoczny, brak błędów w konsoli.
 - [ ] **Z5.4 Instrukcja dla Julii.** Jak sfotografować figurkę do obrotnicy, jak sfotografować lub zeskanować obraz (rozproszone światło, bez odblasków, prosto na wprost) i jak dodać nową pracę każdego rodzaju (JSON + zdjęcia + commit).
 
@@ -364,7 +364,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 
 1. Docelowy e-mail do zgłoszeń. Na stronie na razie zastępczy `example@example.com` (zmiana to jedna linijka w `site.ts`); powiadomienia Netlify idą na testowy `dwolnik12310@gmail.com` (ustawienie w panelu).
 2. Linki do social media. Na razie prowadzą na strony główne serwisów; profile Julii wpisujemy w `site.ts` przed startem.
-3. Logo. Na razie napis „MasterpieceFigurineJ” fontem Cinzel.
+3. Logo. Na razie napis „MasterpieceFigurine” fontem Cinzel.
 
 ## 9. Decyzje
 
@@ -406,4 +406,4 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Prawdziwy status 404 dla nieznanych adresów (zamiast 200, „soft 404”) robimy po pierwszej publikacji |
 | 2026-11-27 | Ustawienia budowania Netlify w `netlify.toml` (w repo, przez review); w panelu tylko `VITE_SITE_URL` i powiadomienia formularza |
 | 2026-11-27 | Podstawowe nagłówki bezpieczeństwa w `public/_headers` (bez pełnej CSP na razie); podglądy PR z `X-Robots-Tag: noindex` |
-| 2026-11-27 | Subdomena Netlify na testy: `masterpiecefigurine.netlify.app` (bez „j”; nazwa `masterpiecefigurinej` zmieniona w panelu); docelowa domena bez zmian: `masterpiecefigurinej.com` |
+| 2026-11-27 | Marka bez „J”: **MasterpieceFigurine** (logo, tytuły, OG, polityka, README, `package.json`); subdomena testowa `masterpiecefigurine.netlify.app`, docelowa domena `masterpiecefigurine.com`. Zastępuje wpisy z 2026-11-25 i 2026-11-26 o „MasterpieceFigurineJ” |

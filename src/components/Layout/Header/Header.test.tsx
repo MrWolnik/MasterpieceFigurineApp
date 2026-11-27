@@ -11,7 +11,7 @@ describe('Header', () => {
   it('links the brand to the home page and shows the navigation', () => {
     renderWithProviders(<Header />, { route: '/pl' });
 
-    expect(screen.getByRole('link', { name: 'MasterpieceFigurineJ' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'MasterpieceFigurine' })).toHaveAttribute(
       'href',
       '/pl',
     );

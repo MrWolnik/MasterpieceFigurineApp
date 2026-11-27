@@ -6,7 +6,7 @@ test.describe('home page', () => {
     await page.goto('/pl');
 
     await expect(page).toHaveTitle(
-      'Julia – malowanie figurek i obrazy na zamówienie | MasterpieceFigurineJ',
+      'Julia – malowanie figurek i obrazy na zamówienie | MasterpieceFigurine',
     );
     await expect(page.getByRole('heading', { level: 1, name: 'Julia' })).toBeVisible();
     await expect(page.getByRole('img', { name: /Julia/ })).toBeVisible();
