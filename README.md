@@ -165,11 +165,14 @@ Netlify builds every push to `main` and publishes it, and builds a preview of ev
 4. **Site configuration → Build & deploy → Branches and deploy contexts**: production branch
    `main`; **Deploy Previews**: any pull request against your production branch; **Branch
    deploys**: none (only `main` is published).
-5. **Forms**: after the first deploy, Netlify lists the `order` form (detected from the hidden copy
-   in the HTML). Enable form detection if asked, then **Forms → Form notifications → Add
-   notification → Email notification**: the address that should receive orders, form `order`.
-6. Check the result: open the site, send a test order with a photo and a GIF, and make sure it
-   arrives by e-mail (PLAN Z3.5).
+5. **Forms → Enable form detection.** New sites have it off, and the order form then fails with
+   "Nie udało się wysłać zgłoszenia" (the POST is rejected). Netlify detects forms only while
+   deploying, so after enabling it run **Deploys → Trigger deploy → Clear cache and deploy
+   site**. The `order` form (from the hidden copy in the HTML) then appears under **Forms**.
+   Finally **Forms → Form notifications → Add notification → Email notification**: the address
+   that should receive orders, form `order`.
+6. Check the result: open the site and send test orders, one with a photo and one with a GIF (the
+   form takes one file per order). Both must arrive by e-mail with the attachment (PLAN Z3.5).
 
 Changing the domain later (PLAN Z5.2) needs no code change: update `VITE_SITE_URL` and redeploy.
 
