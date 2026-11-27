@@ -17,12 +17,24 @@ describe('WorkDetails', () => {
     expect(within(gallery).getAllByRole('listitem')).toHaveLength(1);
   });
 
-  it('shows a figurine without frames as a gallery of the cover and photos', () => {
+  it('shows a figurine without frames as one large zoomable cover, then its photos', () => {
     renderWork('/pl/portfolio/krasnoludzki-kowal');
 
     expect(screen.queryByRole('slider')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Powiększ obraz: Krasnoludzki kowal' }),
+    ).toBeInTheDocument();
     const gallery = screen.getByRole('list', { name: 'Galeria zdjęć' });
-    expect(within(gallery).getAllByRole('button', { name: /Powiększ obraz/ })).toHaveLength(3);
+    expect(within(gallery).getAllByRole('button', { name: /Powiększ obraz/ })).toHaveLength(2);
+  });
+
+  it('shows a figurine with only a cover without an empty gallery', () => {
+    renderWork('/pl/portfolio/lesny-zwiadowca');
+
+    expect(
+      screen.getByRole('button', { name: 'Powiększ obraz: Leśny zwiadowca' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('list', { name: 'Galeria zdjęć' })).not.toBeInTheDocument();
   });
 
   it('shows a painting with zoom, medium, size and year', () => {
