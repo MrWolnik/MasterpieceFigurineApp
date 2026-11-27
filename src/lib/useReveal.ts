@@ -5,9 +5,6 @@ import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 /** Upper bound for `delay`, so a long staggered list never keeps content waiting. */
 export const MAX_REVEAL_DELAY_MS = 400;
 
-/** Reveal a bit after the element's top edge crosses the bottom of the screen. */
-const ROOT_MARGIN = '0px 0px -40px 0px';
-
 /** Props to spread on the revealed element: `<li {...reveal}>`. */
 const subscribeNever = () => () => undefined;
 const hasIntersectionObserver = () => typeof IntersectionObserver !== 'undefined';
@@ -30,9 +27,25 @@ interface RevealOptions {
 }
 
 /**
- * Fades and lifts an element in the first time it scrolls into view (PLAN Z4.1).
- * With reduced motion, or without IntersectionObserver, the element is shown at once.
- * The result is spread on the element; nothing in it is meant to be read during render.
+ * - `static`: prerendered HTML and the first render, with no animation at all. Content on screen
+ *   at load just appears: an opacity animation there would push back the Largest Contentful
+ *   Paint (Chrome counts the element only once it has faded in).
+ * - `waiting`: after hydration, an element that turned out to be off screen is hidden...
+ * - `revealed`: ...until it scrolls into view and fades in.
+ */
+type Phase = 'static' | 'waiting' | 'revealed';
+
+const PHASE_CLASS: Record<Phase, string | undefined> = {
+  static: undefined,
+  waiting: styles.hidden,
+  revealed: styles.revealed,
+};
+
+/**
+ * Fades and lifts an element in the first time it scrolls into view (PLAN Z4.1). Elements on
+ * screen at load, and every element with reduced motion or without IntersectionObserver, are
+ * simply shown. The result is spread on the element; nothing in it is meant to be read during
+ * render.
  */
 export function useReveal<T extends HTMLElement>({
   className,
@@ -41,33 +54,32 @@ export function useReveal<T extends HTMLElement>({
   // A callback ref kept in state, so the observer follows the element if it is replaced.
   const [element, setElement] = useState<T | null>(null);
   const reducedMotion = usePrefersReducedMotion();
-  // Starts false on every render path, so prerendered HTML and hydration agree.
-  const [seen, setSeen] = useState(false);
+  const [phase, setPhase] = useState<Phase>('static');
   const supported = useSyncExternalStore(subscribeNever, hasIntersectionObserver, assumeSupported);
 
   useEffect(() => {
-    if (seen || reducedMotion || !supported || !element) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setSeen(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: ROOT_MARGIN },
-    );
+    if (reducedMotion || !supported || !element) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        // On screen: fade in if it was waiting; if it was there from the start, leave it be.
+        setPhase((current) => (current === 'waiting' ? 'revealed' : current));
+        observer.disconnect();
+      } else {
+        setPhase('waiting');
+      }
+    });
     observer.observe(element);
     return () => {
       observer.disconnect();
     };
-  }, [element, seen, reducedMotion, supported]);
+  }, [element, reducedMotion, supported]);
 
-  const revealed = seen || reducedMotion || !supported;
+  const active = !reducedMotion && supported;
   const delay = Math.min(Math.max(delayMs, 0), MAX_REVEAL_DELAY_MS);
 
   return {
     ref: setElement,
-    className: [className, revealed ? styles.revealed : styles.hidden].filter(Boolean).join(' '),
+    className: [className, active ? PHASE_CLASS[phase] : undefined].filter(Boolean).join(' '),
     // Custom properties are not in CSSProperties, hence the cast.
     style: delay > 0 ? ({ '--reveal-delay': `${String(delay)}ms` } as CSSProperties) : undefined,
   };

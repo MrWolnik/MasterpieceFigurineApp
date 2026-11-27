@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { stubIntersectionObserver, stubReducedMotion } from '../test/intersectionObserver';
 import { MAX_REVEAL_DELAY_MS, useReveal } from './useReveal';
@@ -11,17 +12,30 @@ function Probe({ delay }: { delay?: number }) {
 const probe = () => screen.getByTestId('probe');
 
 describe('useReveal', () => {
-  it('stays hidden until the element scrolls into view', () => {
+  it('adds no animation to prerendered HTML, so content on screen at load just appears', () => {
+    expect(renderToString(<Probe />)).toMatch(/class="own"/);
+  });
+
+  it('leaves an element that is on screen at load as it is', () => {
     const Observer = stubIntersectionObserver();
     render(<Probe />);
-    expect(probe()).toHaveClass('hidden');
+    act(() => {
+      Observer.instances[0]?.enter();
+    });
+    expect(probe()).toHaveAttribute('class', 'own');
+    expect(Observer.instances[0]?.disconnected).toBe(true);
+  });
 
+  it('hides an off-screen element until it scrolls into view, then fades it in', () => {
+    const Observer = stubIntersectionObserver();
+    render(<Probe />);
     const [observer] = Observer.instances;
     expect(observer?.elements.has(probe())).toBe(true);
+
     act(() => {
       observer?.leave();
     });
-    expect(probe()).toHaveClass('hidden');
+    expect(probe()).toHaveClass('own', 'hidden');
 
     act(() => {
       observer?.enter();
@@ -35,6 +49,9 @@ describe('useReveal', () => {
     render(<Probe />);
     const [observer] = Observer.instances;
     act(() => {
+      observer?.leave();
+    });
+    act(() => {
       observer?.enter();
     });
     expect(observer?.disconnected).toBe(true);
@@ -47,18 +64,18 @@ describe('useReveal', () => {
     expect(probe()).toHaveClass('revealed');
   });
 
-  it('shows the element at once with reduced motion and never observes it', () => {
+  it('never hides anything with reduced motion, and does not observe', () => {
     stubReducedMotion(true);
     const Observer = stubIntersectionObserver();
     render(<Probe />);
-    expect(probe()).toHaveClass('revealed');
+    expect(probe()).toHaveAttribute('class', 'own');
     expect(Observer.instances).toHaveLength(0);
   });
 
-  it('shows the element at once where IntersectionObserver is missing', () => {
+  it('never hides anything where IntersectionObserver is missing', () => {
     // jsdom has none by default.
     render(<Probe />);
-    expect(probe()).toHaveClass('revealed');
+    expect(probe()).toHaveAttribute('class', 'own');
   });
 
   it('sets the stagger delay as a CSS variable, capped', () => {
