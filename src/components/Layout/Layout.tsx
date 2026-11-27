@@ -2,6 +2,7 @@ import { useLayoutEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Outlet } from 'react-router';
 import { i18nFor, type Language } from '../../lib/i18n';
+import { usePageMeta } from '../../lib/usePageMeta';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
 import styles from './Layout.module.css';
@@ -18,6 +19,7 @@ export function Layout({ lang }: LayoutProps) {
   useLayoutEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+  usePageMeta();
 
   const i18n = i18nFor(lang);
 

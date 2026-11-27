@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Controller,
   useForm,
   useWatch,
   type Resolver,
+  type UseFormGetFieldState,
   type UseFormGetValues,
   type UseFormSetValue,
 } from 'react-hook-form';
@@ -13,6 +14,7 @@ import { Link } from 'react-router';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
 import { pathFor } from '../../lib/routes';
 import { HONEYPOT_FIELD } from '../../lib/submitOrder';
+import { useHydrated } from '../../lib/useHydrated';
 import { useLanguage } from '../../lib/useLanguage';
 import { WORK_KINDS } from '../../lib/works';
 import { Dropzone } from '../Dropzone/Dropzone';
@@ -38,7 +40,9 @@ function useTranslatedPrefill(
 ) {
   const previous = useRef(prefill);
 
-  useEffect(() => {
+  // Layout effect: applied in the same commit that enables the form after hydration, so no
+  // keystroke can land in between.
+  useLayoutEffect(() => {
     if (previous.current !== prefill && getValues('description') === previous.current) {
       setValue('description', prefill);
     }
@@ -46,11 +50,31 @@ function useTranslatedPrefill(
   }, [prefill, getValues, setValue]);
 }
 
+/**
+ * Prerendered HTML cannot know the URL query, so `?kind=` reaches the form only after hydration
+ * (see useOrderPrefill). Applies it then without remounting the form, so nothing the user has
+ * typed is lost, and only if they have not picked an order type themselves.
+ */
+function useLatePrefillKind(
+  prefill: OrderFormValues['kind'],
+  getFieldState: UseFormGetFieldState<OrderFormValues>,
+  setValue: UseFormSetValue<OrderFormValues>,
+) {
+  useLayoutEffect(() => {
+    // Touched too: picking a type and switching back leaves it clean but chosen.
+    const { isDirty, isTouched } = getFieldState('kind');
+    if (!isDirty && !isTouched) setValue('kind', prefill);
+  }, [prefill, getFieldState, setValue]);
+}
+
 /** The order request form; `?kind=` and `?ref=` in the URL preset it. */
 export function OrderForm({ onSubmit }: OrderFormProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const defaultValues = useOrderPrefill();
+  // Prerendered HTML shows the form before the JS has loaded; it cannot be sent then, and text
+  // typed into it would be unknown to the form state, so it stays disabled until hydration.
+  const hydrated = useHydrated();
   const schema = useMemo(() => createOrderSchema(), []);
   const {
     register,
@@ -58,6 +82,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     resetField,
     reset,
     getValues,
+    getFieldState,
     setValue,
     control,
     formState: { errors, isSubmitting },
@@ -68,7 +93,9 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     defaultValues,
   });
   const kind = useWatch({ control, name: 'kind' });
+  // Also fills the description in once the prefill arrives after hydration (it starts empty).
   useTranslatedPrefill(defaultValues.description, getValues, setValue);
+  useLatePrefillKind(defaultValues.kind, getFieldState, setValue);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<'idle' | 'sent' | 'failed'>('idle');
 
@@ -107,158 +134,165 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
       onSubmit={(event) => void handleSubmit(send)(event)}
     >
       <h2>{t('form.title')}</h2>
-      {/* Honeypot: hidden from people and assistive tech, tempting for bots. */}
-      <p className={styles.honeypot} aria-hidden="true">
-        <label>
-          {t('form.honeypot')}
-          <input
-            ref={honeypotRef}
-            name={HONEYPOT_FIELD}
-            type="text"
-            tabIndex={-1}
-            autoComplete="off"
-          />
-        </label>
-      </p>
-      <p className={styles.hint}>{t('form.intro')}</p>
-
-      <fieldset className={styles.kinds}>
-        <legend className={styles.label}>{t('form.kind.legend')}</legend>
-        {WORK_KINDS.map((value) => (
-          <label key={value} className={styles.kind}>
+      <fieldset className={styles.controls} disabled={!hydrated}>
+        {/* Honeypot: hidden from people and assistive tech, tempting for bots. */}
+        <p className={styles.honeypot} aria-hidden="true">
+          <label>
+            {t('form.honeypot')}
             <input
-              type="radio"
-              value={value}
-              {...register('kind', {
-                onChange: () => {
-                  // Painting-only answers must not linger (or be sent) after switching back.
-                  resetField('dimensions', { defaultValue: '' });
-                  resetField('technique', { defaultValue: '' });
-                },
-              })}
+              ref={honeypotRef}
+              name={HONEYPOT_FIELD}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
             />
-            <span>{t(`form.kind.${value}`)}</span>
           </label>
-        ))}
-      </fieldset>
+        </p>
+        <p className={styles.hint}>{t('form.intro')}</p>
 
-      <FormField id="order-name" label={t('form.name.label')} required error={errors.name?.message}>
-        {(aria) => (
-          <input
-            className={styles.input}
-            type="text"
-            autoComplete="name"
-            {...aria}
-            {...register('name')}
-          />
-        )}
-      </FormField>
+        <fieldset className={styles.kinds}>
+          <legend className={styles.label}>{t('form.kind.legend')}</legend>
+          {WORK_KINDS.map((value) => (
+            <label key={value} className={styles.kind}>
+              <input
+                type="radio"
+                value={value}
+                {...register('kind', {
+                  onChange: () => {
+                    // Painting-only answers must not linger (or be sent) after switching back.
+                    resetField('dimensions', { defaultValue: '' });
+                    resetField('technique', { defaultValue: '' });
+                  },
+                })}
+              />
+              <span>{t(`form.kind.${value}`)}</span>
+            </label>
+          ))}
+        </fieldset>
 
-      <div className={styles.row}>
-        <FormField id="order-email" label={t('form.email.label')} error={errors.email?.message}>
-          {(aria) => (
-            <input
-              className={styles.input}
-              type="email"
-              autoComplete="email"
-              {...aria}
-              {...register('email')}
-            />
-          )}
-        </FormField>
         <FormField
-          id="order-phone"
-          label={t('form.phone.label')}
-          hint={t('form.phone.hint')}
-          error={errors.phone?.message}
+          id="order-name"
+          label={t('form.name.label')}
+          required
+          error={errors.name?.message}
         >
           {(aria) => (
             <input
               className={styles.input}
-              type="tel"
-              autoComplete="tel"
+              type="text"
+              autoComplete="name"
               {...aria}
-              {...register('phone')}
+              {...register('name')}
             />
           )}
         </FormField>
-      </div>
 
-      <FormField
-        id="order-description"
-        label={t('form.description.label')}
-        required
-        error={errors.description?.message}
-      >
-        {(aria) => (
-          <textarea
-            className={styles.input}
-            rows={6}
-            placeholder={t(`form.description.placeholder.${kind}`)}
-            {...aria}
-            {...register('description')}
-          />
-        )}
-      </FormField>
+        <div className={styles.row}>
+          <FormField id="order-email" label={t('form.email.label')} error={errors.email?.message}>
+            {(aria) => (
+              <input
+                className={styles.input}
+                type="email"
+                autoComplete="email"
+                {...aria}
+                {...register('email')}
+              />
+            )}
+          </FormField>
+          <FormField
+            id="order-phone"
+            label={t('form.phone.label')}
+            hint={t('form.phone.hint')}
+            error={errors.phone?.message}
+          >
+            {(aria) => (
+              <input
+                className={styles.input}
+                type="tel"
+                autoComplete="tel"
+                {...aria}
+                {...register('phone')}
+              />
+            )}
+          </FormField>
+        </div>
 
-      {kind === 'painting' && <PaintingFields register={register} />}
-
-      <FormField
-        id="order-deadline"
-        label={t('form.deadline.label')}
-        hint={t('form.deadline.hint')}
-        error={errors.deadline?.message}
-      >
-        {(aria) => (
-          <input className={styles.input} type="date" {...aria} {...register('deadline')} />
-        )}
-      </FormField>
-
-      <Controller
-        control={control}
-        name="files"
-        render={({ field }) => (
-          <Dropzone
-            name="files"
-            label={t(`form.files.label.${kind}`)}
-            hint={t(`form.files.hint.${kind}`)}
-            files={field.value}
-            onChange={field.onChange}
-          />
-        )}
-      />
-
-      <div className={styles.field}>
-        <label className={styles.consent}>
-          <input
-            type="checkbox"
-            aria-required
-            aria-invalid={Boolean(errors.consent)}
-            aria-describedby={errors.consent ? 'order-consent-error' : undefined}
-            {...register('consent')}
-          />
-          <span>
-            <Trans
-              i18nKey="form.consent.label"
-              components={{ policy: <Link to={pathFor('privacy', language)} target="_blank" /> }}
+        <FormField
+          id="order-description"
+          label={t('form.description.label')}
+          required
+          error={errors.description?.message}
+        >
+          {(aria) => (
+            <textarea
+              className={styles.input}
+              rows={6}
+              placeholder={t(`form.description.placeholder.${kind}`)}
+              {...aria}
+              {...register('description')}
             />
-            <span aria-hidden="true"> *</span>
-          </span>
-        </label>
-        {errors.consent?.message && (
-          <FieldError id="order-consent-error" message={errors.consent.message} />
+          )}
+        </FormField>
+
+        {kind === 'painting' && <PaintingFields register={register} />}
+
+        <FormField
+          id="order-deadline"
+          label={t('form.deadline.label')}
+          hint={t('form.deadline.hint')}
+          error={errors.deadline?.message}
+        >
+          {(aria) => (
+            <input className={styles.input} type="date" {...aria} {...register('deadline')} />
+          )}
+        </FormField>
+
+        <Controller
+          control={control}
+          name="files"
+          render={({ field }) => (
+            <Dropzone
+              name="files"
+              label={t(`form.files.label.${kind}`)}
+              hint={t(`form.files.hint.${kind}`)}
+              files={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+
+        <div className={styles.field}>
+          <label className={styles.consent}>
+            <input
+              type="checkbox"
+              aria-required
+              aria-invalid={Boolean(errors.consent)}
+              aria-describedby={errors.consent ? 'order-consent-error' : undefined}
+              {...register('consent')}
+            />
+            <span>
+              <Trans
+                i18nKey="form.consent.label"
+                components={{ policy: <Link to={pathFor('privacy', language)} target="_blank" /> }}
+              />
+              <span aria-hidden="true"> *</span>
+            </span>
+          </label>
+          {errors.consent?.message && (
+            <FieldError id="order-consent-error" message={errors.consent.message} />
+          )}
+        </div>
+
+        {status === 'failed' && (
+          <p className={styles.failure} role="alert">
+            {t('form.failure')}
+          </p>
         )}
-      </div>
 
-      {status === 'failed' && (
-        <p className={styles.failure} role="alert">
-          {t('form.failure')}
-        </p>
-      )}
-
-      <button className={styles.submit} type="submit" disabled={isSubmitting}>
-        {isSubmitting ? t('form.sending') : t('form.submit')}
-      </button>
+        <button className={styles.submit} type="submit" disabled={isSubmitting}>
+          {isSubmitting ? t('form.sending') : t('form.submit')}
+        </button>
+      </fieldset>
     </form>
   );
 }

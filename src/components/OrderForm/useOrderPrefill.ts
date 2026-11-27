@@ -1,18 +1,22 @@
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { emptyOrder, type OrderFormValues } from '../../lib/orderSchema';
+import { useHydrated } from '../../lib/useHydrated';
 import { useLanguage } from '../../lib/useLanguage';
 import { getBySlug, isWorkKind } from '../../lib/works';
 
 /**
  * Initial form values from the URL: `?kind=painting` presets the order type and
  * `?ref=<slug>` (from "I want a similar one") writes the work's title into the description.
- * Unknown values are ignored.
+ * Unknown values are ignored. Prerendered HTML cannot know the query, so the prefill starts
+ * only after hydration; OrderForm then fills it into the fields the user has not touched.
  */
 export function useOrderPrefill(): OrderFormValues {
   const { t } = useTranslation();
   const language = useLanguage();
   const [params] = useSearchParams();
+  const hydrated = useHydrated();
+  if (!hydrated) return emptyOrder();
   const kindParam = params.get('kind');
   const work = getBySlug(params.get('ref') ?? '');
 
