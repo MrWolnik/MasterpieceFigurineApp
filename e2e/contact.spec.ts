@@ -35,3 +35,46 @@ test.describe('privacy policy', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Privacy policy' })).toBeVisible();
   });
 });
+
+test.describe('order form prefill', () => {
+  test('a plain "Contact" link after "I want a similar one" gives a fresh form', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/pl/kontakt?kind=painting&ref=zloty-ogrod');
+    await expect(page.getByLabel(/Opis/)).toHaveValue(/Złoty ogród/);
+
+    if (isMobile) await page.getByRole('button', { name: 'Otwórz menu' }).click();
+    await page
+      .getByRole('navigation', { name: 'Główna nawigacja' })
+      .getByRole('link', { name: 'Kontakt' })
+      .click();
+
+    await expect(page).toHaveURL(/\/pl\/kontakt$/);
+    await expect(page.getByRole('radio', { name: 'Malowanie figurki' })).toBeChecked();
+    await expect(page.getByLabel(/Opis/)).toHaveValue('');
+  });
+
+  test('switching language translates the prefill but keeps what the user typed', async ({
+    page,
+  }) => {
+    await page.goto('/pl/kontakt?ref=zloty-ogrod');
+    await page.getByLabel(/Imię/).fill('Anna');
+
+    await page.getByRole('contentinfo').getByRole('link', { name: /EN/ }).click();
+
+    await expect(page.getByLabel(/Description/)).toHaveValue(/^I would like a work similar to: /);
+    await expect(page.getByLabel(/Name/)).toHaveValue('Anna');
+  });
+
+  test('switching language keeps a description the user edited', async ({ page }) => {
+    await page.goto('/pl/kontakt?ref=zloty-ogrod');
+    await page.getByLabel(/Opis/).fill('Mój własny opis zlecenia, dość długi.');
+
+    await page.getByRole('contentinfo').getByRole('link', { name: /EN/ }).click();
+
+    await expect(page.getByLabel(/Description/)).toHaveValue(
+      'Mój własny opis zlecenia, dość długi.',
+    );
+  });
+});

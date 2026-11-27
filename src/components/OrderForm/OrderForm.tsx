@@ -1,6 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo, useRef, useState } from 'react';
-import { Controller, useForm, useWatch, type Resolver } from 'react-hook-form';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Controller,
+  useForm,
+  useWatch,
+  type Resolver,
+  type UseFormGetValues,
+  type UseFormSetValue,
+} from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
@@ -18,6 +25,25 @@ interface OrderFormProps {
   onSubmit: (order: Order) => Promise<void>;
 }
 
+/**
+ * When the language changes, swaps the prefilled description ("I want a similar one to: …") for
+ * the new language's text, unless the user has already edited it.
+ */
+function useTranslatedPrefill(
+  prefill: string,
+  getValues: UseFormGetValues<OrderFormValues>,
+  setValue: UseFormSetValue<OrderFormValues>,
+) {
+  const previous = useRef(prefill);
+
+  useEffect(() => {
+    if (previous.current !== prefill && getValues('description') === previous.current) {
+      setValue('description', prefill);
+    }
+    previous.current = prefill;
+  }, [prefill, getValues, setValue]);
+}
+
 /** The order request form; `?kind=` and `?ref=` in the URL preset it. */
 export function OrderForm({ onSubmit }: OrderFormProps) {
   const { t } = useTranslation();
@@ -29,6 +55,8 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     handleSubmit,
     resetField,
     reset,
+    getValues,
+    setValue,
     control,
     formState: { errors, isSubmitting },
   } = useForm<OrderFormValues, unknown, Order>({
@@ -38,6 +66,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
     defaultValues,
   });
   const kind = useWatch({ control, name: 'kind' });
+  useTranslatedPrefill(defaultValues.description, getValues, setValue);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<'idle' | 'sent' | 'failed'>('idle');
 
