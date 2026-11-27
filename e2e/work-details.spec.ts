@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { expectNoA11yViolations, urlOf } from './helpers.js';
+import { urlOf } from './helpers.js';
 
 test.describe('work details page', () => {
   test('a figurine with frames shows the 360° turntable', async ({ page }) => {
@@ -47,11 +47,4 @@ test.describe('work details page', () => {
     await expect(page).toHaveURL(urlOf('/pl/portfolio/portret-rycerki'));
     await expect(page.getByRole('heading', { level: 1, name: 'Portret rycerki' })).toBeVisible();
   });
-
-  for (const path of ['/pl/portfolio/nocny-wartownik', '/en/portfolio/mgla-nad-bagnem']) {
-    test(`${path} has no detectable accessibility violations`, async ({ page }) => {
-      await page.goto(path);
-      await expectNoA11yViolations(page);
-    });
-  }
 });

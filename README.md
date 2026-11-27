@@ -50,7 +50,11 @@ them all. The styleguide exists only in development and is left out of productio
 - **Network** is mocked with MSW (`src/test/msw-handlers.ts`). Unhandled requests fail the test.
 - **E2E tests** live in `/e2e` and run against the production build (`vite preview`).
   Dev-only pages (`e2e/styleguide.spec.ts`) run against the dev server in the `dev-only` project.
-  Accessibility is checked with `@axe-core/playwright`.
+  Accessibility is checked with `@axe-core/playwright`: `e2e/a11y.spec.ts` scans every page in
+  the built sitemap (both languages) plus the 404 page, walks one page of each kind with Tab to
+  check that every focused element shows an unclipped focus ring, and checks image text
+  alternatives. States that need an interaction (open menu, form errors, filters) are scanned in
+  their own specs.
 - **Pre-commit hook** (Husky + lint-staged) runs Prettier, ESLint, related Vitest tests and the
   type check on staged files.
 
