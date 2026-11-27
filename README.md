@@ -157,10 +157,10 @@ Netlify builds every push to `main` and publishes it, and builds a preview of ev
 1. **Add new site → Import an existing project → GitHub**, pick this repository and allow the
    Netlify app access to it. Netlify reads the build settings from `netlify.toml`; leave the
    fields it pre-fills as they are.
-2. **Site configuration → Site details → Change site name**: `masterpiecefigurinej`, so the
-   site lives at `https://masterpiecefigurinej.netlify.app` (PLAN Z5.2).
+2. **Site configuration → Site details → Change site name**: `masterpiecefigurine`, so the
+   site lives at `https://masterpiecefigurine.netlify.app` (PLAN Z5.2).
 3. **Site configuration → Environment variables → Add a variable**:
-   `VITE_SITE_URL` = `https://masterpiecefigurinej.netlify.app` (all scopes and deploy contexts).
+   `VITE_SITE_URL` = `https://masterpiecefigurine.netlify.app` (all scopes and deploy contexts).
    Then **Deploys → Trigger deploy → Clear cache and deploy site**, so the build uses it.
 4. **Site configuration → Build & deploy → Branches and deploy contexts**: production branch
    `main`; **Deploy Previews**: any pull request against your production branch; **Branch

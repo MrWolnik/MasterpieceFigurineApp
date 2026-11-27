@@ -213,7 +213,7 @@ Jedno miejsce na dane, które Julia będzie zmieniać. Edycja to zmiana jednej l
 export const site = {
   artistName: 'Julia',
   brand: 'Masterpiece Figurine J',
-  url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurinej.netlify.app',
+  url: import.meta.env.VITE_SITE_URL ?? 'https://masterpiecefigurine.netlify.app',
   contactEmail: 'example@example.com', // e-mail zastępczy; docelowy podamy przed startem
   socials: [
     // Pusty `url` = ikona się nie wyświetla. Wystarczy wkleić link, żeby się pojawiła.
@@ -349,7 +349,7 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 ### Etap 5 — Publikacja
 
 - [ ] **Z5.1 Hosting.** Netlify połączone z GitHubem, wdrożenie `main` i podglądy pull requestów. Powiadomienia formularza idą na `dwolnik12310@gmail.com` (ustawiane w panelu Netlify: Forms → Form notifications). Zmienna `VITE_SITE_URL` jest ustawiona w panelu.
-- [ ] **Z5.2 Domena.** Na etap testów używamy darmowej subdomeny Netlify **`masterpiecefigurinej.netlify.app`** (nazwa do ustawienia w Site settings). Docelowa domena to **`masterpiecefigurinej.com`**. W adresach używamy małych liter, a w logo i tekstach zapisu „MasterpieceFigurineJ”. Własną domenę podpinamy później: podpięcie, HTTPS i przekierowanie z `www`. Wszystkie adresy (sitemap, OG, `hreflang`) bierzemy ze zmiennej `SITE_URL`, więc zmiana domeny nie wymaga zmian w kodzie.
+- [ ] **Z5.2 Domena.** Na etap testów używamy darmowej subdomeny Netlify **`masterpiecefigurine.netlify.app`** (nazwa do ustawienia w Site settings). Docelowa domena to **`masterpiecefigurinej.com`**. W adresach używamy małych liter, a w logo i tekstach zapisu „MasterpieceFigurineJ”. Własną domenę podpinamy później: podpięcie, HTTPS i przekierowanie z `www`. Wszystkie adresy (sitemap, OG, `hreflang`) bierzemy ze zmiennej `SITE_URL`, więc zmiana domeny nie wymaga zmian w kodzie.
 - [ ] **Z5.3 Test dymny po wdrożeniu.** Playwright uruchamiany na produkcyjnym adresie: strony się ładują, formularz jest widoczny, brak błędów w konsoli.
 - [ ] **Z5.4 Instrukcja dla Julii.** Jak sfotografować figurkę do obrotnicy, jak sfotografować lub zeskanować obraz (rozproszone światło, bez odblasków, prosto na wprost) i jak dodać nową pracę każdego rodzaju (JSON + zdjęcia + commit).
 
@@ -406,3 +406,4 @@ Przy każdym zadaniu wymienione są testy, które są częścią „gotowe gdy�
 | 2026-11-27 | Prawdziwy status 404 dla nieznanych adresów (zamiast 200, „soft 404”) robimy po pierwszej publikacji |
 | 2026-11-27 | Ustawienia budowania Netlify w `netlify.toml` (w repo, przez review); w panelu tylko `VITE_SITE_URL` i powiadomienia formularza |
 | 2026-11-27 | Podstawowe nagłówki bezpieczeństwa w `public/_headers` (bez pełnej CSP na razie); podglądy PR z `X-Robots-Tag: noindex` |
+| 2026-11-27 | Subdomena Netlify na testy: `masterpiecefigurine.netlify.app` (bez „j”; nazwa `masterpiecefigurinej` zmieniona w panelu); docelowa domena bez zmian: `masterpiecefigurinej.com` |
