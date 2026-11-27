@@ -1,76 +1,27 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import {
-  Controller,
-  useForm,
-  useWatch,
-  type Resolver,
-  type UseFormGetFieldState,
-  type UseFormGetValues,
-  type UseFormSetValue,
-} from 'react-hook-form';
-import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { useMemo, useRef, useState } from 'react';
+import { Controller, useForm, useWatch, type Resolver } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { createOrderSchema, type Order, type OrderFormValues } from '../../lib/orderSchema';
-import { pathFor } from '../../lib/routes';
 import { HONEYPOT_FIELD } from '../../lib/submitOrder';
 import { useHydrated } from '../../lib/useHydrated';
-import { useLanguage } from '../../lib/useLanguage';
-import { WORK_KINDS } from '../../lib/works';
 import { Dropzone } from '../Dropzone/Dropzone';
-import { FieldError } from './FieldError';
+import { ConsentField } from './ConsentField';
 import { FormField } from './FormField';
+import { KindField } from './KindField';
 import { OrderSuccess } from './OrderSuccess';
 import styles from './OrderForm.module.css';
 import { PaintingFields } from './PaintingFields';
+import { useLatePrefillKind, useTranslatedPrefill } from './useFormPrefillSync';
 import { useOrderPrefill } from './useOrderPrefill';
 
 interface OrderFormProps {
   onSubmit: (order: Order) => Promise<void>;
 }
 
-/**
- * When the language changes, swaps the prefilled description ("I want a similar one to: …") for
- * the new language's text, unless the user has already edited it.
- */
-function useTranslatedPrefill(
-  prefill: string,
-  getValues: UseFormGetValues<OrderFormValues>,
-  setValue: UseFormSetValue<OrderFormValues>,
-) {
-  const previous = useRef(prefill);
-
-  // Layout effect: applied in the same commit that enables the form after hydration, so no
-  // keystroke can land in between.
-  useLayoutEffect(() => {
-    if (previous.current !== prefill && getValues('description') === previous.current) {
-      setValue('description', prefill);
-    }
-    previous.current = prefill;
-  }, [prefill, getValues, setValue]);
-}
-
-/**
- * Prerendered HTML cannot know the URL query, so `?kind=` reaches the form only after hydration
- * (see useOrderPrefill). Applies it then without remounting the form, so nothing the user has
- * typed is lost, and only if they have not picked an order type themselves.
- */
-function useLatePrefillKind(
-  prefill: OrderFormValues['kind'],
-  getFieldState: UseFormGetFieldState<OrderFormValues>,
-  setValue: UseFormSetValue<OrderFormValues>,
-) {
-  useLayoutEffect(() => {
-    // Touched too: picking a type and switching back leaves it clean but chosen.
-    const { isDirty, isTouched } = getFieldState('kind');
-    if (!isDirty && !isTouched) setValue('kind', prefill);
-  }, [prefill, getFieldState, setValue]);
-}
-
 /** The order request form; `?kind=` and `?ref=` in the URL preset it. */
 export function OrderForm({ onSubmit }: OrderFormProps) {
   const { t } = useTranslation();
-  const language = useLanguage();
   const defaultValues = useOrderPrefill();
   // Prerendered HTML shows the form before the JS has loaded; it cannot be sent then, and text
   // typed into it would be unknown to the form state, so it stays disabled until hydration.
@@ -150,25 +101,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
         </p>
         <p className={styles.hint}>{t('form.intro')}</p>
 
-        <fieldset className={styles.kinds}>
-          <legend className={styles.label}>{t('form.kind.legend')}</legend>
-          {WORK_KINDS.map((value) => (
-            <label key={value} className={styles.kind}>
-              <input
-                type="radio"
-                value={value}
-                {...register('kind', {
-                  onChange: () => {
-                    // Painting-only answers must not linger (or be sent) after switching back.
-                    resetField('dimensions', { defaultValue: '' });
-                    resetField('technique', { defaultValue: '' });
-                  },
-                })}
-              />
-              <span>{t(`form.kind.${value}`)}</span>
-            </label>
-          ))}
-        </fieldset>
+        <KindField register={register} resetField={resetField} />
 
         <FormField
           id="order-name"
@@ -261,27 +194,7 @@ export function OrderForm({ onSubmit }: OrderFormProps) {
           )}
         />
 
-        <div className={styles.field}>
-          <label className={styles.consent}>
-            <input
-              type="checkbox"
-              aria-required
-              aria-invalid={Boolean(errors.consent)}
-              aria-describedby={errors.consent ? 'order-consent-error' : undefined}
-              {...register('consent')}
-            />
-            <span>
-              <Trans
-                i18nKey="form.consent.label"
-                components={{ policy: <Link to={pathFor('privacy', language)} target="_blank" /> }}
-              />
-              <span aria-hidden="true"> *</span>
-            </span>
-          </label>
-          {errors.consent?.message && (
-            <FieldError id="order-consent-error" message={errors.consent.message} />
-          )}
-        </div>
+        <ConsentField register={register} error={errors.consent?.message} />
 
         {status === 'failed' && (
           <p className={styles.failure} role="alert">
